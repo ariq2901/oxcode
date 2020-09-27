@@ -24,7 +24,7 @@ class Board extends Component {
           <div className="vl"></div>
           <div className="anywhere">
             <i class="fas fa-map-marker-alt"></i>
-            <input type="text" name="search" placeholder="what you would like to find?"/>
+            <input type="text" name="search" placeholder="anywhere"/>
           </div>
           <div className="category-search-box">
             <select class="select-category">
