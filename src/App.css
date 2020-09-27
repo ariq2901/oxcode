@@ -1,38 +1,190 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+
+html, body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+section.header {
+  background: rgb(243, 243, 243);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+nav {
+  width: 100vw;
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  min-height: 10vh;
+  background: transparent;
+  color: rgb(112, 110, 110);
 }
 
-.App-link {
-  color: #61dafb;
+.nav-links {
+  margin: 0 1% 0 0;
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  font-size: 1.5em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav-links li {
+  list-style: none;
+}
+
+.btn-nav-login {
+  font-size: 1.5em;
+  outline: none;
+  border: none;
+  width: 8%;
+  height: 48%;
+  background: salmon;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.wrapper {
+  min-width: 100%;
+  display: flex;
+  padding: 9% 0 5% 0;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.big-title {
+  color: salmon;
+  line-height: 1.1em;
+  font-size: 6.4em;
+}
+
+.slogant-title {
+  margin-top: 5%;
+  font-size: 1.7em;
+  color: rgb(242, 176, 168);
+}
+
+.worldmap-img img {
+ transform: scaleY(1.2) scaleX(1.1);
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 1%;
+  margin-bottom: 10%;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.find {
+  flex-grow: 2;
+  display: flex;
+  align-items: center;
+  padding-left: 2.5%;
+}
+
+.find i {
+  color: salmon;
+  font-size: 2em;
+  margin-right: 6%;
+}
+
+.find input {
+  height: 50px;
+  width: 100%;
+  border: none;
+  font-size: 1.7em;
+}
+
+.find input:focus {
+  outline: unset;
+}
+
+.find input::-webkit-input-placeholder {
+  line-height: 7;
+}
+
+.vl {
+  flex-grow: 1;
+  border-right: 2px solid #ddd;
+  height: 100%;
+}
+
+.anywhere {
+  flex-grow: 4;
+  display: flex;
+  align-items: center;
+  padding-left: 2.5%;
+}
+
+.anywhere i {
+  color: salmon;
+  font-size: 2em;
+  margin-right: 6%;
+}
+
+.anywhere input {
+  height: 50px;
+  width: 100%;
+  border: none;
+  font-size: 1.7em;
+}
+
+.anywhere input:focus {
+  outline: unset;
+}
+
+.anywhere input::-webkit-input-placeholder {
+  line-height: 7;
+}
+
+.category-search-box {
+  position: relative;
+  flex-grow: 2;
+}
+
+.category-search-box i.fa-chevron-up {
+  color: #767676;
+  left: 25%;
+  top: 10%;
+  position: absolute;
+}
+
+.category-search-box i.fa-chevron-down {
+  color: #767676;
+  left: 25%;
+  bottom: 20%;
+  position: absolute;
+}
+
+.category-search-box select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Add some styling */
+  
+  display: block;
+  font-size: 16px;
+  color: #767676;
+  width: 60%;
+  border: none;
+  outline: none;
+  font-size: 1.7em;
+}
+
+.btn-search-box {
+  font-size: 1.7em;
+  font-weight: 300;
+  outline: none;
+  border: none;
+  width: 10%;
+  height: 100%;
+  background: salmon;
+  color: #fff;
+  border-radius: 8px;
 }
