@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import Nav from './ComponentHome/Nav';
 import Board from './ComponentHome/Board';
 import PopularSpots from './ComponentHome/PopularSpots';
+import PopularCity from './ComponentHome/PopularCity';
 import '../App.css';
 
 class Home extends Component{
@@ -22,6 +23,9 @@ class Home extends Component{
           <div className="container">
             <div className="row">
               <PopularSpots />
+            </div>
+            <div className="row">
+              <PopularCity />
             </div>
           </div>
         </section>

@@ -6,7 +6,7 @@ html, body{
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   font-size: 10px;
-  height: 150%;
+  text-transform: lowercase;
 }
 
 p {
@@ -212,7 +212,8 @@ nav {
 }
 
 .spots-title p {
-  font-size: 2em;
+  font-size: 1.8em;
+  color: #767676;
   margin: 0 !important;
 }
 
@@ -284,4 +285,16 @@ nav {
   margin-left: 3%;
   color: rgb(242, 176, 168);
   font-size: 1.5em;
+}
+
+.city-wrapper {
+  width: 100%;
+  padding-top: 8%;
+  padding-bottom: 20%;
+}
+
+.desc-city p{
+  padding-top: 2%;
+  font-size: 1.7em;
+  color: rgb(106, 106, 106);;
 }
