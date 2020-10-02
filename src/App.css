@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
 
+:root {
+  --white: #e8e9ed;
+  --gray: #434257;
+  --blue: #18172c;
+  --green: #00d084;
+  --pink: #ff4b77;
+  --blue-primary: #439CEF;
+}
+
 html, body{
   margin: 0;
   padding: 0;
@@ -17,14 +26,20 @@ section.header {
   background: rgb(243, 243, 243);
 }
 
-nav {
-  width: 100vw;
-  display: flex;
+.row.row-nav {
   justify-content: flex-end;
+}
+
+nav {
+  display: flex;
   align-items: center;
   min-height: 10vh;
-  background: transparent;
+  background: rgb(243, 243, 243);
   color: rgb(112, 110, 110);
+}
+
+.navigation.active {
+  color: var(--blue-primary);
 }
 
 .nav-links {
@@ -38,6 +53,56 @@ nav {
 
 .nav-links li {
   list-style: none;
+  color: #89c0f3;
+}
+
+.nav-links li .navbar__link{
+  text-decoration: none;
+  cursor: pointer;
+  color: #89c0f3;
+  border-bottom: 3px solid transparent;
+}
+
+.nav-links li .navbar__link:hover{
+  transform: translateY(-2px);
+}
+
+.nav-links li .navbar__link--active {
+  color: #0bce83;
+  transition: color .2s ease-in-out;
+}
+
+.dropdown {
+  display: flex;
+}
+
+.menu {
+  position: relative;
+}
+
+.menu input {
+  position: absolute;
+  opacity: 0;
+  top: 18%;
+  left: 6%;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.menu i {
+  padding-left: 20%;
+  font-size: .8em;
+  transition: all 0.5s;
+}
+
+/* Chevron Menu animation */
+.arrow-bawah {
+  transform-origin: 60% 40%;
+}
+
+.menu input:checked ~ .arrow-bawah {
+  color: var(--blue-primary);
+  transform: rotate(180deg);
 }
 
 .btn-nav-login {
@@ -46,21 +111,21 @@ nav {
   border: none;
   width: 8%;
   height: 48%;
-  background: salmon;
+  background: var(--blue-primary);
   color: #fff;
-  border-radius: 10px;
+  border-radius: 6px;
 }
 
 .wrapper {
   min-width: 100%;
   display: flex;
-  padding: 9% 0 5% 0;
+  padding: 5% 0 5% 0;
   align-items: center;
   justify-content: space-between;
 }
 
 .big-title {
-  color: salmon;
+  color: var(--blue-primary);
   line-height: 1.1em;
   font-size: 6.4em;
 }
@@ -68,11 +133,7 @@ nav {
 .slogant-title {
   margin-top: 5%;
   font-size: 1.7em;
-  color: rgb(242, 176, 168);
-}
-
-.worldmap-img img {
- transform: scaleY(1.2) scaleX(1.1);
+  color: #89c0f3;
 }
 
 .search-box {
@@ -94,7 +155,7 @@ nav {
 }
 
 .find i {
-  color: salmon;
+  color: var(--blue-primary);
   font-size: 2em;
   margin-right: 6%;
 }
@@ -128,7 +189,7 @@ nav {
 }
 
 .anywhere i {
-  color: salmon;
+  color: var(--blue-primary);
   font-size: 2em;
   margin-right: 6%;
 }
@@ -153,15 +214,23 @@ nav {
   flex-grow: 2;
 }
 
+select.select-category {
+  cursor: pointer;
+}
+
+select.select-category option {
+  cursor: pointer !important;
+}
+
 .category-search-box i.fa-chevron-up {
-  color: #767676;
+  color: var(--blue-primary);
   left: 25%;
   top: 10%;
   position: absolute;
 }
 
 .category-search-box i.fa-chevron-down {
-  color: #767676;
+  color: var(--blue-primary);
   left: 25%;
   bottom: 20%;
   position: absolute;
@@ -189,7 +258,7 @@ nav {
   border: none;
   width: 10%;
   height: 100%;
-  background: salmon;
+  background: var(--blue-primary);
   color: #fff;
   border-radius: 8px;
 }
@@ -208,7 +277,7 @@ nav {
 .spots-title span {
   font-size: 2.8em;
   font-weight: 500;
-  color: salmon;
+  color: #292929;
 }
 
 .spots-title p {
@@ -221,6 +290,7 @@ nav {
   margin-top: 6%;
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
 }
@@ -278,23 +348,136 @@ nav {
 
 .location-wrapper i {
   font-size: 2em;
-  color: salmon;
+  color: var(--blue-primary);
 }
 
 .location-wrapper .location-name {
   margin-left: 3%;
-  color: rgb(242, 176, 168);
+  color: #89c0f3;
   font-size: 1.5em;
 }
 
 .city-wrapper {
   width: 100%;
   padding-top: 8%;
-  padding-bottom: 20%;
+  padding-bottom: 15%;
 }
 
 .desc-city p{
   padding-top: 2%;
   font-size: 1.7em;
   color: rgb(106, 106, 106);;
+}
+
+
+
+/* List Attraction Page */
+
+.search-box.list-page {
+  margin: 5% 0 5% 0;
+}
+
+[type="checkbox"] {
+  position: absolute;
+  left: -9999px;
+}
+
+.spots-wrapper.listpage {
+  padding: 2.5% 0 2.5% 0;
+}
+
+.list-title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 4.6%;
+}
+
+.filter-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.filter-wrapper label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 15px 15px 15px;
+  cursor: pointer;
+}
+
+.filter-wrapper span:last-child {
+  position: relative;
+  width: 60px;
+  height: 26px;
+  border-radius: 15px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.4);
+  background: var(--gray);
+  transition: all 0.3s;
+}
+
+.filter-wrapper span:last-child::before,
+.filter-wrapper span:last-child::after {
+  content: "";
+  position: absolute;
+}
+
+.filter-wrapper span:last-child::before {
+  left: 1px;
+  top: 1px;
+  width: 24px;
+  height: 24px;
+  background: var(--white);
+  border-radius: 50%;
+  z-index: 1;
+  transition: transform 0.3s;
+}
+
+.filter-wrapper span:last-child::after {
+  top: 50%;
+  right: 13px;
+  width: 12px;
+  height: 12px;
+  transform: translateY(-50%);
+  background: url(./svg/uncheck.svg);
+  color: #828282;
+  filter: invert(57%) sepia(3%) saturate(11%) hue-rotate(343deg) brightness(89%) contrast(95%);
+  background-size: 12px 12px;
+}
+
+.filter-wrapper [type="checkbox"]:checked + label span:last-child {
+  background: var(--blue-primary);
+}
+
+.filter-wrapper [type="checkbox"]:checked + label span:last-child::before {
+  transform: translateX(34px);
+}
+
+.filter-wrapper [type="checkbox"]:checked + label span:last-child::after {
+  width: 14px;
+  height: 14px;
+  /*right: auto;*/
+  left: 13px;
+  background-image: url(./svg/check.svg);
+  filter: invert(100%) sepia(94%) saturate(24%) hue-rotate(352deg) brightness(105%) contrast(107%);
+  background-size: 14px 14px;
+}
+
+.list-title p {
+  font-size: 1.8em;
+  color: #767676;
+}
+
+.main-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: repeat(3, 2fr);
+  grid-gap: 40px 30px;
+}
+
+.main-list .crd {
+  width: 100%;
+  padding: 4.5% 5%;
 }
