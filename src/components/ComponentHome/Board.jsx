@@ -2,20 +2,21 @@ import React, { Fragment, Component } from 'react';
 import WorldMap from '../../img/home/worldmap.png';
 import '../../App.css';
 
-class Board extends Component {
-  render() {
-    return(
-      <Fragment>
-        <div className="wrapper">
-          <div className="slogant">
-            <p className="big-title">find your</p>
-            <p className="big-title">destination</p>
-            <p className="slogant-title">this is the start of your journey, don't let other people hold your move. get your own way</p>
-          </div>
-          <div className="worldmap-img">
-            <img src={WorldMap} alt="worldmap image"/>
-          </div>
+const Board = () => {
+
+  return(
+    <Fragment>
+      <div className="wrapper">
+        <div className="slogant">
+          <p className="big-title">find your</p>
+          <p className="big-title">destination</p>
+          <p className="slogant-title">this is the start of your journey, don't let other people hold your move. get your own way</p>
         </div>
+        <div className="worldmap-img">
+          <img src={WorldMap} alt="worldmap image"/>
+        </div>
+      </div>
+      <div className="search-box-wrapper">
         <div className="search-box">
           <div className="find">
             <i class="fas fa-search"></i>
@@ -38,9 +39,9 @@ class Board extends Component {
           </div>
           <button type="submit" className="btn-search-box">search</button>
         </div>
-      </Fragment>
-    );
-  }
+      </div>
+    </Fragment>
+  );
 }
 
 export default Board;

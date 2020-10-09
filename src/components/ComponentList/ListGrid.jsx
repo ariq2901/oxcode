@@ -2,281 +2,392 @@ import React, { Fragment } from 'react';
 import Bromo from '../../img/bromo.jpg';
 import Waterbom from '../../img/waterbom.jpg';
 import Dufan from '../../img/dufan.jpg';
-
+// import '../../feature';
 const ListGrid = () => {
+  const [gridfilter, setGridfilter] = React.useState(false);
+
+  const handleClick = () => {
+    setGridfilter(!gridfilter);
+    console.log(gridfilter);
+  }
+
+
+
   return(
     <Fragment>
       <div className="spots-wrapper listpage">
         <div className="list-title">
           <div className="filter-wrapper">
             <p>filter</p>
-            <input type="checkbox" id="filter-toggle"/>
+            <input type="checkbox" onClick={handleClick} id="filter-toggle"/>
             <label htmlFor="filter-toggle">
               <span></span>
             </label>
           </div>
           <p>list attractions</p>
         </div>
-        <div className="main-list">
-          <div className="crd">
-            <div className="img-wrapper">
-              <img src={Bromo} alt="bromo img"/>
-            </div>
-            <div className="title-wrapper">
-              <span>bromo mountain</span>
-            </div>
-            <div className="rate-wrapper">
-              <div className="rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+        <div className={gridfilter ? "grid-filter" : "grid-wrapper"}>
+          <div className={gridfilter ? "filter-panel show" : "filter-panel none"}>
+            <div className="sortby-tunel">
+              <p>sort by</p>
+              <div className="sort-checkbox">
+                <div className="reviews-btn">
+                  <input type="checkbox" name="reviews" className="visually-hidden" id="reviews"/>
+                  <label htmlFor="reviews" className="sortby-label r">reviews</label>
+                </div>
+                <div className="reviews-btn">
+                  <input type="checkbox" name="distance" className="visually-hidden" id="distance"/>
+                  <label htmlFor="distance" className="sortby-label d">distance</label>
+                </div>
+                <div className="reviews-btn">
+                  <input type="checkbox" name="alphabet" className="visually-hidden" id="alphabet"/>
+                  <label htmlFor="alphabet" className="sortby-label a">alphabet</label>
+                </div>
               </div>
-              <p className="total-reviews">175 reviews</p>
             </div>
-            <div className="location-wrapper">
-              <i class="fas fa-map-marker-alt"></i>
-              <p className="location-name">bromo</p>
+            <hr className="line-divider"/>
+            <div className="types-tunel">
+              <div className="types-tunel-title">
+                <p>types of attractions</p>
+                <button>reset</button>
+              </div>
+              <div className="types-checkbox">
+                <ul>
+                  <li>
+                    <div className="type-checkbox">
+                      <input type="checkbox" id="mountain-box"/>
+                      <label htmlFor="mountain-box">
+                        <span className="checkmark"></span>
+                      </label>
+                      <p className="label-title">mountain</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="type-checkbox">
+                      <input type="checkbox" id="beach-box"/>
+                      <label htmlFor="beach-box">
+                        <span className="checkmark"></span>
+                      </label>
+                      <p className="label-title">beach</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="type-checkbox">
+                      <input type="checkbox" id="museum-box"/>
+                      <label htmlFor="museum-box">
+                        <span className="checkmark"></span>
+                      </label>
+                      <p className="label-title">museum</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="type-checkbox">
+                      <input type="checkbox" id="zoo-box"/>
+                      <label htmlFor="zoo-box">
+                        <span className="checkmark"></span>
+                      </label>
+                      <p className="label-title">zoo</p>
+                    </div>
+                  </li>
+                  <li className="show-wrapper">
+                    <input type="checkbox" id="show-check" />
+                    <label htmlFor="show-check" className="show-label"></label>
+                    <ul>
+                      <li>
+                        <div className="type-checkbox">
+                          <input type="checkbox" id="lake-box"/>
+                          <label htmlFor="lake-box">
+                            <span className="checkmark"></span>
+                          </label>
+                          <p className="label-title">lake</p>
+                        </div>
+                      </li>
+                      <li>
+                        <div className="type-checkbox">
+                          <input type="checkbox" id="waterpark-box"/>
+                          <label htmlFor="waterpark-box">
+                            <span className="checkmark"></span>
+                          </label>
+                          <p className="label-title">waterpark</p>
+                        </div>
+                      </li>
+                      <li>
+                        <div className="type-checkbox">
+                          <input type="checkbox" id="waterfall-box"/>
+                          <label htmlFor="waterfall-box">
+                            <span className="checkmark"></span>
+                          </label>
+                          <p className="label-title">waterfall</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
             </div>
+            <hr className="line-divider dua"/>
           </div>
-          <div className="crd">
-            <div className="img-wrapper">
-              <img src={Waterbom} alt="waterbom img"/>
-            </div>
-            <div className="title-wrapper">
-              <span>waterbom jakarta</span>
-            </div>
-            <div className="rate-wrapper">
-              <div className="rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
+          <div className={gridfilter ? "main-list-filter" : "main-list"}>
+            <div className="crd">
+              <div className="img-wrapper">
+                <img src={Bromo} alt="bromo img"/>
               </div>
-              <p className="total-reviews">340 reviews</p>
-            </div>
-            <div className="location-wrapper">
-              <i class="fas fa-map-marker-alt"></i>
-              <p className="location-name">jakarta</p>
-            </div>
-          </div>
-          <div className="crd">
-            <div className="img-wrapper">
-              <img src={Dufan} alt="dufan img"/>
-            </div>
-            <div className="title-wrapper">
-              <span>dunia fantasi</span>
-            </div>
-            <div className="rate-wrapper">
-              <div className="rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+              <div className="title-wrapper">
+                <span>bromo mountain</span>
               </div>
-              <p className="total-reviews">439 reviews</p>
-            </div>
-            <div className="location-wrapper">
-              <i class="fas fa-map-marker-alt"></i>
-              <p className="location-name">jakarta</p>
-            </div>
-          </div><div className="crd">
-            <div className="img-wrapper">
-              <img src={Bromo} alt="bromo img"/>
-            </div>
-            <div className="title-wrapper">
-              <span>bromo mountain</span>
-            </div>
-            <div className="rate-wrapper">
-              <div className="rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p className="total-reviews">175 reviews</p>
               </div>
-              <p className="total-reviews">175 reviews</p>
-            </div>
-            <div className="location-wrapper">
-              <i class="fas fa-map-marker-alt"></i>
-              <p className="location-name">bromo</p>
-            </div>
-          </div>
-          <div className="crd">
-            <div className="img-wrapper">
-              <img src={Waterbom} alt="waterbom img"/>
-            </div>
-            <div className="title-wrapper">
-              <span>waterbom jakarta</span>
-            </div>
-            <div className="rate-wrapper">
-              <div className="rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
+              <div className="location-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <p className="location-name">bromo</p>
               </div>
-              <p className="total-reviews">340 reviews</p>
             </div>
-            <div className="location-wrapper">
-              <i class="fas fa-map-marker-alt"></i>
-              <p className="location-name">jakarta</p>
-            </div>
-          </div>
-          <div className="crd">
-            <div className="img-wrapper">
-              <img src={Dufan} alt="dufan img"/>
-            </div>
-            <div className="title-wrapper">
-              <span>dunia fantasi</span>
-            </div>
-            <div className="rate-wrapper">
-              <div className="rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+            <div className="crd">
+              <div className="img-wrapper">
+                <img src={Waterbom} alt="waterbom img"/>
               </div>
-              <p className="total-reviews">439 reviews</p>
-            </div>
-            <div className="location-wrapper">
-              <i class="fas fa-map-marker-alt"></i>
-              <p className="location-name">jakarta</p>
-            </div>
-          </div><div className="crd">
-            <div className="img-wrapper">
-              <img src={Bromo} alt="bromo img"/>
-            </div>
-            <div className="title-wrapper">
-              <span>bromo mountain</span>
-            </div>
-            <div className="rate-wrapper">
-              <div className="rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+              <div className="title-wrapper">
+                <span>waterbom jakarta</span>
               </div>
-              <p className="total-reviews">175 reviews</p>
-            </div>
-            <div className="location-wrapper">
-              <i class="fas fa-map-marker-alt"></i>
-              <p className="location-name">bromo</p>
-            </div>
-          </div>
-          <div className="crd">
-            <div className="img-wrapper">
-              <img src={Waterbom} alt="waterbom img"/>
-            </div>
-            <div className="title-wrapper">
-              <span>waterbom jakarta</span>
-            </div>
-            <div className="rate-wrapper">
-              <div className="rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p className="total-reviews">340 reviews</p>
               </div>
-              <p className="total-reviews">340 reviews</p>
-            </div>
-            <div className="location-wrapper">
-              <i class="fas fa-map-marker-alt"></i>
-              <p className="location-name">jakarta</p>
-            </div>
-          </div>
-          <div className="crd">
-            <div className="img-wrapper">
-              <img src={Dufan} alt="dufan img"/>
-            </div>
-            <div className="title-wrapper">
-              <span>dunia fantasi</span>
-            </div>
-            <div className="rate-wrapper">
-              <div className="rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+              <div className="location-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <p className="location-name">jakarta</p>
               </div>
-              <p className="total-reviews">439 reviews</p>
             </div>
-            <div className="location-wrapper">
-              <i class="fas fa-map-marker-alt"></i>
-              <p className="location-name">jakarta</p>
-            </div>
-          </div><div className="crd">
-            <div className="img-wrapper">
-              <img src={Bromo} alt="bromo img"/>
-            </div>
-            <div className="title-wrapper">
-              <span>bromo mountain</span>
-            </div>
-            <div className="rate-wrapper">
-              <div className="rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+            <div className="crd">
+              <div className="img-wrapper">
+                <img src={Dufan} alt="dufan img"/>
               </div>
-              <p className="total-reviews">175 reviews</p>
-            </div>
-            <div className="location-wrapper">
-              <i class="fas fa-map-marker-alt"></i>
-              <p className="location-name">bromo</p>
-            </div>
-          </div>
-          <div className="crd">
-            <div className="img-wrapper">
-              <img src={Waterbom} alt="waterbom img"/>
-            </div>
-            <div className="title-wrapper">
-              <span>waterbom jakarta</span>
-            </div>
-            <div className="rate-wrapper">
-              <div className="rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
+              <div className="title-wrapper">
+                <span>dunia fantasi</span>
               </div>
-              <p className="total-reviews">340 reviews</p>
-            </div>
-            <div className="location-wrapper">
-              <i class="fas fa-map-marker-alt"></i>
-              <p className="location-name">jakarta</p>
-            </div>
-          </div>
-          <div className="crd">
-            <div className="img-wrapper">
-              <img src={Dufan} alt="dufan img"/>
-            </div>
-            <div className="title-wrapper">
-              <span>dunia fantasi</span>
-            </div>
-            <div className="rate-wrapper">
-              <div className="rating">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p className="total-reviews">439 reviews</p>
               </div>
-              <p className="total-reviews">439 reviews</p>
+              <div className="location-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <p className="location-name">jakarta</p>
+              </div>
+            </div><div className="crd">
+              <div className="img-wrapper">
+                <img src={Bromo} alt="bromo img"/>
+              </div>
+              <div className="title-wrapper">
+                <span>bromo mountain</span>
+              </div>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p className="total-reviews">175 reviews</p>
+              </div>
+              <div className="location-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <p className="location-name">bromo</p>
+              </div>
             </div>
-            <div className="location-wrapper">
-              <i class="fas fa-map-marker-alt"></i>
-              <p className="location-name">jakarta</p>
+            <div className="crd">
+              <div className="img-wrapper">
+                <img src={Waterbom} alt="waterbom img"/>
+              </div>
+              <div className="title-wrapper">
+                <span>waterbom jakarta</span>
+              </div>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p className="total-reviews">340 reviews</p>
+              </div>
+              <div className="location-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <p className="location-name">jakarta</p>
+              </div>
+            </div>
+            <div className="crd">
+              <div className="img-wrapper">
+                <img src={Dufan} alt="dufan img"/>
+              </div>
+              <div className="title-wrapper">
+                <span>dunia fantasi</span>
+              </div>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p className="total-reviews">439 reviews</p>
+              </div>
+              <div className="location-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <p className="location-name">jakarta</p>
+              </div>
+            </div><div className="crd">
+              <div className="img-wrapper">
+                <img src={Bromo} alt="bromo img"/>
+              </div>
+              <div className="title-wrapper">
+                <span>bromo mountain</span>
+              </div>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p className="total-reviews">175 reviews</p>
+              </div>
+              <div className="location-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <p className="location-name">bromo</p>
+              </div>
+            </div>
+            <div className="crd">
+              <div className="img-wrapper">
+                <img src={Waterbom} alt="waterbom img"/>
+              </div>
+              <div className="title-wrapper">
+                <span>waterbom jakarta</span>
+              </div>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p className="total-reviews">340 reviews</p>
+              </div>
+              <div className="location-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <p className="location-name">jakarta</p>
+              </div>
+            </div>
+            <div className="crd">
+              <div className="img-wrapper">
+                <img src={Dufan} alt="dufan img"/>
+              </div>
+              <div className="title-wrapper">
+                <span>dunia fantasi</span>
+              </div>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p className="total-reviews">439 reviews</p>
+              </div>
+              <div className="location-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <p className="location-name">jakarta</p>
+              </div>
+            </div><div className="crd">
+              <div className="img-wrapper">
+                <img src={Bromo} alt="bromo img"/>
+              </div>
+              <div className="title-wrapper">
+                <span>bromo mountain</span>
+              </div>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p className="total-reviews">175 reviews</p>
+              </div>
+              <div className="location-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <p className="location-name">bromo</p>
+              </div>
+            </div>
+            <div className="crd">
+              <div className="img-wrapper">
+                <img src={Waterbom} alt="waterbom img"/>
+              </div>
+              <div className="title-wrapper">
+                <span>waterbom jakarta</span>
+              </div>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p className="total-reviews">340 reviews</p>
+              </div>
+              <div className="location-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <p className="location-name">jakarta</p>
+              </div>
+            </div>
+            <div className="crd">
+              <div className="img-wrapper">
+                <img src={Dufan} alt="dufan img"/>
+              </div>
+              <div className="title-wrapper">
+                <span>dunia fantasi</span>
+              </div>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p className="total-reviews">439 reviews</p>
+              </div>
+              <div className="location-wrapper">
+                <i class="fas fa-map-marker-alt"></i>
+                <p className="location-name">jakarta</p>
+              </div>
             </div>
           </div>
         </div>
