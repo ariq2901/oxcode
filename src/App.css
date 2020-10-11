@@ -929,15 +929,19 @@ label .checkmark::after {
     opacity: 0;
     transition: all .5s;
   }
-
+  
   .nav-links.slide {
     z-index: 2;
     opacity: 1;
     transform: translateX(0);
   }
-
+  
   .nav-links li {
     margin-bottom: 20%;
+  }
+  
+  .btn-nav-login {
+    padding: 8px 25px;
   }
 
   .menu-toggle {
@@ -956,7 +960,7 @@ label .checkmark::after {
   .img-wrapper img {
     transform: scale(2);
   }
-
+  
   .list-title {
     padding-left: 4%;
     padding-right: 4%;
@@ -1024,7 +1028,7 @@ label .checkmark::after {
   }
 
   .desc-city p {
-    font-size: 1.5em;
+    font-size: 1.3em;
   }
 
   .worldmap-img img {
@@ -1049,6 +1053,7 @@ label .checkmark::after {
   .slogant-title {
     font-size: 1.6em;
   }
+
 }
 
 .container-fluid {
