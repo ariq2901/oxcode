@@ -52,6 +52,7 @@ section.header {
 }
 
 nav {
+  width: 100%;
   display: flex;
   align-items: center;
   min-height: 10vh;
@@ -145,7 +146,7 @@ nav {
   cursor: pointer;
 }
 
-.arrow-bawah {
+i.arrow-bawah {
   transform-origin: 60% 40%;
 }
 
@@ -1049,6 +1050,7 @@ label .checkmark::after {
     font-size: 1.6em;
   }
 }
+
 .container-fluid {
   width: 100%;
   padding-right: 15px;
@@ -1057,7 +1059,7 @@ label .checkmark::after {
   margin-left: auto;
 }
 
-.row {
+.row.ia {
   display: flex;
   display: -ms-flexbox;
   -ms-flex-wrap: wrap;
@@ -1070,7 +1072,7 @@ label .checkmark::after {
   justify-content:center!important
 }
 
-.col-8 {
+.col-8.ia {
   -ms-flex: 0 0 66.666667%;
   flex: 0 0 66.666667%;
   max-width: 66.666667%;
@@ -1078,15 +1080,7 @@ label .checkmark::after {
   width: 100%;
 }
 
-.col-9 {
-  -ms-flex: 0 0 75%;
-  flex: 0 0 75%;
-  max-width: 75%;
-  position: relative;
-  width: 100%;
-}
-
-.col-3 {
+.col-3.ia {
   -ms-flex: 0 0 25%;
   flex: 0 0 25%;
   max-width: 25%;
@@ -1094,7 +1088,7 @@ label .checkmark::after {
   width: 100%;
 }
 
-.col {
+.col.ia {
   -ms-flex-preferred-size: 0;
   flex-basis: 0;
   -ms-flex-positive: 1;
@@ -1103,7 +1097,7 @@ label .checkmark::after {
   position: relative;
   width: 100%;
 }
-
+/* 
 .navbar {
   width: 100%;
 }
@@ -1147,9 +1141,9 @@ ul>li {
 
 .nav-active, .nav-active > button {
   color: red!important;
-}
+} */
 
-.btn {
+.btn-ia {
   padding: 7px 20px;
   border: none;
   background-color: blue;
@@ -1158,7 +1152,7 @@ ul>li {
   border-radius: 5px;
 }
 
-.header {
+.header.ia {
   margin-top: 2em;
   text-align: start;
 }
@@ -1207,8 +1201,8 @@ ul>li {
   margin-bottom: 0;
 }
 
-.block {
-  margin-top: 50px;
+.ia.block {
+  /* margin-top: 50px; */
   padding-top: 1%;
 }
 
@@ -1409,21 +1403,22 @@ h3 {
   height: 110px;
 }
 
-.rating {
+.rating.ia {
   font-size: 15px;
+  width: 100%;
   display: block;
   margin-bottom: 15px;
   color: rgba(0, 0, 0, 60%);
 }
 
-.rating>i {
+.rating.ia>i {
   color: orange;
   vertical-align: bottom;
   font-size: 18px;
   padding-right: 3px;
 }
 
-.rating>span {
+.rating.ia>span {
   margin-left: 10px;
   vertical-align: bottom;
 }
@@ -1577,13 +1572,13 @@ h3 {
   padding-right: 1em;
 }
 
-.card {
+.card.ia {
   border-radius: 5px;
   padding: 1em;
   overflow-wrap: anywhere;
 }
 
-.card p {
+.card.ia p {
   padding: 0;
   margin: 0;
 }
@@ -1632,7 +1627,7 @@ h3 {
   /* border-bottom: 1px solid rgba(0, 0, 0, 40%); */
 /* } */
 
-hr {
+.hr.ia {
   margin: 1em 0;
 }
 

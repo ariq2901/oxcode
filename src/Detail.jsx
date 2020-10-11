@@ -36,15 +36,15 @@ const Detail = (props) => {
 
   return (
     <Fragment>
-      <div className="row color block align-items-center pb-2">
-        <div className="col-8">
+      <div className="row ia color block align-items-center pb-2">
+        <div className="col-8 ia">
           {/* <div> */}
-          <div className="row mt-5">
-            <div className="col">
+          <div className="row ia mt-5">
+            <div className="col ia">
               <span className="breadcumb">recreation / jungle land</span>
               <h1 className="title">Jungle Land</h1>
               <h1 className="title">Adventure Theme Park</h1>
-              <span className="rating">
+              <span className="rating ia">
                 <i className="material-icons">star</i>
                 <i className="material-icons">star</i>
                 <i className="material-icons">star</i>
@@ -54,11 +54,11 @@ const Detail = (props) => {
                 <span className="material-icons favorite">favorite</span>
               </span>
               <div className="button-row">
-                <button className="btn">
+                <button className="btn-ia">
                   <i className="material-icons">location_on</i>
                   sentul
                 </button>
-                <button className="btn">
+                <button className="btn-ia">
                   <i className="material-icons">location_on</i>
                   bogor
                 </button>
@@ -93,7 +93,7 @@ const Detail = (props) => {
                 </span>
               </div>
             </div>
-            <div className="col m-auto">
+            <div className="col ia m-auto">
               <div className="img-main" ref={img} style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
               <div className="img-bar" ref={imgBar}>
                 <button className="image-on" onClick={imgHandler}>
@@ -122,11 +122,11 @@ const Detail = (props) => {
           </div>
         </div>
       </div>
-      <div className="row align-items-center mt-2">
-        <div className="col-8">
-          <div className="row">
-            <div className="col mr-1">
-              <div className="card color">
+      <div className="row ia align-items-center mt-2">
+        <div className="col-8 ia">
+          <div className="row ia">
+            <div className="col ia mr-1">
+              <div className="card ia color">
                 <p>
                   Merupakan wahana aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                 </p>
@@ -134,15 +134,15 @@ const Detail = (props) => {
               <div className="mt-1">
                 <div className="mb-1">
                   <h3 className="valign-super">Review</h3>
-                  <button className="float-right btn" onClick={modal}>add review</button>
+                  <button className="float-right btn-ia" onClick={modal}>add review</button>
                 </div>
-                <div className="card color">
+                <div className="card ia color">
                   <div className="review">
                     <div className="review-head">
                       <div className="head-img" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
                       <div className="head-body">
                         <p>Sirizqi.</p><span>September 2010</span>
-                        <span className="rating">
+                        <span className="rating ia">
                           <i className="material-icons">star</i>
                           <i className="material-icons">star</i>
                           <i className="material-icons">star</i>
@@ -155,13 +155,13 @@ const Detail = (props) => {
                       <p>KLKLKLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLKLKLKLKLKLKKKKKKKKKKKKKKKKKKKKKKKKK</p>
                     </div>
                   </div>
-                  <hr />
+                  <hr className="hr ia" />
                   <div className="review">
                     <div className="review-head">
                       <div className="head-img" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
                       <div className="head-body">
                         <p>Sirizqi.</p><span>September 2010</span>
-                        <span className="rating">
+                        <span className="rating ia">
                           <i className="material-icons">star</i>
                           <i className="material-icons">star</i>
                           <i className="material-icons">star</i>
@@ -174,36 +174,36 @@ const Detail = (props) => {
                       <p>KLKLKLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLKLKLKLKLKLKKKKKKKKKKKKKKKKKKKKKKKKK</p>
                     </div>
                   </div>
-                  <button className="btn w-100">
+                  <button className="btn-ia w-100">
                     show more
                   </button>
                 </div>
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-3 ia">
               <div className="mb-1">
                 <p>Weather in sentul,</p>
                 <p>Bogor</p>
               </div>
-              <div className="color card">
+              <div className="color card ia">
                 <div className="weather">
                   <p>Today</p>
                   {/* <i className="material-icons">weather</i> */}
                   <p className="float-right">32&#xb0;</p>
                 </div>
-                <hr />
+                <hr className="hr ia" />
                 <div className="weather">
                   <p>Tomorrow</p>
                   {/* <i className="material-icons">weather</i> */}
                   <p className="float-right">32&#xb0;</p>
                 </div>
-                <hr />
+                <hr className="hr ia" />
                 <div className="weather">
                   <p>Saturday</p>
                   {/* <i className="material-icons">weather</i> */}
                   <p className="float-right">32&#xb0;</p>
                 </div>
-                <hr />
+                <hr className="hr ia" />
                 <div className="weather">
                   <p>Sunday</p>
                   {/* <i className="material-icons">weather</i> */}
@@ -214,7 +214,7 @@ const Detail = (props) => {
                 <h3>Direction</h3>
                 <span className="float-right"><i className="material-icons-outlined">gps_fixed</i></span>
               </div>
-              <div className="color card">
+              <div className="color card ia">
                 <span>
 
                 </span>
