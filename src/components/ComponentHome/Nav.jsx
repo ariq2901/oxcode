@@ -29,7 +29,7 @@ const Nav = () => {
               </div>
             </li>
             <li><NavLink activeClassName="navbar__link--active" className="navbar__link" to="/about">about us</NavLink></li>
-            <li><NavLink className="btn-nav-login" to="/login">login</NavLink></li>
+            <li className="btn-log"><NavLink className="btn-nav-login" to="/login">login</NavLink></li>
           </ul>
           <div className="menu-toggle">
             <input type="checkbox" onClick={onHamburger}/>

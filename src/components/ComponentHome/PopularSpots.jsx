@@ -3,6 +3,7 @@ import '../../App.css';
 import Bromo from '../../img/bromo.jpg';
 import Waterbom from '../../img/waterbom.jpg';
 import Dufan from '../../img/dufan.jpg';
+import { NavLink } from 'react-router-dom';
 
 class PopularSpots extends Component {
   render() {
@@ -14,7 +15,7 @@ class PopularSpots extends Component {
             <p href="#">view all</p>
           </div>
           <div className="spots-list">
-            <div className="crd">
+            <NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Bromo} alt="bromo img"/>
               </div>
@@ -35,8 +36,8 @@ class PopularSpots extends Component {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">bromo</p>
               </div>
-            </div>
-            <div className="crd">
+            </NavLink>
+            <NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Waterbom} alt="waterbom img"/>
               </div>
@@ -57,8 +58,8 @@ class PopularSpots extends Component {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">jakarta</p>
               </div>
-            </div>
-            <div className="crd">
+            </NavLink>
+            <NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Dufan} alt="dufan img"/>
               </div>
@@ -79,7 +80,7 @@ class PopularSpots extends Component {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">jakarta</p>
               </div>
-            </div>
+            </NavLink>
           </div>
         </div>
       </Fragment>

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import Bromo from '../../img/bromo.jpg';
 import Waterbom from '../../img/waterbom.jpg';
 import Dufan from '../../img/dufan.jpg';
+import {NavLink} from 'react-router-dom';
 // import '../../feature';
 const ListGrid = () => {
   const [gridfilter, setGridfilter] = React.useState(false);
@@ -138,7 +139,7 @@ const ListGrid = () => {
             </div>
           </div>
           <div className={gridfilter ? "main-list-filter" : "main-list"}>
-            <div className="crd">
+            <NavLink className="crd" to="detail">
               <div className="img-wrapper">
                 <img src={Bromo} alt="bromo img"/>
               </div>
@@ -159,8 +160,8 @@ const ListGrid = () => {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">bromo</p>
               </div>
-            </div>
-            <div className="crd">
+            </NavLink>
+            <NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Waterbom} alt="waterbom img"/>
               </div>
@@ -181,8 +182,8 @@ const ListGrid = () => {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">jakarta</p>
               </div>
-            </div>
-            <div className="crd">
+            </NavLink>
+            <NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Dufan} alt="dufan img"/>
               </div>
@@ -203,7 +204,7 @@ const ListGrid = () => {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">jakarta</p>
               </div>
-            </div><div className="crd">
+            </NavLink><NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Bromo} alt="bromo img"/>
               </div>
@@ -224,8 +225,8 @@ const ListGrid = () => {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">bromo</p>
               </div>
-            </div>
-            <div className="crd">
+            </NavLink>
+            <NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Waterbom} alt="waterbom img"/>
               </div>
@@ -246,8 +247,8 @@ const ListGrid = () => {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">jakarta</p>
               </div>
-            </div>
-            <div className="crd">
+            </NavLink>
+            <NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Dufan} alt="dufan img"/>
               </div>
@@ -268,7 +269,7 @@ const ListGrid = () => {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">jakarta</p>
               </div>
-            </div><div className="crd">
+            </NavLink><NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Bromo} alt="bromo img"/>
               </div>
@@ -289,8 +290,8 @@ const ListGrid = () => {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">bromo</p>
               </div>
-            </div>
-            <div className="crd">
+            </NavLink>
+            <NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Waterbom} alt="waterbom img"/>
               </div>
@@ -311,8 +312,8 @@ const ListGrid = () => {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">jakarta</p>
               </div>
-            </div>
-            <div className="crd">
+            </NavLink>
+            <NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Dufan} alt="dufan img"/>
               </div>
@@ -333,7 +334,7 @@ const ListGrid = () => {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">jakarta</p>
               </div>
-            </div><div className="crd">
+            </NavLink><NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Bromo} alt="bromo img"/>
               </div>
@@ -354,8 +355,8 @@ const ListGrid = () => {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">bromo</p>
               </div>
-            </div>
-            <div className="crd">
+            </NavLink>
+            <NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Waterbom} alt="waterbom img"/>
               </div>
@@ -376,8 +377,8 @@ const ListGrid = () => {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">jakarta</p>
               </div>
-            </div>
-            <div className="crd">
+            </NavLink>
+            <NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Dufan} alt="dufan img"/>
               </div>
@@ -398,7 +399,7 @@ const ListGrid = () => {
                 <i class="fas fa-map-marker-alt"></i>
                 <p className="location-name">jakarta</p>
               </div>
-            </div>
+            </NavLink>
           </div>
         </div>
       </div>
