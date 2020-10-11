@@ -126,6 +126,16 @@ const ListGrid = () => {
               </div>
             </div>
             <hr className="line-divider dua"/>
+            <div className="hours-operation">
+              <div className="hours-operation-title">
+                <p>hours of operation</p>
+              </div>
+              <div className="hours-operation-field">
+                <input type="text" name="from-op" id="from-op"/>
+                <div className="field-to"><span>to</span></div>
+                <input type="text" name="to-op" id="to-op"/>
+              </div>
+            </div>
           </div>
           <div className={gridfilter ? "main-list-filter" : "main-list"}>
             <div className="crd">

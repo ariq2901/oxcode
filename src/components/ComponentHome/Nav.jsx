@@ -20,9 +20,11 @@ const Nav = () => {
             <li><NavLink activeClassName="navbar__link--active" className="navbar__link" exact={true} to="/">home</NavLink></li>
             <li><NavLink activeClassName="navbar__link--active" className="navbar__link" to="list-attraction">list attractions</NavLink></li>
             <li className="dropdown">
-              category
+              <label htmlFor="megamenu-check" className="megamenu-check-label">
+                category
+              </label>
               <div className="menu">
-                <input type="checkbox"/>
+                <input type="checkbox" id="megamenu-check"/>
                 <i className="fas fa-chevron-down arrow-bawah"></i>
               </div>
             </li>

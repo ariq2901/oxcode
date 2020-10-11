@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
 
 :root {
+  --white-input: #eef0f58c;
   --white: #e8e9ed;
   --blue: #18172c;
   --green: #00d084;
@@ -29,8 +30,17 @@ body{
   text-transform: lowercase;
 }
 
+button:focus {
+  outline: none;
+  border: none;
+}
+
 p {
   margin-bottom: 0;
+}
+
+label {
+  margin: 0;
 }
 
 section.header {
@@ -66,6 +76,7 @@ nav {
   list-style: none;
   color: #89c0f3;
 }
+
 
 .btn-login-wrapper {
   height: 100%;
@@ -130,6 +141,10 @@ nav {
 }
 
 /* Chevron Menu animation */
+.megamenu-check-label {
+  cursor: pointer;
+}
+
 .arrow-bawah {
   transform-origin: 60% 40%;
 }
@@ -289,6 +304,10 @@ select.select-category option {
   background: var(--blue-primary);
   color: #fff;
   border-radius: 8px;
+}
+
+.btn-search-box:hover {
+  color: #e6f0fa;
 }
 
 .spots-wrapper {
@@ -469,8 +488,7 @@ select.select-category option {
   height: 12px;
   transform: translateY(-50%);
   background: url(./svg/uncheck.svg);
-  color: #828282;
-  filter: invert(57%) sepia(3%) saturate(11%) hue-rotate(343deg) brightness(89%) contrast(95%);
+  filter: invert(74%) sepia(100%) saturate(0%) hue-rotate(70deg) brightness(98%) contrast(95%);
   background-size: 12px 12px;
 }
 
@@ -643,7 +661,7 @@ select.select-category option {
   padding: 3%;
   box-sizing: border-box;
   width: 100%;
-  background-color: var(--white-darker);
+  background-color: var(--white-input);
   border-radius: 10px;
   display: grid;
   align-items: center;
@@ -779,6 +797,47 @@ label .checkmark::after {
 
 .line-divider.dua {
   margin-top: 25%;
+}
+
+.hours-operation {
+  margin-top: 10%;
+}
+
+.hours-operation-title {
+  color: rgba(63, 61, 86, 1);
+  font-weight: 500;
+  font-size: 2.5em;
+}
+
+.hours-operation-field {
+  margin-top: 10%;
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr .5fr 1fr;
+}
+
+.hours-operation-field input {
+  width: 100%;
+  height: 42px;
+  border-radius: 8px;
+  outline: none;
+  border: none;
+  background: var(--white-input);
+  text-align: center;
+  font-size: 1.8em;
+  color: #767676;
+}
+
+.field-to {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.field-to span {
+  font-size: 2em;
+  font-weight: 500;
+  color: var(--blue-primary);
 }
 
 /*^ Responsive Breakpoint */
