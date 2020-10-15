@@ -3,16 +3,49 @@ import Bromo from '../../img/bromo.jpg';
 import Waterbom from '../../img/waterbom.jpg';
 import Dufan from '../../img/dufan.jpg';
 import {NavLink} from 'react-router-dom';
+import Axios from 'axios';
+import {config} from '../../config';
+
 // import '../../feature';
 const ListGrid = () => {
+  const [list, setList] = React.useState([]);
+  const [img, setImg] = React.useState('api/images/');
   const [gridfilter, setGridfilter] = React.useState(false);
+  
+  const getList = async () => {
+    try {
+      const respon = await Axios.get(`${config.api_host}/api/attractions`);
+      // setList(respon.data);
+      setList(respon.data.data);
+    } catch(e) {
+      console.error('error feching data', e);
+    }
+  }
 
+  React.useEffect(() => {
+    getList();
+  }, []);
+
+  
   const handleClick = () => {
     setGridfilter(!gridfilter);
     console.log(gridfilter);
   }
 
-
+  function starLoop(stars) {
+    var tag = [];
+    var i;
+    for( i = 0; i < stars; i++ ) {
+      tag.push(<i class='fas fa-star'></i>);
+    }
+    // console.log(i);
+    if( i < 5 ) {
+      tag.push(<i class="far fa-star"></i>);
+    } else {
+      console.log('pass');
+    }
+    return tag;
+  }
 
   return(
     <Fragment>
@@ -139,50 +172,27 @@ const ListGrid = () => {
             </div>
           </div>
           <div className={gridfilter ? "main-list-filter" : "main-list"}>
-            <NavLink className="crd" to="detail">
-              <div className="img-wrapper">
-                <img src={Bromo} alt="bromo img"/>
-              </div>
-              <div className="title-wrapper">
-                <span>bromo mountain</span>
-              </div>
-              <div className="rate-wrapper">
-                <div className="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
+            {console.log(list)}
+            {list.map((wisata) => 
+              <NavLink className="crd" to="detail">
+                <div className="img-wrapper">
+                  <img src={`${config.api_host}/api/images/${wisata.id}`} alt="bromo img" />
                 </div>
-                <p className="total-reviews">175 reviews</p>
-              </div>
-              <div className="location-wrapper">
-                <i class="fas fa-map-marker-alt"></i>
-                <p className="location-name">bromo</p>
-              </div>
-            </NavLink>
-            <NavLink className="crd" to="/detail">
-              <div className="img-wrapper">
-                <img src={Waterbom} alt="waterbom img"/>
-              </div>
-              <div className="title-wrapper">
-                <span>waterbom jakarta</span>
-              </div>
-              <div className="rate-wrapper">
-                <div className="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star-half-alt"></i>
+                <div className="title-wrapper">
+                  <span>{wisata.name}</span>
                 </div>
-                <p className="total-reviews">340 reviews</p>
-              </div>
-              <div className="location-wrapper">
-                <i class="fas fa-map-marker-alt"></i>
-                <p className="location-name">jakarta</p>
-              </div>
-            </NavLink>
+                <div className="rate-wrapper">
+                  <div className="rating">
+                    {starLoop(wisata.rating)}
+                  </div>
+                  <p className="total-reviews">175 reviews</p>
+                </div>
+                <div className="location-wrapper">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <p className="location-name">{wisata.city}</p>
+                </div>
+              </NavLink>
+            )}
             <NavLink className="crd" to="/detail">
               <div className="img-wrapper">
                 <img src={Dufan} alt="dufan img"/>
