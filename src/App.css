@@ -637,7 +637,7 @@ select.select-category option {
 }
 
 .spots-wrapper.listpage {
-  padding: 2.5% 0 2.5% 0;
+  padding: 2.5% 0 10% 0;
 }
 
 .list-title {
@@ -2263,4 +2263,110 @@ h1.title {
   font-weight: 500;
   color: rgba(63, 61, 86, 0.7);
   font-size: 1.5em;
+}
+
+/*^ Footer */
+section.footer {
+  background-color: #096bc5;
+}
+
+.footer-wrapper {
+  width: 100vw;
+  height: 50vh;
+  padding-top: 4%;
+  width: 100%;
+}
+
+.social-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.s-media img {
+  width: 30px;
+  height: 30px;
+}
+
+.social-box a:not(:last-child) {
+  margin-right: 1.2%;
+}
+
+.page-boxaj{
+  margin-top: 3%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-link {
+  font-weight: 300;
+  font-size: 1.3em;
+  color: #e2e2e2;
+}
+
+.list-link:hover {
+  text-decoration: none;
+  color: #66f7e8;
+}
+
+.list-link:not(:last-child) {
+  margin-right: 5%;
+}
+
+.address-title {
+  margin-top: 3.5%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-weight: 300;
+  font-size: 1.3em;
+  color: #e2e2e2;
+}
+
+.address-box {
+  padding: 0 26%;
+  margin-top: 1%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  color: #E5E5E5;
+  font-weight: 300;
+  font-size: 1.3em;
+}
+
+.address-box i {
+  font-size: 1.4em;
+  margin-right: 1%;
+}
+
+.copyright {
+  bottom: 0;
+  margin-top: 6%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copyright p{
+  color: #ddd;
+  font-size: 1.1em;
+}
+
+.cptlz-text {
+  text-transform: capitalize !important;
+}
+
+.copyright .c-brand {
+  margin-left: .5%;
+  color: #66f7e8;
+}
+
+.copyright .last-p {
+  margin-left: .5%;
 }

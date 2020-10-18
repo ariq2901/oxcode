@@ -1,4 +1,5 @@
 import React, { Fragment, useRef } from 'react';
+import Footer from './components/Footer';
 
 const Detail = (props) => {
 
@@ -223,6 +224,7 @@ const Detail = (props) => {
           </div>
         </div>
       </div>
+      <Footer />
       <div className="modal" ref={modalRef}>
         <div className="modal-content">
           <div className="modal-header">

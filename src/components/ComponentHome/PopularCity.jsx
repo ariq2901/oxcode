@@ -32,7 +32,7 @@ const PopularCity = () => {
     var n;
     for( n = 0; n < jumlah; n++ ) {
       skeleton.push(
-        <div className="crd loading">
+        <div className="crd">
           <div className="img-wrapper loading"></div>
           <div className="title-wrapper loading">
             <span></span>

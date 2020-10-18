@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import Board from './ComponentAbout/Board';
 import AboutMain from './ComponentAbout/AboutMain';
+import Footer from './Footer';
 
 const About = () => {
   return(
@@ -19,6 +20,7 @@ const About = () => {
           </div>
         </div>
       </section>
+      <Footer/>
     </Fragment>
   );
 }

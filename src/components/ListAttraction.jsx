@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import Board from './ComponentList/Board';
 import ListGrid from './ComponentList/ListGrid';
+import Footer from './Footer';
 
 const ListAttraction = () => {
   return(
@@ -19,6 +20,7 @@ const ListAttraction = () => {
           </div>
         </div>
       </section>
+      <Footer/>
     </Fragment>
   );
 }
