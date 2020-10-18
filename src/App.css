@@ -43,6 +43,109 @@ label {
   margin: 0;
 }
 
+nav > .megamenu {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  height: 400px;
+  opacity: 1;
+  background-color: #fff;
+  transition: all .5s;
+}
+
+nav > .megamenu-hidden {
+  position: absolute;
+  width: 100%;
+  top: -100%;
+  opacity: 0;
+  transition: all .5s;
+}
+
+.megamenu-title {
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.p-categories {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 20px;
+}
+
+.popular-title, .popular-searches {
+  font-weight: 500;
+  font-size: 2em;
+  color: rgba(63, 61, 86, 0.7);
+}
+
+.popular-link {
+  font-weight: 300;
+  font-size: 1.4em;
+  color: #439CEF;
+}
+
+.megamenu-main {
+  margin-top: 3%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr .4fr;
+  grid-column-gap: 30%;
+}
+
+.category-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-row-gap: 30px;
+  cursor: pointer;
+}
+
+.category-wrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: .5fr 1fr;
+  grid-column-gap: 2%;
+  align-items: center;
+}
+
+.category-wrapper img {
+  width: 70%;
+}
+
+.category-wrapper p {
+  font-weight: 300;
+  font-size: 1.6em;
+  color: rgba(63, 61, 86, 1);
+}
+
+.search-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: 5%;
+}
+
+.search-wrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: .2fr  1fr;
+  align-items: center;
+}
+
+.search-wrapper i {
+  font-size: 2em;
+  color: rgba(67, 156, 239, 1);
+}
+
+.search-wrapper p {
+  font-weight: 300;
+  font-size: 1.7em;
+  color: rgba(63, 61, 86, 0.7);
+}
+
 
 
 section.header {
@@ -66,9 +169,13 @@ nav {
   transition: all .3s ease-out;
 }
 
-.nav-scrolled {
-  /* padding: 20px; */
-  padding: 0 120px;
+.nav-white {
+  background-color: #fff;
+}
+
+#root > nav.nav-scrolled {
+  /* padding: 20px;
+  padding: 0 120px; */
   min-height: 11vh;
   font-size: 1.06em;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
@@ -90,6 +197,7 @@ nav {
 }
 
 .nav-links li {
+  z-index: 5;
   list-style: none;
   color: #89c0f3;
 }
@@ -2035,6 +2143,8 @@ h1.title {
 }
 
 .map-contact {
+  outline: unset !important;
+  border: unset !important;
   width: 100%;
   height: 100%;
 }
@@ -2063,6 +2173,10 @@ h1.title {
   display: flex;
   width: 100%;
   align-items: center;
+}
+
+.social-media a:hover {
+  text-decoration: none;
 }
 
 .social-media .icon-svg {
