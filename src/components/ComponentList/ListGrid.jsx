@@ -8,24 +8,82 @@ import {config} from '../../config';
 
 // import '../../feature';
 const ListGrid = () => {
+  const [loading, setLoading] = React.useState(false);
   const [list, setList] = React.useState([]);
-  const [img, setImg] = React.useState('api/images/');
   const [gridfilter, setGridfilter] = React.useState(false);
   
   const getList = async () => {
     try {
+      setLoading(true);
       const respon = await Axios.get(`${config.api_host}/api/attractions`);
       // setList(respon.data);
       setList(respon.data.data);
+      setLoading(false)
     } catch(e) {
       console.error('error feching data', e);
     }
   }
 
+  
   React.useEffect(() => {
     getList();
   }, []);
+  
+  function skeletonCard(jumlah) {
+    const skeleton = [];
+    var n;
+    for( n = 0; n < jumlah; n++ ) {
+      skeleton.push(
+        <div className="crd loading">
+          <div className="img-wrapper loading"></div>
+          <div className="title-wrapper loading">
+            <span></span>
+          </div>
+          <div className="rate-wrapper loading">
+            <div className="rating"></div>
+            <p className="total-reviews"></p>
+          </div>
+          <div className="location-wrapper loading">
+            <i class="fas fa-map-marker-alt"></i>
+            <p className="location-name"></p>
+          </div>
+        </div>
+      )
+    }
+    return skeleton;
+  }
 
+  function dummyCard(jumlah) {
+    const skeleton = [];
+    var t;
+    for( t = 0; t < jumlah; t++ ) {
+      skeleton.push(
+        <NavLink className="crd" to="/detail">
+          <div className="img-wrapper">
+            <img src={Dufan} alt="dufan img"/>
+          </div>
+          <div className="title-wrapper">
+            <span>dunia fantasi</span>
+          </div>
+          <div className="rate-wrapper">
+            <div className="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p className="total-reviews">439 reviews</p>
+          </div>
+          <div className="location-wrapper">
+            <i class="fas fa-map-marker-alt"></i>
+            <p className="location-name">jakarta</p>
+          </div>
+        </NavLink>
+      )
+    }
+    return skeleton;
+  }
   
   const handleClick = () => {
     setGridfilter(!gridfilter);
@@ -172,244 +230,35 @@ const ListGrid = () => {
             </div>
           </div>
           <div className={gridfilter ? "main-list-filter" : "main-list"}>
-            {console.log(list)}
-            {list.map((wisata) => 
-              <NavLink className="crd" to="detail">
-                <div className="img-wrapper">
-                  <img src={`${config.api_host}/api/images/${wisata.id}`} alt="bromo img" />
-                </div>
-                <div className="title-wrapper">
-                  <span>{wisata.name}</span>
-                </div>
-                <div className="rate-wrapper">
-                  <div className="rating">
-                    {starLoop(wisata.rating)}
-                  </div>
-                  <p className="total-reviews">175 reviews</p>
-                </div>
-                <div className="location-wrapper">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <p className="location-name">{wisata.city}</p>
-                </div>
-              </NavLink>
+            {loading ? (
+              <Fragment>
+                {skeletonCard(6)}
+              </Fragment>
+            ) : (
+              <Fragment>
+                {list.map((wisata) => 
+                  <NavLink className="crd" to="detail">
+                    <div className="img-wrapper">
+                      <img src={`${config.api_host}/api/images/${wisata.id}`} alt="bromo img" />
+                    </div>
+                    <div className="title-wrapper">
+                      <span>{wisata.name}</span>
+                    </div>
+                    <div className="rate-wrapper">
+                      <div className="rating">
+                        {starLoop(wisata.rating)}
+                      </div>
+                      <p className="total-reviews">175 reviews</p>
+                    </div>
+                    <div className="location-wrapper">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <p className="location-name">{wisata.city}</p>
+                    </div>
+                  </NavLink>
+                )}
+                {dummyCard(10)}
+              </Fragment>
             )}
-            <NavLink className="crd" to="/detail">
-              <div className="img-wrapper">
-                <img src={Dufan} alt="dufan img"/>
-              </div>
-              <div className="title-wrapper">
-                <span>dunia fantasi</span>
-              </div>
-              <div className="rate-wrapper">
-                <div className="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p className="total-reviews">439 reviews</p>
-              </div>
-              <div className="location-wrapper">
-                <i class="fas fa-map-marker-alt"></i>
-                <p className="location-name">jakarta</p>
-              </div>
-            </NavLink><NavLink className="crd" to="/detail">
-              <div className="img-wrapper">
-                <img src={Bromo} alt="bromo img"/>
-              </div>
-              <div className="title-wrapper">
-                <span>bromo mountain</span>
-              </div>
-              <div className="rate-wrapper">
-                <div className="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p className="total-reviews">175 reviews</p>
-              </div>
-              <div className="location-wrapper">
-                <i class="fas fa-map-marker-alt"></i>
-                <p className="location-name">bromo</p>
-              </div>
-            </NavLink>
-            <NavLink className="crd" to="/detail">
-              <div className="img-wrapper">
-                <img src={Waterbom} alt="waterbom img"/>
-              </div>
-              <div className="title-wrapper">
-                <span>waterbom jakarta</span>
-              </div>
-              <div className="rate-wrapper">
-                <div className="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                </div>
-                <p className="total-reviews">340 reviews</p>
-              </div>
-              <div className="location-wrapper">
-                <i class="fas fa-map-marker-alt"></i>
-                <p className="location-name">jakarta</p>
-              </div>
-            </NavLink>
-            <NavLink className="crd" to="/detail">
-              <div className="img-wrapper">
-                <img src={Dufan} alt="dufan img"/>
-              </div>
-              <div className="title-wrapper">
-                <span>dunia fantasi</span>
-              </div>
-              <div className="rate-wrapper">
-                <div className="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p className="total-reviews">439 reviews</p>
-              </div>
-              <div className="location-wrapper">
-                <i class="fas fa-map-marker-alt"></i>
-                <p className="location-name">jakarta</p>
-              </div>
-            </NavLink><NavLink className="crd" to="/detail">
-              <div className="img-wrapper">
-                <img src={Bromo} alt="bromo img"/>
-              </div>
-              <div className="title-wrapper">
-                <span>bromo mountain</span>
-              </div>
-              <div className="rate-wrapper">
-                <div className="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p className="total-reviews">175 reviews</p>
-              </div>
-              <div className="location-wrapper">
-                <i class="fas fa-map-marker-alt"></i>
-                <p className="location-name">bromo</p>
-              </div>
-            </NavLink>
-            <NavLink className="crd" to="/detail">
-              <div className="img-wrapper">
-                <img src={Waterbom} alt="waterbom img"/>
-              </div>
-              <div className="title-wrapper">
-                <span>waterbom jakarta</span>
-              </div>
-              <div className="rate-wrapper">
-                <div className="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                </div>
-                <p className="total-reviews">340 reviews</p>
-              </div>
-              <div className="location-wrapper">
-                <i class="fas fa-map-marker-alt"></i>
-                <p className="location-name">jakarta</p>
-              </div>
-            </NavLink>
-            <NavLink className="crd" to="/detail">
-              <div className="img-wrapper">
-                <img src={Dufan} alt="dufan img"/>
-              </div>
-              <div className="title-wrapper">
-                <span>dunia fantasi</span>
-              </div>
-              <div className="rate-wrapper">
-                <div className="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p className="total-reviews">439 reviews</p>
-              </div>
-              <div className="location-wrapper">
-                <i class="fas fa-map-marker-alt"></i>
-                <p className="location-name">jakarta</p>
-              </div>
-            </NavLink><NavLink className="crd" to="/detail">
-              <div className="img-wrapper">
-                <img src={Bromo} alt="bromo img"/>
-              </div>
-              <div className="title-wrapper">
-                <span>bromo mountain</span>
-              </div>
-              <div className="rate-wrapper">
-                <div className="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p className="total-reviews">175 reviews</p>
-              </div>
-              <div className="location-wrapper">
-                <i class="fas fa-map-marker-alt"></i>
-                <p className="location-name">bromo</p>
-              </div>
-            </NavLink>
-            <NavLink className="crd" to="/detail">
-              <div className="img-wrapper">
-                <img src={Waterbom} alt="waterbom img"/>
-              </div>
-              <div className="title-wrapper">
-                <span>waterbom jakarta</span>
-              </div>
-              <div className="rate-wrapper">
-                <div className="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                </div>
-                <p className="total-reviews">340 reviews</p>
-              </div>
-              <div className="location-wrapper">
-                <i class="fas fa-map-marker-alt"></i>
-                <p className="location-name">jakarta</p>
-              </div>
-            </NavLink>
-            <NavLink className="crd" to="/detail">
-              <div className="img-wrapper">
-                <img src={Dufan} alt="dufan img"/>
-              </div>
-              <div className="title-wrapper">
-                <span>dunia fantasi</span>
-              </div>
-              <div className="rate-wrapper">
-                <div className="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p className="total-reviews">439 reviews</p>
-              </div>
-              <div className="location-wrapper">
-                <i class="fas fa-map-marker-alt"></i>
-                <p className="location-name">jakarta</p>
-              </div>
-            </NavLink>
           </div>
         </div>
       </div>

@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import {NavLink} from 'react-router-dom';
 import '../../App.css';
-import Groupone from '../../img/icon/groupone.png';
 import Axios from 'axios';
 import { config } from '../../config';
+import Loader from 'react-loader-spinner';
 
 const Nav = () => {
+  const [loading, setLoading] = React.useState(false);
   const [category, setCategory] = React.useState([]);
   const [megamenu, SetMegamenu] = React.useState(false);
   const [navbar, setNavbar] = React.useState(false);
@@ -13,39 +14,19 @@ const Nav = () => {
 
   const getCategory = async () => {
     try {
+      setLoading(true);
       const respon = await Axios.get(`${config.api_host}/api/categories`);
       // setList(respon.data);
       setCategory(respon.data.data);
-      
+      setLoading(false);
     } catch(e) {
       console.error('error feching data', e);
     }
   }
 
-  // const getImageById = () => {
-  //   try {
-  // }
-  // catch(e) {
-  //   console.error('error fetching', e);
-  // }
-  //   // console.log('calist', calist);
-  //   // console.log('categories ', category);
-  // }
-
-  // const getImage = () => {
-  //   const imageMap = category.map((item) => item.image);
-  //   const image = imageMap.map((icon) => icon.id);
-  //   const imageData = category.map((data) => data.push(image));
-  //   // console.log('image', image);
-  //   // imageData.push(image);
-  //   console.log('category final', imageData);
-  // }
-  
   React.useEffect(() => {
     getCategory();
   }, []);
-
-
   
   const changeNavbar = () => {
     if(window.scrollY >= 80) {
@@ -106,7 +87,11 @@ const Nav = () => {
               </div>
             </div>
             <div className="megamenu-main">
-              {console.log(category)}
+              {loading ? (
+                <div className="loader-category">
+                  <Loader type="ThreeDots" color="#439CEF" height="80" width="80" />
+                </div>
+              ) : (
               <div className="category-list">
               {category.map((item) => 
                 <div className="category-wrapper">
@@ -115,6 +100,7 @@ const Nav = () => {
                 </div>
               )}
               </div>
+              )}
               <div className="search-list">
                 <div className="search-wrapper">
                   <i class="fas fa-search"></i>
