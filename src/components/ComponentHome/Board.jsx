@@ -1,15 +1,14 @@
 import React, { Fragment, Component } from 'react';
 import WorldMap from '../../img/home/worldmap.png';
+import Typical from 'react-typical';
 import '../../App.css';
 
 const Board = () => {
-
   return(
     <Fragment>
       <div className="wrapper">
         <div className="slogant">
-          <p className="big-title">find your</p>
-          <p className="big-title">destination</p>
+          <p className="big-title"><Typical steps={[`find your destination`, 10000, 'find your exploration', 10000, 'find your happiness', 10000]} loop={1} wrapper="p"/></p>
           <p className="slogant-title">this is the start of your journey, don't let other people hold your move. get your own way</p>
         </div>
         <div className="worldmap-img">

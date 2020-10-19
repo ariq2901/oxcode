@@ -7,7 +7,7 @@ import Axios from 'axios';
 import {config} from '../../config';
 
 // import '../../feature';
-const ListGrid = () => {
+const ListGrid = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [list, setList] = React.useState([]);
   const [gridfilter, setGridfilter] = React.useState(false);
@@ -15,7 +15,14 @@ const ListGrid = () => {
   const getList = async () => {
     try {
       setLoading(true);
-      const respon = await Axios.get(`${config.api_host}/api/attractions`);
+      console.log('props list-grid ', props.type);
+      if(props.type) {
+        var respon = await Axios.get(`${config.api_host}/api/${props.type}/attractions`);
+        console.log('bypopular', respon);
+      } else {
+        var respon = await Axios.get(`${config.api_host}/api/attractions`);
+        console.log('bygeneral', respon);
+      }
       // setList(respon.data);
       setList(respon.data.data);
       setLoading(false)
@@ -44,7 +51,6 @@ const ListGrid = () => {
             <p className="total-reviews"></p>
           </div>
           <div className="location-wrapper loading">
-            <i class="fas fa-map-marker-alt"></i>
             <p className="location-name"></p>
           </div>
         </div>
@@ -251,12 +257,11 @@ const ListGrid = () => {
                       <p className="total-reviews">175 reviews</p>
                     </div>
                     <div className="location-wrapper">
-                      <i class="fas fa-map-marker-alt"></i>
+                      {loading ? '' : <i class="fas fa-map-marker-alt"></i>}
                       <p className="location-name">{wisata.city}</p>
                     </div>
                   </NavLink>
                 )}
-                {dummyCard(10)}
               </Fragment>
             )}
           </div>

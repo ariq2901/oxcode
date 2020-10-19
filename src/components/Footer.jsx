@@ -46,7 +46,7 @@ const Footer = () => {
                 <NavLink className="list-link" to="/list-attraction">
                   <p>list attraction</p>
                 </NavLink>
-                <NavLink className="list-link" to="/home">
+                <NavLink className="list-link" to="/" exact>
                   <p>home</p>
                 </NavLink>
                 <NavLink className="list-link" to="/login">

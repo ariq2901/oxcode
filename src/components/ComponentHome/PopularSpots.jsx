@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Axios from 'axios';
 import {config} from '../../config';
 import '../../App.css';
+import Listgrid from '../ComponentList/ListGrid';
 
 const PopularSpots = () => {
   const [loading, setLoading] = React.useState(false);
@@ -39,7 +40,6 @@ const PopularSpots = () => {
             <p className="total-reviews"></p>
           </div>
           <div className="location-wrapper loading">
-            <i class="fas fa-map-marker-alt"></i>
             <p className="location-name"></p>
           </div>
         </div>
@@ -67,8 +67,8 @@ const PopularSpots = () => {
     <Fragment>
       <div className="spots-wrapper">
         <div className="spots-title">
-          <span>most popular tourist spots</span>
-          <p href="#">view all</p>
+          <span className="s-title">most popular tourist spots</span>
+          <Link className="s-view" to={'list-attraction/popular'}>view all<span><i class="fas fa-arrow-right"></i></span></Link>
         </div>
         <div className="spots-list">
         {loading ? (
@@ -77,10 +77,10 @@ const PopularSpots = () => {
               </Fragment>
             ) : (
               <Fragment>
-              {list.map((wisata) =>
+              {list.slice(0, 3).map((wisata) =>
                 <NavLink className="crd" to="/detail">
                   <div className="img-wrapper">
-                  <img src={`${config.api_host}/api/images/${wisata.id}`} alt="bromo img" />
+                  <img src={`${config.api_host}/api/images/${wisata.id}`} alt="img" />
                   </div>
                   <div className="title-wrapper">
                     <span>{wisata.name}</span>

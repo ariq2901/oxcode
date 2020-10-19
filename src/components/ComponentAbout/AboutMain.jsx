@@ -21,7 +21,7 @@ const AboutMain = () => {
         </div>
         <div className="started-text" data-aos="fade-up" data-aos-delay="300">
           <p>
-            blabla is a trusted travel agent who has been in the field for almost 12 years,
+            <span>Skytours</span> is a trusted travel agency who has been in the field for almost 12 years,
             this company was founded by daffa rabbanee who has experience in the field of 
             travel services in his career. Now our main goal is to provide the best travel 
             services for each of our customers.

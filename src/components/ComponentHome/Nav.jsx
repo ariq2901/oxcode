@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import {NavLink} from 'react-router-dom';
-import '../../App.css';
+import Skytours from '../../img/logo/logo.png';
 import Axios from 'axios';
 import { config } from '../../config';
 import Loader from 'react-loader-spinner';
+import '../../App.css';
 
 const Nav = () => {
   const [loading, setLoading] = React.useState(false);
@@ -52,6 +53,10 @@ const Nav = () => {
       <nav className={ navbar ? 'nav-scrolled' : megamenu ? 'nav-white' : ''}>
         <div className="container">
           <div className="row row-nav">
+            <div className="nav-logo">
+              <img src={Skytours} alt="skytours" />
+              <span>Skytours</span>
+            </div>
             <ul className={hamburger ? "nav-links slide" : "nav-links"}>
               <li><NavLink activeClassName="navbar__link--active" className="navbar__link" exact={true} to="/">home</NavLink></li>
               <li><NavLink activeClassName="navbar__link--active" className="navbar__link" to="list-attraction">list attractions</NavLink></li>
@@ -103,19 +108,19 @@ const Nav = () => {
               )}
               <div className="search-list">
                 <div className="search-wrapper">
-                  <i class="fas fa-search"></i>
+                  <i className="fas fa-search"></i>
                   <p>bromo</p>
                 </div>
                 <div className="search-wrapper">
-                  <i class="fas fa-search"></i>
+                  <i className="fas fa-search"></i>
                   <p>dufan</p>
                 </div>
                 <div className="search-wrapper">
-                  <i class="fas fa-search"></i>
+                  <i className="fas fa-search"></i>
                   <p>ancol</p>
                 </div>
                 <div className="search-wrapper">
-                  <i class="fas fa-search"></i>
+                  <i className="fas fa-search"></i>
                   <p>taman safari</p>
                 </div>
               </div>

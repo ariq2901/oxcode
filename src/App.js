@@ -14,7 +14,7 @@ function App() {
       <Nav />
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/list-attraction" component={ListAttraction} />
+        <Route path="/list-attraction/:type?" component={ListAttraction} />
         <Route path="/about" component={About} />
         <Route path="/detail" component={Detail}/>
       </Switch>

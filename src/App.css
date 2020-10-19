@@ -173,7 +173,8 @@ section.header {
 }
 
 .row.row-nav {
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
 }
 
 nav {
@@ -204,6 +205,25 @@ nav {
 
 .navigation.active {
   color: var(--blue-primary);
+}
+
+.nav-logo {
+  display: flex;
+  width: 80px;
+  padding: 0;
+  align-items: center;
+}
+
+.nav-logo img {
+  vertical-align: middle;
+  max-width: 50%;
+}
+
+.nav-logo span {
+  text-transform: capitalize;
+  margin-left: 8%;
+  font-size: 1.7em;
+  color: #174979;
 }
 
 .nav-links {
@@ -313,11 +333,16 @@ i.arrow-bawah {
   font-size: 6.4em;
 }
 
+.styles_typicalWrapper__1_Uvh::after {
+  font-weight: 100;
+}
+
 .slogant-title {
   margin-top: 5%;
   font-size: 1.7em;
   color: #89c0f3;
 }
+
 .search-box {
   display: flex;
   align-items: center;
@@ -466,16 +491,41 @@ select.select-category option {
   align-items: center;
 }
 
-.spots-title span {
+.spots-title .s-title {
   font-size: 2.8em;
   font-weight: 500;
   color: #292929;
 }
 
-.spots-title p {
+.spots-title .s-view {
+  position: relative;
   font-size: 1.8em;
   color: #767676;
-  margin: 0 !important;
+  margin: 0;
+  transition: margin .5s;
+  text-decoration: none;
+}
+
+.s-view span {
+  position: absolute;
+  left: 50%;
+  visibility: hidden;
+  opacity: 0;
+  transition: all .5s;
+}
+
+.s-view:hover span {
+  position: absolute;
+  left: 105%;
+  visibility: visible;
+  opacity: 1;
+  transition: all .5s;
+}
+
+.spots-title .s-view:hover {
+  margin-right: 1%;
+  transition: margin .5s;
+  text-decoration: none;
 }
 
 .spots-list {
@@ -538,6 +588,7 @@ select.select-category option {
   background: linear-gradient(90deg, transparent, 
             rgba(255, 255, 255, 0.2), transparent);
   animation: loading 0.8s infinite;
+  z-index: 15;
 }
 
 @keyframes loading {
@@ -597,6 +648,7 @@ select.select-category option {
 .location-wrapper.loading {
   width: 40%;
   height: 10%;
+  z-index: 15px;
 }
 
 .location-wrapper i {
@@ -617,10 +669,24 @@ select.select-category option {
   padding-bottom: 15%;
 }
 
+/* .desc-city {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; */
+/* } */
+
 .desc-city p{
   padding-top: 2%;
   font-size: 1.7em;
-  color: rgb(106, 106, 106);;
+  color: rgb(106, 106, 106);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -moz-line-clamp: 3;
+  -ms-line-clamp: 3;
+  -o-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 
@@ -1052,6 +1118,7 @@ label .checkmark::after {
 /*! Hamburger menu */
 .menu-toggle {
   display: none;
+  visibility: hidden;
   padding-right: 5%;
   flex-direction: column;
   height: 20px;
@@ -1271,6 +1338,10 @@ label .checkmark::after {
     position: unset;
   }
 
+  .nav-logo {
+    padding: 2%;
+  }
+
   .nav-links {
     width: 68%;
     padding-top: 15%;
@@ -1304,6 +1375,7 @@ label .checkmark::after {
   }
 
   .menu-toggle {
+    visibility: visible;
     display: flex;
   }
 
@@ -1334,11 +1406,12 @@ label .checkmark::after {
     align-items: center;
   }
 
+  
   .vl {
     visibility: hidden;
     display: none;
   }
-
+  
   .anywhere, .category-search-box {
     visibility: hidden;
     display: none;
@@ -1348,11 +1421,29 @@ label .checkmark::after {
     width: 20%;
     margin-right: 1%;
   }
-
+  
   section.main {
     padding: 0 2% 10% 2%;
   }
   
+  .spots-title .s-title {
+    font-size: 2em;
+  }
+
+  .spots-title .s-view:hover {
+    margin-right: 4%;
+    transition: margin .5s;
+    text-decoration: none;
+  }
+
+  .rate-wrapper {
+    width: 100%;
+    margin-top: 2.3%;
+    display: flex;
+    align-items: center;
+    padding-left: 4%;
+  }
+
   .grid-filter {
     /* active filter grid awal */
     grid-template-columns: 1fr 1fr;
@@ -1423,6 +1514,27 @@ label .checkmark::after {
 
   .slogant-title {
     font-size: 1.6em;
+  }
+
+  .address-box {
+    padding: 0;
+    margin-top: 1%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: #E5E5E5;
+    font-weight: 300;
+    font-size: 1.2em;
+  }
+
+  .footer-wrapper {
+    width: 100vw;
+    height: 55vh !important;
+    padding-top: 4%;
+    width: 100%;
   }
 
 }
@@ -2163,6 +2275,10 @@ h1.title {
   color: rgba(63, 61, 86, 0.7);
 }
 
+.started-text span {
+  text-transform: capitalize;
+}
+
 .our-team-title {
   width: 100%;
   margin: 8% 0 4% 0;
@@ -2317,7 +2433,7 @@ section.footer {
 }
 
 .address-title {
-  margin-top: 3.5%;
+  margin-top: 5%;
   display: flex;
   width: 100%;
   justify-content: center;

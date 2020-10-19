@@ -5,7 +5,7 @@ import Bali from '../../img/bali.jpg';
 import Axios from 'axios';
 import {config} from '../../config';
 import '../../App.css';
-import {NavLink} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 
 const PopularCity = () => {
   const [loading, setLoading] = React.useState(false);
@@ -42,7 +42,6 @@ const PopularCity = () => {
             <p className="total-reviews"></p>
           </div>
           <div className="location-wrapper loading">
-            <i class="fas fa-map-marker-alt"></i>
             <p className="location-name"></p>
           </div>
         </div>
@@ -55,8 +54,8 @@ const PopularCity = () => {
     <Fragment>
       <div className="city-wrapper">
         <div className="spots-title">
-          <span>most popular city</span>
-          <p href="#">view all</p>
+          <span className="s-title">most popular city</span>
+          <Link className="s-view" to={'list-attraction/popular'}>view all<span><i class="fas fa-arrow-right"></i></span></Link>
         </div>
         <div className="spots-list">
           {loading ? (
@@ -73,7 +72,7 @@ const PopularCity = () => {
                   <span>{kota.name}</span>
                 </div>
                 <div className="desc-city">
-                  <p>{kota.description.slice(0, 88)}</p>
+                  <p>{kota.description}</p>
                 </div>
               </NavLink>
             )
