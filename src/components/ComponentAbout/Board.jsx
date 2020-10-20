@@ -1,22 +1,11 @@
-import React, { Fragment, Component } from 'react';
-import WorldMap from '../../img/home/worldmap.png';
-import Typical from 'react-typical';
-import '../../App.css';
+import React, { Fragment } from 'react';
+import AbS from '../../svg/travel.svg';
 
 const Board = () => {
   return(
     <Fragment>
-      <div className="wrapper">
-        <div className="slogant">
-          <p className="big-title"><Typical steps={[`find your destination`, 10000, 'find your exploration', 10000, 'find your happiness', 10000]} loop={Infinity} wrapper="p"/></p>
-          <p className="slogant-title">this is the start of your journey, don't let other people hold your move. get your own way</p>
-        </div>
-        <div className="worldmap-img">
-          <img src={WorldMap} alt="worldmap image"/>
-        </div>
-      </div>
       <div className="search-box-wrapper">
-        <div className="search-box">
+        <div className="search-box list-page">
           <div className="find">
             <i class="fas fa-search"></i>
             <input type="text" name="search" placeholder="what you would like to find?"/>
@@ -39,8 +28,19 @@ const Board = () => {
           <button type="submit" className="btn-search-box">search</button>
         </div>
       </div>
+      <div className="about-us">
+        <div className="about-title-wrapper">
+          <p className="about-title">about us</p>
+          <p className="about-text">
+            as a trusted travel agency, we aim to satisfy our customers by providing the utmost best service.
+            we believe that everything we do for you will be a new experience in enjoying your whole journey which is very enjoyable.
+          </p>
+        </div>
+        <div className="about-image-svg">
+          <img src={AbS} alt="teamwork" />
+        </div>
+      </div>
     </Fragment>
   );
 }
-
 export default Board;

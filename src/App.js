@@ -13,6 +13,7 @@ function App() {
   return (
     <Router>
       <Switch>
+<<<<<<< HEAD
         <Route path='/login' component={Login} />
         <Nav>
           <Route path="/" exact component={Home} />
@@ -20,6 +21,12 @@ function App() {
           <Route path="/about" component={About} />
           <Route path="/detail" component={Detail} />
         </Nav>
+=======
+        <Route path="/" exact component={Home} />
+        <Route path="/list-attraction/:type?" component={ListAttraction} />
+        <Route path="/about" component={About} />
+        <Route path="/detail" component={Detail}/>
+>>>>>>> de57c3a63d96caac7becf1e4fde312e6230a62dc
       </Switch>
 
     </Router>

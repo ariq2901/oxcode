@@ -1,12 +1,9 @@
-import React, { Component, Fragment } from 'react';
-import Nav from './ComponentHome/Nav';
+import React, { Fragment } from 'react';
 import Board from './ComponentHome/Board';
 import PopularSpots from './ComponentHome/PopularSpots';
 import PopularCity from './ComponentHome/PopularCity';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-// import ListAttraction from './ListAttraction';
 import '../App.css';
-import ListAttraction from './ListAttraction';
+import Footer from './Footer';
 
 const Home = () => {
   return(
@@ -28,6 +25,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </Fragment>
   );
 }

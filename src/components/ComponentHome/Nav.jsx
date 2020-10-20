@@ -1,12 +1,42 @@
 import React, { Component, Fragment } from 'react';
+<<<<<<< HEAD
 import { NavLink } from 'react-router-dom';
 import '../../App.css';
 
 
 const Nav = ({ children }) => {
+=======
+import {NavLink} from 'react-router-dom';
+import Skytours from '../../img/logo/logo.png';
+import Axios from 'axios';
+import { config } from '../../config';
+import Loader from 'react-loader-spinner';
+import '../../App.css';
+
+const Nav = () => {
+  const [loading, setLoading] = React.useState(false);
+  const [category, setCategory] = React.useState([]);
+  const [megamenu, SetMegamenu] = React.useState(false);
+>>>>>>> de57c3a63d96caac7becf1e4fde312e6230a62dc
   const [navbar, setNavbar] = React.useState(false);
   const [hamburger, setHamburger] = React.useState(false);
 
+  const getCategory = async () => {
+    try {
+      setLoading(true);
+      const respon = await Axios.get(`${config.api_host}/api/categories`);
+      // setList(respon.data);
+      setCategory(respon.data.data);
+      setLoading(false);
+    } catch(e) {
+      console.error('error feching data', e);
+    }
+  }
+
+  React.useEffect(() => {
+    getCategory();
+  }, []);
+  
   const changeNavbar = () => {
     if (window.scrollY >= 80) {
       setNavbar(true);
@@ -14,19 +44,31 @@ const Nav = ({ children }) => {
       setNavbar(false);
     }
   }
-
+  
   window.addEventListener('scroll', changeNavbar);
 
   const onHamburger = () => {
-    setHamburger(!hamburger)
-    console.log(hamburger);
+    setHamburger(!hamburger);
   }
 
+<<<<<<< HEAD
   return (
+=======
+  const onMegamenu = () => {
+    SetMegamenu(!megamenu);
+  }
+
+
+  return(
+>>>>>>> de57c3a63d96caac7becf1e4fde312e6230a62dc
     <Fragment>
-      <nav className={navbar ? 'nav-scrolled' : ''}>
+      <nav className={ navbar ? 'nav-scrolled' : megamenu ? 'nav-white' : ''}>
         <div className="container">
           <div className="row row-nav">
+            <div className="nav-logo">
+              <img src={Skytours} alt="skytours" />
+              <span>Skytours</span>
+            </div>
             <ul className={hamburger ? "nav-links slide" : "nav-links"}>
               <li><NavLink activeClassName="navbar__link--active" className="navbar__link" exact={true} to="/">home</NavLink></li>
               <li><NavLink activeClassName="navbar__link--active" className="navbar__link" to="list-attraction">list attractions</NavLink></li>
@@ -35,7 +77,11 @@ const Nav = ({ children }) => {
                   category
                 </label>
                 <div className="menu">
+<<<<<<< HEAD
                   <input type="checkbox" id="megamenu-check" />
+=======
+                  <input type="checkbox" onClick={onMegamenu} id="megamenu-check"/>
+>>>>>>> de57c3a63d96caac7becf1e4fde312e6230a62dc
                   <i className="fas fa-chevron-down arrow-bawah"></i>
                 </div>
               </li>
@@ -47,6 +93,53 @@ const Nav = ({ children }) => {
               <span></span>
               <span></span>
               <span></span>
+            </div>
+          </div>
+        </div>
+        <div className={megamenu ? "megamenu" : "megamenu-hidden"}>
+          <div className="container pt-4">
+            <div className="megamenu-title">
+              <div className="p-categories">
+                <p className="popular-title">popular categories</p>
+                <p className="popular-link">view all</p>
+              </div>
+              <div className="p-searches">
+                <p className="popular-searches">popular searches</p>
+              </div>
+            </div>
+            <div className="megamenu-main">
+              {loading ? (
+                <div className="loader-category">
+                  <Loader type="ThreeDots" color="#439CEF" height="80" width="80" />
+                </div>
+              ) : (
+              <div className="category-list">
+              {category.map((item) => 
+                <div className="category-wrapper">
+                  <img src={`${config.api_host}/api/images/${item.image.id}`} alt="icon" />
+                  <p>{item.name}</p>
+                </div>
+              )}
+              </div>
+              )}
+              <div className="search-list">
+                <div className="search-wrapper">
+                  <i className="fas fa-search"></i>
+                  <p>bromo</p>
+                </div>
+                <div className="search-wrapper">
+                  <i className="fas fa-search"></i>
+                  <p>dufan</p>
+                </div>
+                <div className="search-wrapper">
+                  <i className="fas fa-search"></i>
+                  <p>ancol</p>
+                </div>
+                <div className="search-wrapper">
+                  <i className="fas fa-search"></i>
+                  <p>taman safari</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

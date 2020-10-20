@@ -1,8 +1,11 @@
 import React, { Fragment } from 'react';
+import { useParams } from 'react-router-dom';
 import Board from './ComponentList/Board';
 import ListGrid from './ComponentList/ListGrid';
+import Footer from './Footer';
 
-const ListAttraction = () => {
+const ListAttraction = (props) => {
+  let{ type } = useParams();
   return(
     <Fragment>
       <section className="header">
@@ -15,10 +18,11 @@ const ListAttraction = () => {
       <section className="main">
         <div className="container">
           <div className="row">
-            <ListGrid />
+            <ListGrid type={type}/>
           </div>
         </div>
       </section>
+      <Footer/>
     </Fragment>
   );
 }
