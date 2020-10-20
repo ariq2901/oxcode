@@ -1,14 +1,14 @@
 import React, { Component, Fragment } from 'react';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import '../../App.css';
 
 
-const Nav = () => {
+const Nav = ({ children }) => {
   const [navbar, setNavbar] = React.useState(false);
   const [hamburger, setHamburger] = React.useState(false);
 
   const changeNavbar = () => {
-    if(window.scrollY >= 80) {
+    if (window.scrollY >= 80) {
       setNavbar(true);
     } else {
       setNavbar(false);
@@ -22,7 +22,7 @@ const Nav = () => {
     console.log(hamburger);
   }
 
-  return(
+  return (
     <Fragment>
       <nav className={navbar ? 'nav-scrolled' : ''}>
         <div className="container">
@@ -35,7 +35,7 @@ const Nav = () => {
                   category
                 </label>
                 <div className="menu">
-                  <input type="checkbox" id="megamenu-check"/>
+                  <input type="checkbox" id="megamenu-check" />
                   <i className="fas fa-chevron-down arrow-bawah"></i>
                 </div>
               </li>
@@ -43,7 +43,7 @@ const Nav = () => {
               <li className="btn-log"><NavLink className="btn-nav-login" to="/login">login</NavLink></li>
             </ul>
             <div className="menu-toggle">
-              <input type="checkbox" onClick={onHamburger}/>
+              <input type="checkbox" onClick={onHamburger} />
               <span></span>
               <span></span>
               <span></span>
@@ -51,6 +51,7 @@ const Nav = () => {
           </div>
         </div>
       </nav>
+      {children}
     </Fragment>
   );
 }
