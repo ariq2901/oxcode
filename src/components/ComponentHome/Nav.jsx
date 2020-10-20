@@ -100,7 +100,7 @@ const Nav = () => {
               <div className="category-list">
               {category.map((item) => 
                 <div className="category-wrapper">
-                  <img src={`${config.api_host}/api/images/${item.image.id}`} alt="icon" />
+                  <img src={`${config.api_host}/api/images/51`} alt="icon" />
                   <p>{item.name}</p>
                 </div>
               )}

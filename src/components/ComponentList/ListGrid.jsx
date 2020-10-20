@@ -90,6 +90,13 @@ const ListGrid = (props) => {
     }
     return skeleton;
   }
+
+  // function getUserLocation() {
+  //   navigator.geolocation.getCurrentPosition(function(position) {
+  //     console.log("lat : ", position.coords.latitude);
+  //     console.log("long : ", position.coords.longitude);
+  //   })
+  // }
   
   const handleClick = () => {
     setGridfilter(!gridfilter);
@@ -243,9 +250,9 @@ const ListGrid = (props) => {
             ) : (
               <Fragment>
                 {list.map((wisata) => 
-                  <NavLink className="crd" to="detail">
+                  <NavLink className="crd" to="/detail">
                     <div className="img-wrapper">
-                      <img src={`${config.api_host}/api/images/${wisata.id}`} alt="bromo img" />
+                      <img src={`${config.api_host}/api/images/${wisata.id}`} alt="place img" />
                     </div>
                     <div className="title-wrapper">
                       <span>{wisata.name}</span>

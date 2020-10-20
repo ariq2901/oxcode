@@ -81,7 +81,7 @@ const AboutMain = () => {
           <div className="info-title" data-aos="fade-up" data-aos-delay="500" data-aos-offset="400">
             <p>contact us</p>
           </div>
-          <div className="social-media" data-aos="fade-up" data-aos-delay="800" data-aos-offset="400">
+          <div className="social-media" data-aos="fade-up" data-aos-delay="800" data-aos-offset="300">
             <a href="mailto:info@smkmadinatulquran.sch.id">
               <div className="info-social">
                 <img src={Email} className="icon-svg" alt="email"/>
@@ -89,7 +89,7 @@ const AboutMain = () => {
               </div>
             </a>
           </div>
-          <div className="social-media" data-aos="fade-up" data-aos-delay="1100" data-aos-offset="400">
+          <div className="social-media" data-aos="fade-up" data-aos-delay="1100" data-aos-offset="300">
             <a href="https://www.facebook.com/smktimadinatulquran" target="_blank">
               <div className="info-social">
                 <img src={Facebook} className="icon-svg" alt="facebook"/>
@@ -97,7 +97,7 @@ const AboutMain = () => {
               </div>
             </a>
           </div>
-          <div className="social-media" data-aos="fade-up" data-aos-delay="1400" data-aos-offset="400">
+          <div className="social-media" data-aos="fade-up" data-aos-delay="1400" data-aos-offset="300">
             <a href="https://www.youtube.com/channel/UCLQ2_4V-t11pUG0pATDXK6g" target="_blank">
               <div className="info-social">
                 <img src={Youtube} className="icon-svg" alt="youtube"/>
@@ -105,7 +105,7 @@ const AboutMain = () => {
               </div>
             </a>
           </div>
-          <div className="social-media" data-aos="fade-up" data-aos-delay="1700" data-aos-offset="400">
+          <div className="social-media" data-aos="fade-up" data-aos-delay="1700" data-aos-offset="300">
             <a href="https://www.instagram.com/smktimadinatulquran/" target="_blank">
               <div className="info-social">
                 <img src={Instagram} className="icon-svg" alt="instagram"/>
