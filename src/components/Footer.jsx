@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
-import Email2 from '../svg/email2.svg';
-import Facebook2 from '../svg/facebook2.svg';
 import Instagram2 from '../svg/instagram2.svg';
+import Facebook2 from '../svg/facebook2.svg';
+import Skytours from '../img/logo/logo.png';
+import { NavLink } from 'react-router-dom';
 import Youtube2 from '../svg/youtube2.svg';
+import Email2 from '../svg/email2.svg';
 
 const Footer = () => {
 
@@ -14,56 +15,55 @@ const Footer = () => {
   return(
     <Fragment>
       <section className="footer">
-        <div className="container">
-          <div className="row">
-            <div className="footer-wrapper">
-              <div className="social-box">
-                <a href="https://www.facebook.com/smktimadinatulquran" target="_blank">
-                  <div className="s-media">
-                    <img src={Facebook2} className="icon-svg" alt="facebook"/>
+        <div className="row">
+          <div className="footer-wrapper">
+            <div className="footer-main">
+              <div className="container">
+                <div className="content-footer">
+                  <div className="logo-wrapper">
+                    <img src={Skytours} alt="logo" />
+                    <span>Skytours</span>
                   </div>
-                </a>
-                <a href="https://www.instagram.com/smktimadinatulquran/" target="_blank">
-                  <div className="s-media">
-                    <img src={Instagram2} className="icon-svg" alt="instagram"/>
+                  <div className="location-footer">
+                    <i className="material-icons">location_on</i>
+                    <a href="https://goo.gl/maps/6VS7aCJJwP3WGn53A" target="_blank"><span><span className="locone">Singasari, Kec. Jonggol</span><span className="loctwo">Bogor, Jawa Barat 16830</span></span></a>
                   </div>
-                </a>
-                <a href="https://www.youtube.com/channel/UCLQ2_4V-t11pUG0pATDXK6g" target="_blank">
-                  <div className="s-media">
-                    <img src={Youtube2} className="icon-svg" alt="Youtube"/>
+                  <div className="call-footer">
+                    <i className="material-icons">call</i>
+                    <span><span className="locone">0812 6900 457</span><span className="loctwo">info@skytours.com</span></span>
                   </div>
-                </a>
-                <a href="mailto:info@smkmadinatulquran.sch.id">
-                  <div className="s-media">
-                    <img src={Email2} className="icon-svg" alt="Email"/>
+                  <div className="social-footer">
+                    <a href="https://www.facebook.com/smktimadinatulquran" target="_blank">
+                      <div className="social-button">
+                        <img src={Facebook2} alt="fb" />
+                      </div>
+                    </a>
+                    <a href="https://www.instagram.com/smktimadinatulquran/" target="_blank">
+                      <div className="social-button">
+                        <img src={Instagram2} alt="ig" />
+                      </div>
+                    </a>
+                    <a href="mailto:skytours.com">
+                      <div className="social-button">
+                        <img src={Email2} alt="email" />
+                      </div>
+                    </a>
+                    <a href="https://www.youtube.com/channel/UCLQ2_4V-t11pUG0pATDXK6g" target="_blank">
+                      <div className="social-button">
+                        <img src={Youtube2} alt="yt" />
+                      </div>
+                    </a>
                   </div>
-                </a>
+                </div>
               </div>
-              <div className="page-boxaj">
-                <NavLink className="list-link" to="/about">
-                  <p>about us</p>
-                </NavLink>
-                <NavLink className="list-link" to="/list-attraction">
-                  <p>list attraction</p>
-                </NavLink>
-                <NavLink className="list-link" to="/" exact>
-                  <p>home</p>
-                </NavLink>
-                <NavLink className="list-link" to="/login">
-                  <p>login</p>
-                </NavLink>
-              </div>
-              <div className="address-title">
-                <p>our-location</p>
-              </div>
-              <div className="address-box">
-                <i class="fas fa-map-marker-alt"></i>
-                <p>Kp.Kebon Kelapa, RT.02/RW.011, Singasari, Kec. Jonggol, Bogor, Jawa Barat 16830</p>
-              </div>
-              <div className="copyright">
-                <p className="cptlz-text">copyright &#169; {getThisYear()}</p>
-                <p className="cptlz-text c-brand">Skytours, Inc. </p>
-                <p className="last-p"><span className="cptlz-text">All</span> rights reserved</p>
+            </div>
+            <div className="footer-copyright">
+              <div className="container">
+                <div className="copyright">
+                  <p className="cptlz-text">copyright &#169; {getThisYear()}</p>
+                  <p className="cptlz-text c-brand">Skytours, Inc. </p>
+                  <p className="last-p"><span className="cptlz-text">All</span> rights reserved</p>
+                </div>
               </div>
             </div>
           </div>
