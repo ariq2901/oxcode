@@ -30,7 +30,7 @@ const Nav = () => {
   }, []);
   
   const changeNavbar = () => {
-    if(window.scrollY >= 80) {
+    if (window.scrollY >= 80) {
       setNavbar(true);
     } else {
       setNavbar(false);
@@ -73,7 +73,7 @@ const Nav = () => {
               <li className="btn-log"><NavLink className="btn-nav-login" to="/login">login</NavLink></li>
             </ul>
             <div className="menu-toggle">
-              <input type="checkbox" onClick={onHamburger}/>
+              <input type="checkbox" onClick={onHamburger} />
               <span></span>
               <span></span>
               <span></span>

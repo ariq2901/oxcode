@@ -1524,6 +1524,10 @@ label .checkmark::after {
     font-size: 1.6em;
   }
 
+  .not-active {
+    min-width: 100%;
+  }
+
   .address-box {
     padding: 0;
     margin-top: 1%;
@@ -2239,6 +2243,89 @@ h1.title {
   font-size: 20px;
 }
 
+.center {
+  align-self: center;
+}
+
+.form-login {
+  padding: 0px 30px;
+  position: absolute;
+  right: 0;
+  left: 0;
+}
+
+.border-black {
+  border: 1px solid rgba(0, 0, 0, 40%);
+}
+
+.signin {
+  display: block;
+  margin-top: 2.5em;
+}
+
+.form-login form {
+  margin-top: 30px;
+}
+
+.form-login button, .form-login input {
+  margin: 0.5em 0;
+}
+
+.form-login img {
+  margin-right: 5px;
+}
+
+.form-login button {
+  padding: 12px 0;
+}
+
+.policy {
+  position: absolute;
+  margin-bottom: 30px;
+  margin-left: 30px;
+  bottom: 0;
+  left: 0;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.lr-3 {
+  left: 10%;
+  right: 10%;
+  transform: translate(0, -50%);
+}
+
+.log-footer {
+  position: absolute;
+  display: grid;
+  grid-auto-flow: column;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  margin-bottom: 30px;
+}
+
+.log-footer button:first-child {
+  margin-right: 10px;
+}
+
+.log-rad {
+  color: white;
+  cursor: pointer;
+  padding: 0;
+}
+
+.log-log {
+  margin-right: 7px;
+}
+
+.not-active {
+  width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+}
 /*? About US PAGE */
 .about-us {
   margin-top: 3%;
