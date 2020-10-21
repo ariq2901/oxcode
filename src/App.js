@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Nav from './components/ComponentHome/Nav';
 import Home from './components/Home';
@@ -14,11 +13,11 @@ function App() {
     <Router>
       <Nav />
       <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/list-attraction" component={ListAttraction} />
-          <Route path="/about" component={About} />
-          <Route path="/detail" component={Detail} />
-          <Route path='/login' component={Login} />
+        <Route path="/" exact component={Home} />
+        <Route path="/list-attraction" component={ListAttraction} />
+        <Route path="/about" component={About} />
+        <Route path="/detail" component={Detail} />
+        <Route path='/login' component={Login} />
       </Switch>
 
     </Router>

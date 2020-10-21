@@ -43,6 +43,13 @@ label {
   margin: 0;
 }
 
+.search-box form {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
 .loader-category {
   /* margin: auto;
   width: 50px;
@@ -167,6 +174,7 @@ nav > .megamenu-hidden {
 }
 
 section.header {
+  width: 100vw;
   padding-top: 10vh;
   background: rgb(243, 243, 243);
 }
@@ -215,7 +223,7 @@ nav {
 
 .nav-logo img {
   vertical-align: middle;
-  max-width: 50%;
+  max-width: 65%;
 }
 
 .nav-logo span {
@@ -422,7 +430,10 @@ i.arrow-bawah {
 
 .category-search-box {
   position: relative;
+  height: 100%;
   flex-grow: 2;
+  display: flex;
+  align-items: center;
 }
 
 select.select-category {
@@ -436,14 +447,14 @@ select.select-category option {
 .category-search-box i.fa-chevron-up {
   color: var(--blue-primary);
   left: 25%;
-  top: 10%;
+  top: 31%;
   position: absolute;
 }
 
 .category-search-box i.fa-chevron-down {
   color: var(--blue-primary);
   left: 25%;
-  bottom: 20%;
+  bottom: 32%;
   position: absolute;
 }
 
@@ -476,6 +487,68 @@ select.select-category option {
 
 .btn-search-box:hover {
   color: #e6f0fa;
+}
+
+
+/* .suggess-box {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+} */
+
+.all-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.autoContainer {
+  position: absolute;
+  top: 71%;
+  width: 100%;
+  background: #fff;
+  z-index: 80;
+  border-radius: 10px;
+  padding: 0 2%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.autoOption {
+  width: 100%;
+  height: 70px;
+  padding: 0 1%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.autoOption span:nth-child(1) {
+  font-size: 1.6em;
+  cursor: pointer;
+}
+
+.autoOption span:nth-child(2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  width: 250px; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -moz-line-clamp: 1;
+  -ms-line-clamp: 1;
+  -o-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  font-size: 1.2em;
+}
+
+.autoOption span i {
+  color: #439cef;
+}
+
+.autoOption:last-child {
+  border: none;
 }
 
 .spots-wrapper {

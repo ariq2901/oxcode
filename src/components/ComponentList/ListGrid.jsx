@@ -11,7 +11,7 @@ const ListGrid = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [list, setList] = React.useState([]);
   const [gridfilter, setGridfilter] = React.useState(false);
-  
+  console.log('props resulta length', props.resulta.length);
   const getList = async () => {
     try {
       setLoading(true);
@@ -34,7 +34,7 @@ const ListGrid = (props) => {
   
   React.useEffect(() => {
     getList();
-  }, []);
+  }, [props]);
   
   function skeletonCard(jumlah) {
     const skeleton = [];
@@ -112,8 +112,9 @@ const ListGrid = (props) => {
     // console.log(i);
     if( i < 5 ) {
       tag.push(<i class="far fa-star"></i>);
-    } else {
-      console.log('pass');
+    }
+    if( i < 4 ) {
+      tag.push(<i class="far fa-star"></i>);
     }
     return tag;
   }
@@ -249,7 +250,8 @@ const ListGrid = (props) => {
               </Fragment>
             ) : (
               <Fragment>
-                {list.map((wisata) => 
+                {props.resulta.length > 0 ? 
+                  props.resulta.map((wisata) => 
                   <NavLink className="crd" to="/detail">
                     <div className="img-wrapper">
                       <img src={`${config.api_host}/api/images/${wisata.id}`} alt="place img" />
@@ -268,7 +270,27 @@ const ListGrid = (props) => {
                       <p className="location-name">{wisata.city}</p>
                     </div>
                   </NavLink>
-                )}
+                ) : list.map((wisata) => 
+                    <NavLink className="crd" to="/detail">
+                      <div className="img-wrapper">
+                        <img src={`${config.api_host}/api/images/${wisata.id}`} alt="place img" />
+                      </div>
+                      <div className="title-wrapper">
+                        <span>{wisata.name}</span>
+                      </div>
+                      <div className="rate-wrapper">
+                        <div className="rating">
+                          {starLoop(wisata.rating)}
+                        </div>
+                        <p className="total-reviews">175 reviews</p>
+                      </div>
+                      <div className="location-wrapper">
+                        {loading ? '' : <i class="fas fa-map-marker-alt"></i>}
+                        <p className="location-name">{wisata.city}</p>
+                      </div>
+                    </NavLink>
+                  )
+                }
               </Fragment>
             )}
           </div>
