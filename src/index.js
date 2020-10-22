@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Home from './components/Home';
+import 'boo'
 
 ReactDOM.render(
   // <React.StrictMode>

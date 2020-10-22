@@ -6,6 +6,7 @@ import ListAttraction from './components/ListAttraction';
 import About from './components/About';
 import Detail from './Detail';
 import Login from './Login';
+import ResetPassword from './components/ResetPassword';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/about" component={About} />
         <Route path="/detail" component={Detail} />
         <Route path='/login' component={Login} />
+        <Route path='/reset-password/:token' component={ResetPassword} />
       </Switch>
 
     </Router>
