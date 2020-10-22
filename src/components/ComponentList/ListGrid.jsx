@@ -135,6 +135,7 @@ const ListGrid = (props) => {
         <div className={gridfilter ? "grid-filter" : "grid-wrapper"}>
           <div className={gridfilter ? "filter-panel show" : "filter-panel none"}>
             <div className="sortby-tunel">
+              {console.log('list', list)}
               <p>sort by</p>
               <div className="sort-checkbox">
                 <div className="reviews-btn">

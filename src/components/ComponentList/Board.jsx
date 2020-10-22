@@ -100,7 +100,7 @@ const Board = ({ result }) => {
         <div  ref={wrapperRef} className="autoContainer">
           {options.slice(0, 5).map((v, i) => {
             return (
-              <div onClick={() => setPlace(v.name)} className="autoOption" key={i}>
+              <div onClick={() => setPlace(v.name)} className="autoOption" key={i} tabIndex="0">
                 {console.log('v', v)}
                 <span><i class="fas fa-map-marker-alt"></i> &nbsp;{v.name}</span>
                 <span>{v.address}</span>

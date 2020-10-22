@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import {NavLink} from 'react-router-dom';
-import Skytours from '../../img/logo/logo.png';
+import Skytours from '../img/logo/logo.png';
 import Axios from 'axios';
-import { config } from '../../config';
+import { config } from '../config';
 import Loader from 'react-loader-spinner';
-import '../../App.css';
+import '../App.css';
 
 const Nav = () => {
   const [loading, setLoading] = React.useState(false);
@@ -16,7 +16,7 @@ const Nav = () => {
   const getCategory = async () => {
     try {
       setLoading(true);
-      const respon = await Axios.get(`${config.api_host}/api/categories`);
+      const respon = await Axios.get(`${config.api_host}/api/popular/categories`);
       // setList(respon.data);
       setCategory(respon.data.data);
       setLoading(false);
@@ -100,7 +100,7 @@ const Nav = () => {
               <div className="category-list">
               {category.map((item) => 
                 <div className="category-wrapper">
-                  <img src={`${config.api_host}/api/images/51`} alt="icon" />
+                  <img src={`${config.api_host}/api/images/${item.image.id}`} alt="icon" />
                   <p>{item.name}</p>
                 </div>
               )}

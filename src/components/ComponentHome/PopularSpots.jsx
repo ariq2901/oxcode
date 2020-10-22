@@ -57,8 +57,9 @@ const PopularSpots = () => {
     // console.log(i);
     if( i < 5 ) {
       tag.push(<i class="far fa-star"></i>);
-    } else {
-      console.log('pass');
+    }
+    if( i < 4 ) {
+      tag.push(<i class="far fa-star"></i>);
     }
     return tag;
   }

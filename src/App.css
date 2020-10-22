@@ -521,11 +521,11 @@ select.select-category option {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ddd;
+  cursor: pointer;
 }
 
 .autoOption span:nth-child(1) {
   font-size: 1.6em;
-  cursor: pointer;
 }
 
 .autoOption span:nth-child(2) {
