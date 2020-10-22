@@ -1,17 +1,18 @@
 import React, { Fragment } from 'react';
+import '../App.css';
 import Board from './ComponentHome/Board';
 import PopularSpots from './ComponentHome/PopularSpots';
 import PopularCity from './ComponentHome/PopularCity';
-import '../App.css';
 import Footer from './Footer';
 
 const Home = () => {
+  const [result, setResult] = React.useState([]);
   return(
     <Fragment>
       <section className="header">
         <div className="container">
           <div className="row">
-            <Board />
+            <Board result={result => setResult(result)}/>
           </div>
         </div>
       </section>

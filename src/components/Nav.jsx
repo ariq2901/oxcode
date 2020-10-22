@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import {NavLink} from 'react-router-dom';
-import Skytours from '../../img/logo/logo.png';
+import Skytours from '../img/logo/logo.png';
 import Axios from 'axios';
-import { config } from '../../config';
+import { config } from '../config';
 import Loader from 'react-loader-spinner';
-import '../../App.css';
+import '../App.css';
 
 const Nav = () => {
   const [loading, setLoading] = React.useState(false);

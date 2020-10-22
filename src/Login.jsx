@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState, Fragment } from 'react';
 import FacebookLogin from 'react-facebook-login';
+import { useDispatch, useSelector } from 'react-redux';
 import Side from './side';
 
 const getWindowDimensions = () => {
@@ -27,9 +28,17 @@ const useWindowDimensions = () => {
 
 const Login = () => {
 
+  const LoginReducer = useSelector(state => state.LoginReducer);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    console.log('login reducer : ', LoginReducer);
+  }, [])
+
   const [click, setClick] = useState(false);
   const [auth, setAuth] = useState(false);
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [picture, setPicture] = useState('');
 
   const getUserFacebook = () => {
@@ -40,9 +49,15 @@ const Login = () => {
   const responseFacebook = (response) => {
     if( response.status !== "unknown" ){
       setAuth(true);
+      setName(response.email);
       setName(response.name);
       setPicture(response.picture.data.url);
+      console.log('berhasil di set');
     }
+  }
+
+  const sendProfile = (value, input) => {
+    dispatch({type: 'SET_PROFILE', pData: input, pValue: value});
   }
 
   const logOutFacebook = () => {
@@ -125,11 +140,10 @@ const Login = () => {
         <div className="row" style={{ height: '100%' }}>
           <div className="col-4 not-active">
             <div className="form-login center">
-              <p>Start for free</p>
+              <p>{console.log(LoginReducer.profile)}</p>
               <h2>Create An Account</h2>
               <form action="">
                 <input type="email" className="form-control" />
-                {console.log('auth ', auth)}
                 <input type="password" className="form-control" />
                 <button className="btn btn-primary btn-block mt-4">sign up</button>
                 <button className="btn btn-block border-black"><img src={`${process.env.PUBLIC_URL + '/google.png'}`} height='20px' /> sign up with google</button>
@@ -167,6 +181,9 @@ const Login = () => {
           <Side image={image} radButton={radButton} logRad={logRad} changeRad={changeRad} />
         </div>
       </div>
+      <input type="hidden" value={LoginReducer.profile.name} onChange={value => sendProfile(value, 'email')}/>
+      <input type="hidden" value={LoginReducer.profile.name} onChange={value => sendProfile(value, 'name')}/>
+      <input type="hidden" value={LoginReducer.profile.name} onChange={value => sendProfile(value, 'picture')}/>
     </>
   );
 }
