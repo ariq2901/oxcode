@@ -73,7 +73,7 @@ const Board = ({result}) => {
     <Fragment>
       <div className="wrapper">
         <div className="slogant">
-          {/* <p className="big-title"><Typical steps={[`find your destination`, 10000, 'find your exploration', 10000, 'find your happiness', 10000]} loop={Infinity} wrapper="p"/></p> */}
+          <p className="big-title"><Typical steps={[`find your destination`, 10000, 'find your exploration', 10000, 'find your happiness', 10000]} loop={Infinity} wrapper="p"/></p>
           <p className="slogant-title">this is the start of your journey, don't let other people hold your move. get your own way</p>
         </div>
         <div className="worldmap-img">

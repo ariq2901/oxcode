@@ -8,10 +8,16 @@ import {config} from '../../config';
 
 // import '../../feature';
 const ListGrid = (props) => {
+  const [long, setLong] = React.useState('');
+  const [lat, setLat] = React.useState('');
+  const [cdistance, setCdistance] = React.useState(false);
+  const [calphabet, setCalphabet] = React.useState(false);
+  const [creviews, setCreviews] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [list, setList] = React.useState([]);
   const [gridfilter, setGridfilter] = React.useState(false);
   console.log('props resulta length', props.resulta.length);
+
   const getList = async () => {
     try {
       setLoading(true);
@@ -92,11 +98,55 @@ const ListGrid = (props) => {
   }
 
   // function getUserLocation() {
-  //   navigator.geolocation.getCurrentPosition(function(position) {
-  //     console.log("lat : ", position.coords.latitude);
-  //     console.log("long : ", position.coords.longitude);
-  //   })
+  //   if(navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(function(position) {
+  //       setLat(position.coords.latitude.toString());
+  //       setLong(position.coords.longitude.toString());
+  //       console.log('lat long set');
+  //     })
+  //   }
+  //   else {
+  //     alert('your browser is not supported gps feature');
+  //   }
   // }
+
+  const filterList = () => {
+    if(creviews || calphabet) {
+      setLoading(true);
+      const url = `${config.api_host}/api/attractions/search`;
+  
+      if( creviews ) {
+        var payloadf = {
+          sort_by : "reviews"
+        }
+        console.log('by reviews');
+      }
+      if( calphabet ) {
+        var payloadf = {
+          sort_by : "alphabet"
+        }
+        console.log('by alphabet');
+      }
+      console.log('payloadf ', payloadf);
+      Axios.post(url, payloadf)
+      .then(respons => {
+        setList(respons.data.data);
+        setLoading(false)
+      })
+      .catch(e => {
+        console.log('failure ', e);
+        setLoading(false)
+      })
+    }
+  }
+
+  React.useEffect(() => {
+    if(creviews || calphabet) {
+      filterList();
+    } else {
+      getList();
+    }
+  }, [creviews, calphabet]);
   
   const handleClick = () => {
     setGridfilter(!gridfilter);
@@ -119,6 +169,43 @@ const ListGrid = (props) => {
     return tag;
   }
 
+  const byDistance = () => {
+    if( cdistance ) {
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            setLoading(true);
+            var latitu = position.coords.latitude;
+            var longitu = position.coords.longitude;
+
+            var latit = latitu.toString();
+            var longit = longitu.toString();
+            const url = `${config.api_host}/api/attractions/search`;
+            const payload = {
+              sort_by : "distance",
+              latitude : latit,
+              longitude : longit
+            }
+            Axios.post(url, payload)
+            .then(resp => {
+              setLoading(false)
+              setList(resp.data.data);
+            })
+            .catch(er => {
+              setLoading(false)
+              console.log('failure ', er);
+            })
+          }
+        )
+      }
+    }
+  }
+
+  React.useEffect(() => {
+    byDistance();
+  }, [cdistance]);
+
+
   return(
     <Fragment>
       <div className="spots-wrapper listpage">
@@ -129,6 +216,9 @@ const ListGrid = (props) => {
             <label htmlFor="filter-toggle">
               <span></span>
             </label>
+            {console.log('latitude', lat)}
+            {console.log('longitude', long)}
+            {console.log('cdistance', cdistance)}
           </div>
           <p>list attractions</p>
         </div>
@@ -139,15 +229,15 @@ const ListGrid = (props) => {
               <p>sort by</p>
               <div className="sort-checkbox">
                 <div className="reviews-btn">
-                  <input type="checkbox" name="reviews" className="visually-hidden" id="reviews"/>
+                  <input type="checkbox" name="reviews" onClick={_ => setCreviews(!creviews)} className="visually-hidden" id="reviews"/>
                   <label htmlFor="reviews" className="sortby-label r">reviews</label>
                 </div>
                 <div className="reviews-btn">
-                  <input type="checkbox" name="distance" className="visually-hidden" id="distance"/>
+                  <input type="checkbox" name="distance" onClick={e => setCdistance(!cdistance)} className="visually-hidden" id="distance"/>
                   <label htmlFor="distance" className="sortby-label d">distance</label>
                 </div>
                 <div className="reviews-btn">
-                  <input type="checkbox" name="alphabet" className="visually-hidden" id="alphabet"/>
+                  <input type="checkbox" name="alphabet" onClick={_ => setCalphabet(!calphabet)} className="visually-hidden" id="alphabet"/>
                   <label htmlFor="alphabet" className="sortby-label a">alphabet</label>
                 </div>
               </div>

@@ -4,8 +4,11 @@ import Board from './ComponentHome/Board';
 import PopularSpots from './ComponentHome/PopularSpots';
 import PopularCity from './ComponentHome/PopularCity';
 import Footer from './Footer';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
+  const LoginReducer = useSelector(state => state.LoginReducer);
+
   const [result, setResult] = React.useState([]);
   return(
     <Fragment>

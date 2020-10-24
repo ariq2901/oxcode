@@ -6,6 +6,7 @@ import ListAttraction from './components/ListAttraction';
 import About from './components/About';
 import Detail from './Detail';
 import Login from './Login';
+import Register from './Register';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux';
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/about" component={About} />
           <Route path="/detail" component={Detail} />
           <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
         </Switch>
       </Router>
     </Provider>

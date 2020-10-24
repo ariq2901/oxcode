@@ -8,22 +8,42 @@ const Board = ({ result }) => {
   const [options, setOptions] = React.useState([]);
   const [display, setDisplay] = React.useState(false);
   const [search, setSearch] = React.useState([]);
+  const [searchKota, setSearchKota] = React.useState("");
   const wrapperRef = useRef(null);
-  const [searchName, setSearchName] = React.useState("");
-  const [searchCity, setSearchCity] = React.useState("");
+  // const [searchName, setSearchName] = React.useState("");
+  // const [searchCity, setSearchCity] = React.useState("");
   const [searchCat, setSearchCat] = React.useState("");
-  const [searchFrom, setSearchFrom] = React.useState("00:00");
-  const [searchTo, setSearchTo] = React.useState("00:00");
+  // const [searchFrom, setSearchFrom] = React.useState("00:00");
+  // const [searchTo, setSearchTo] = React.useState("00:00");
 
   const keyDownHandler = event => {
     event.preventDefault()
     const url = `${config.api_host}/api/attractions/search`;
-    const payload = {
-      name : event.target.value
+    var namaa = document.getElementById("searchName").value
+    var cityy = document.getElementById("searchCity").value
+
+    if( namaa.length > 0 && cityy.length > 0 ) {
+      var payloadk = {
+        name : namaa,
+        city : cityy
+      }
     }
-    Axios.post(url, payload)
+    if( namaa.length > 0 && cityy.length < 1 ) {
+      var payloadk = {
+        name : namaa
+      }
+    }
+    if( namaa.length < 1 && cityy.length > 0 ) {
+      var payloadk = {
+        city : cityy
+      }
+    }
+
+    console.log('payload onKydown ', payloadk);
+    Axios.post(url, payloadk)
     .then(respons => {
-      setOptions(respons.data)
+      console.log('kena, ', respons);
+      setOptions(respons.data.data)
     })
     .catch(err => {
       console.log('failure ', err);
@@ -48,13 +68,29 @@ const Board = ({ result }) => {
   const onSubmit = event => {
     event.preventDefault()
     const url = `${config.api_host}/api/attractions/search`;
-    const payload = {
-      name : search
+    var namaa = document.getElementById("searchName").value
+    var cityy = document.getElementById("searchCity").value
+
+    if( namaa.length > 0 && cityy.length > 0 ) {
+      var payloads = {
+        name : namaa,
+        city : cityy
+      }
+    }
+    if( namaa.length > 0 && cityy.length < 1 ) {
+      var payloads = {
+        name : namaa
+      }
+    }
+    if( namaa.length < 1 && cityy.length > 0 ) {
+      var payloads = {
+        city : cityy
+      }
     }
 
-    Axios.post(url, payload)
+    Axios.post(url, payloads)
     .then(respons => {
-      result(respons.data)
+      result(respons.data.data)
     })
     .catch(e => {
       console.log("error ", e);
@@ -75,12 +111,12 @@ const Board = ({ result }) => {
           <form autoComplete="off" onSubmit={onSubmit}>
             <div className="find">
               <i class="fas fa-search"></i>
-              <input type="text" name="searchName" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event); setSearch(event.target.value)}} placeholder="what you would like to find?" value={search} />
+              <input type="text" name="searchName" id="searchName" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event); setSearch(event.target.value)}} placeholder="what you would like to find?" value={search} />
             </div>
             <div className="vl"></div>
             <div className="anywhere">
               <i class="fas fa-map-marker-alt"></i>
-              <input type="text" name="searchCity" onChange={event => setSearchCity(event.target.value)} placeholder="anywhere"/>
+              <input type="text" name="searchCity" id="searchCity" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setSearchKota(event.target.value)}} placeholder="anywhere" value={searchKota}/>
             </div>
             <div className="category-search-box">
               <select onChange={event => setSearchCat(event.target.value)} class="select-category">

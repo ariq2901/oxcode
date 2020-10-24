@@ -19,23 +19,37 @@ const initialStateLogin = {
     name: '',
     picture: ''
   },
-  info: 'tolong masukkan pass anda',
-  isLogin: true
+  isLogin: false,
+  logoutBtn: false
 }
 
 const LoginReducer = (state = initialStateLogin, action) => {
-  if( action.type === 'SET_INFO' ) {
+  if( action.type === 'SET_ISLOGIN' ) {
     return {
       ...state,
-      info: 'Login ganti info'
+      isLogin: true
     }
   }
   if( action.type === 'SET_PROFILE' ) {
     return {
       ...state,
+      isLogin: true,
+      // info: 'OKE MASUK BOS'
       profile: {
         ...state.profile,
         [action.pData]: action.pValue,
+      }
+    }
+  }
+  if( action.type === 'SETLOGOUT' ) {
+    return {
+      ...state,
+      isLogin: false,
+      isLogin: true,
+      profile: {
+        email: '',
+        name: '',
+        picture: ''
       }
     }
   }
