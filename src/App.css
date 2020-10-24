@@ -71,6 +71,10 @@ label {
   align-items: center;
 }
 
+nav {
+  top: 0;
+}
+
 nav > .megamenu {
   position: absolute;
   top: 100%;
@@ -595,7 +599,6 @@ select.select-category option {
   color: #e6f0fa;
 }
 
-
 /* .suggess-box {
   width: 100%;
   height: 200px;
@@ -638,7 +641,7 @@ select.select-category option {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  width: 250px; 
+  width: 250px;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 1;
@@ -2528,7 +2531,8 @@ h1.title {
   margin-top: 30px;
 }
 
-.form-login button, .form-login input {
+.form-login button,
+.form-login input {
   margin: 0.5em 0;
 }
 
@@ -2745,8 +2749,17 @@ h1.title {
   font-size: 1.5em;
 }
 
+/* 
+** Reset Password
+*/
+main.reset-password {
+  margin-top: 10vh;
+  height: 100vh;
+  text-transform: initial;
+}
+
 /*^ Footer */
-section.footer {
+footer.footer {
   background-color: #096bc5;
 }
 

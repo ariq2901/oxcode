@@ -7,6 +7,7 @@ import About from './components/About';
 import Detail from './Detail';
 import Login from './Login';
 import Register from './Register';
+import ResetPassword from './components/ResetPassword';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux';
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/detail" component={Detail} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
+          <Route path='/reset-password/:token' component={ResetPassword} />
         </Switch>
       </Router>
     </Provider>

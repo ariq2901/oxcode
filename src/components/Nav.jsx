@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import {NavLink} from 'react-router-dom';
 import Skytours from '../img/logo/logo.png';
 import Axios from 'axios';
@@ -152,8 +152,8 @@ const Nav = () => {
                 </div>
               ) : (
               <div className="category-list">
-              {category.map((item) => 
-                <div className="category-wrapper">
+              {category.map((item, index) => 
+                <div className="category-wrapper" key={index}>
                   <img src={`${config.api_host}/api/images/${item.image.id}`} alt="icon" />
                   <p>{item.name}</p>
                 </div>

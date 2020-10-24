@@ -3,7 +3,7 @@ import FacebookLogin from 'react-facebook-login';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { Input, Button } from './property/Form';
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 import { config } from './config';
 import Side from './side';
 import Axios from 'axios';
