@@ -223,6 +223,18 @@ const Detail = (props) => {
           </div>
         </div>
       </section>
+      <Footer />
+      <div className="modal" ref={modalRef}>
+        <div className="modal-content">
+          <div className="modal-header">
+            <p className="modal-title">Add Review</p>
+            <span className="close" onClick={closeModal}>X</span>
+          </div>
+          <div className="modal-body">
+            <p>JKJKJKJKJKJKJ</p>
+          </div>
+        </div>
+      </div>
     </Fragment>
   );
 }
