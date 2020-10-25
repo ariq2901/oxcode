@@ -79,25 +79,26 @@ const Login = (props) => {
       console.log('payload ', payload);
       Axios.post(url, payload)
       .then(_ => {
-        const token = _.data.access_token;
-        const tokenB = `Bearer `.concat(token);
+        const token = _.data.personal_access_token;
+        const tokenB = `Bearer `.concat(token.token);
         // const options = {
-        //   headers: {'Authorization': tokenB}
-        // }
-        const urlD = `${config.api_host}/api/auth/user`;
-        Axios.get(urlD, { headers : {'Authorization': tokenB} })
-        .then(u => {
-          console.log('user detail ', u.data.data);
+          //   headers: {'Authorization': tokenB}
+          // }
+          const urlD = `${config.api_host}/api/auth/user`;
+          Axios.get(urlD, { headers : {'Authorization': tokenB} })
+          .then(u => {
+            console.log('user data: ', u);
           sessionStorage.setItem("typeLogin", 'skytours');
           sessionStorage.setItem("isLogin", true);
-          sessionStorage.setItem("email", u.data.data.email);
-          sessionStorage.setItem("name", u.data.data.name);
+          sessionStorage.setItem("email", u.data.user.email);
+          sessionStorage.setItem("name", u.data.user.name);
           sessionStorage.setItem("tokenB", token);
-          sessionStorage.setItem("picture", `${config.api_host}/api/images/${u.data.data.image.id}`);
+          sessionStorage.setItem("picture", `${config.api_host}/api/images/${u.data.user.image.id}`);
           dispatch({type: 'SET_ISLOGIN', typeLogin: 'skytours'});
-          dispatch({type: 'SET_PROFILE', pData: "email", pValue: u.data.data.email});
-          dispatch({type: 'SET_PROFILE', pData: "name", pValue: u.data.data.name});
-          dispatch({type: 'SET_PROFILE', pData: "picture", pValue: `${config.api_host}/api/images/${u.data.data.image.id}`});
+          dispatch({type: 'SET_ISLOGIN'});
+          dispatch({type: 'SET_PROFILE', pData: "email", pValue: u.data.user.email});
+          dispatch({type: 'SET_PROFILE', pData: "name", pValue: u.data.user.name});
+          dispatch({type: 'SET_PROFILE', pData: "picture", pValue: `${config.api_host}/api/images/${u.data.user.image.id}`});
 
           props.history.push('/');
         })
@@ -171,13 +172,6 @@ const Login = (props) => {
       props.history.push("/");
     }
   }
-
-  // const forgotPass = () => {
-  //   // const url = `${config.api_host}/api/password/create`;
-  //   // const body = {
-  //   //   email: 
-  //   // }
-  // }
     
   const logRad = useRef();
   const image = useRef();

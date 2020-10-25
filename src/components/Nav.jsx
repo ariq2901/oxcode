@@ -56,7 +56,7 @@ const Nav = () => {
   const getCategory = async () => {
     try {
       setLoading(true);
-      const respon = await Axios.get(`https://peaceful-river-55348.herokuapp.com/api/popular/categories`);
+      const respon = await Axios.get(`${config.api_host}/api/popular/categories`);
       setCategory(respon.data.categories);
       dispatch({type: 'SET_CATEGORY', categories: respon.data.categories});
       setLoading(false);

@@ -44,7 +44,7 @@ const ListGrid = (props) => {
         console.log('bygeneral', respon);
       }
       // setList(respon.data);
-      setList(respon.data.data);
+      setList(respon.data.attractions);
       setLoading(false)
     } catch(e) {
       console.error('error feching data', e);

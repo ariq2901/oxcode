@@ -14,7 +14,7 @@ const PopularSpots = () => {
       setLoading(true);
       const respon = await Axios.get(`${config.api_host}/api/popular/attractions`);
       // setList(respon.data);
-      setList(respon.data.data);
+      setList(respon.data.attractions);
       setLoading(false);
     } catch(e) {
       console.error('error feching data', e);

@@ -43,7 +43,7 @@ p {
   margin-bottom: 0;
 }
 
-.no-select{
+.no-select {
   user-select: none;
 }
 
@@ -253,9 +253,9 @@ nav > .megamenu-hidden {
 }
 
 .status-wrapper div {
-  padding: 0.5em .5em;
+  padding: 0.5em 0.5em;
   font-weight: 300;
-  font-size: .9em;
+  font-size: 0.9em;
   overflow: hidden;
   text-overflow: ellipsis;
   display: flex;
@@ -270,6 +270,8 @@ nav > .megamenu-hidden {
 }
 .status-wrapper span {
   color: #282c34;
+  position: relative;
+  z-index: 1;
 }
 
 .status-wrapper div:not(:last-child) {
@@ -1334,7 +1336,8 @@ label .checkmark::after {
   font-size: 1.7em;
 }
 
-.ul-form, .ul-form2 {
+.ul-form,
+.ul-form2 {
   list-style: none;
   padding: 0;
 }
@@ -1690,7 +1693,7 @@ ul>li {
   padding: 7px 20px;
   border: none;
   background-color: blue;
-  color: white!important;
+  color: white !important;
   outline: none;
   border-radius: 5px;
   cursor: pointer;
@@ -2170,12 +2173,12 @@ h3 {
 }
 
 .review-head p {
-  color: rgb(63, 61, 86)!important;
+  color: rgb(63, 61, 86) !important;
   display: inline-block;
 }
 
 .review-head span {
-  color: rgba(0, 0, 0, 30%)!important;
+  color: rgba(0, 0, 0, 30%) !important;
 }
 
 /* .review-body {
@@ -2218,10 +2221,12 @@ h1 {
 
 .breadcumb {
   margin-bottom: 1em;
-  font-size: 1.5em!important;
+  font-size: 1.5em !important;
 }
 
-.title-box p, .title-box span, .title-box button {
+.title-box p,
+.title-box span,
+.title-box button {
   font-weight: 300;
   font-size: 2.1em;
   color: rgba(63, 61, 86, 0.7);
@@ -2770,7 +2775,9 @@ footer.footer {
   grid-gap: 5%;
 }
 
-.main-body p, .main-body button, .main-body span {
+.main-body p,
+.main-body button,
+.main-body span {
   font-weight: 300;
   font-size: 2.1em;
   color: rgba(63, 61, 86, 0.7);
@@ -2788,11 +2795,12 @@ footer.footer {
 }
 
 .card-title-ia p {
-  color: rgb(63, 61, 86)!important;
+  color: rgb(63, 61, 86) !important;
   align-self: center;
 }
 
-.card-title-ia span, .card-title-ia button {
+.card-title-ia span,
+.card-title-ia button {
   justify-self: end;
 }
 
