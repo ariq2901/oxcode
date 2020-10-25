@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState, Fragment } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, withRouter } from 'react-router-dom';
-import swal from 'sweetalert2';
+import swal from 'sweetalert';
 import { config } from './config';
 import { Input, Button } from './property/Form';
 import Side from './side';
@@ -32,6 +32,18 @@ const useWindowDimensions = () => {
   return windowDimensions;
 }
 
+// const useViewport = () => {
+//   const [width, setWidth] = useState(window.innerWidth);
+
+//   useEffect(() => {
+//     const handleWindowResize = () => setWidth(window.innerWidth);
+//     window.addEventListener("resize", handleWindowResize);
+//     return () => window.removeEventListener("resize", handleWindowResize);
+//   }, []);
+
+//   return {width};
+// }
+
 const Login = (props) => {
 
   const LoginReducer = useSelector(state => state.LoginReducer);
@@ -46,6 +58,10 @@ const Login = (props) => {
   const [picture, setPicture] = useState('');
   const [emailInput, setEmailInput] = useState('');
   const [passInput, setPassInput] = useState('');
+  // const { width } = useViewport();
+
+  // ^ Breakpoint
+  const breakpoint = 1200;
 
   const submitLog = (e) => {
     console.log('hi');
@@ -72,12 +88,13 @@ const Login = (props) => {
         Axios.get(urlD, { headers : {'Authorization': tokenB} })
         .then(u => {
           console.log('user detail ', u.data.data);
+          sessionStorage.setItem("typeLogin", 'skytours');
           sessionStorage.setItem("isLogin", true);
           sessionStorage.setItem("email", u.data.data.email);
           sessionStorage.setItem("name", u.data.data.name);
           sessionStorage.setItem("tokenB", token);
           sessionStorage.setItem("picture", `${config.api_host}/api/images/${u.data.data.image.id}`);
-          dispatch({type: 'SET_ISLOGIN'});
+          dispatch({type: 'SET_ISLOGIN', typeLogin: 'skytours'});
           dispatch({type: 'SET_PROFILE', pData: "email", pValue: u.data.data.email});
           dispatch({type: 'SET_PROFILE', pData: "name", pValue: u.data.data.name});
           dispatch({type: 'SET_PROFILE', pData: "picture", pValue: `${config.api_host}/api/images/${u.data.data.image.id}`});
@@ -118,10 +135,12 @@ const Login = (props) => {
       setPicture(response.picture.data.url);
       console.log('berhasil di set');
       sessionStorage.setItem("isLogin", true);
+      sessionStorage.setItem("typeLogin", 'facebook');
       sessionStorage.setItem("email", response.email);
       sessionStorage.setItem("name", response.name);
       sessionStorage.setItem("picture", response.picture.data.url);
       dispatch({type: 'SET_ISLOGIN'});
+      dispatch({type: 'SET_ISLOGIN', typeLogin: 'facebook'});
       dispatch({type: 'SET_PROFILE', pData: "email", pValue: response.email});
       dispatch({type: 'SET_PROFILE', pData: "name", pValue: response.name});
       dispatch({type: 'SET_PROFILE', pData: "picture", pValue: response.picture.data.url});
@@ -139,10 +158,12 @@ const Login = (props) => {
       setPicture(response.profileObj.imageUrl);
       console.log('berhasil di set');
       sessionStorage.setItem("isLogin", true);
+      sessionStorage.setItem("typeLogin", 'google');
       sessionStorage.setItem("email", response.profileObj.email);
       sessionStorage.setItem("name", response.profileObj.name);
       sessionStorage.setItem("picture", response.profileObj.imageUrl);
       dispatch({type: 'SET_ISLOGIN'});
+      dispatch({type: 'SET_ISLOGIN', typeLogin: 'google'});
       dispatch({type: 'SET_PROFILE', pData: "email", pValue: response.profileObj.email});
       dispatch({type: 'SET_PROFILE', pData: "name", pValue: response.profileObj.name});
       dispatch({type: 'SET_PROFILE', pData: "picture", pValue: response.profileObj.imageUrl});
@@ -150,6 +171,13 @@ const Login = (props) => {
       props.history.push("/");
     }
   }
+
+  // const forgotPass = () => {
+  //   // const url = `${config.api_host}/api/password/create`;
+  //   // const body = {
+  //   //   email: 
+  //   // }
+  // }
     
   const logRad = useRef();
   const image = useRef();
@@ -221,56 +249,60 @@ const Login = (props) => {
     <>
       <div className="container-fluid no-select" style={{ height: '100vh' }}>
         <div className="row" style={{ height: '100%' }}>
-          <div className="col-4 not-active">
+          <div className={width < breakpoint ? "col-12 login-area not-active" : "col-4 login-area not-active"}>
             <div className="form-login center">
               <p>login with your account</p>
               <h2>Login with account</h2>
-              <form onSubmit={submitLog}>
-                <Input type="email" className="form-control" onChange={e => setEmailInput(e.target.value)} placeholder="enter your email" />
-                <Input type="password" className="form-control" onChange={e => setPassInput(e.target.value)} placeholder="enter your password"/>
-                <div className="add-on">
-                  <div className="remember-me">
-                    <input type="checkbox" onClick={e => setRemember(!remember)} id="remember"/>
-                    <label htmlFor="remember">remember me</label>
+              <div className="user-choice">
+                <form onSubmit={submitLog}>
+                  <Input type="email" className="form-control" onChange={e => setEmailInput(e.target.value)} placeholder="enter your email" />
+                  <Input type="password" className="form-control" onChange={e => setPassInput(e.target.value)} placeholder="enter your password"/>
+                  <div className="add-on">
+                    <div className="remember-me">
+                      <input type="checkbox" onClick={e => setRemember(!remember)} id="remember"/>
+                      <label htmlFor="remember">remember me</label>
+                    </div>
+                    <Link to="/forgot-password">forgot password ?</Link>
                   </div>
-                  <span>forgot password ?</span>
-                </div>
-                {loading ? 
-                (
-                  <Button className="btn btn-primary btn-block mt-4" label="getting your info..." />
-                ) : (
-                  <Button className="btn btn-primary btn-block mt-4" type="submit" label="sign in" />
-                )}
+                  {loading ? 
+                  (
+                    <Button className="btn btn-primary btn-block mt-4" label="getting your info..." />
+                  ) : (
+                    <Button className="btn btn-primary btn-block mt-4" type="submit" label="sign in" />
+                  )}
 
-                {auth ? (
-                  <Fragment>
-                    {/* <a href="#" onClick={(e)=>{e.preventDefault(); window.FB.logout(); logOutFacebook()}}>logout</a> */}
-                  <button className="btn btn-block border-black"><img src={`${process.env.PUBLIC_URL + '/google.png'}`} height='20px' /> sign in with google</button>
-                  <button className="btn btn-block border-black"><img src={`${process.env.PUBLIC_URL + '/facebook.png'}`} height='20px' /> getting your info... </button>
-                  </Fragment>
-                ) : (
-                  <Fragment>
-                    <GoogleLogin 
-                      autoLoad={false}
-                      onSuccess={responseGoogle}
-                      className="btn btn-block border-black goog"
-                      icon="fa-google"
-                      clientId="237905800096-t4qvpgqhmkis3dpa8ce9pdhem7d5dgi2.apps.googleusercontent.com"
-                      buttonText="sign in with google"
-                    />
-                    <FacebookLogin
-                      appId="2363350287365556"
-                      autoLoad={false}
-                      onClick={getUserFacebook}
-                      fields="name,email,picture"
-                      callback={responseFacebook}
-                      cssClass="btn btn-block border-black"
-                      icon="fa-facebook"
-                      textButton="&nbsp;&nbsp;Sign in with facebook"
-                    />
-                  </Fragment>
-                )}
-              </form>
+                </form>
+                <div className="social-login">
+                  {auth ? (
+                    <Fragment>
+                      {/* <a href="#" onClick={(e)=>{e.preventDefault(); window.FB.logout(); logOutFacebook()}}>logout</a> */}
+                    <button className="btn btn-block border-black"><img src={`${process.env.PUBLIC_URL + '/google.png'}`} height='20px' /> sign in with google </button>
+                    <button className="btn btn-block border-black"><img src={`${process.env.PUBLIC_URL + '/facebook.png'}`} height='20px' /> getting your info... </button>
+                    </Fragment>
+                  ) : (
+                    <Fragment>
+                      <GoogleLogin 
+                        autoLoad={false}
+                        onSuccess={responseGoogle}
+                        className="btn btn-block border-black goog"
+                        icon="fa-google"
+                        clientId="237905800096-t4qvpgqhmkis3dpa8ce9pdhem7d5dgi2.apps.googleusercontent.com"
+                        buttonText="sign in with google"
+                      />
+                      <FacebookLogin
+                        appId="2363350287365556"
+                        autoLoad={false}
+                        onClick={getUserFacebook}
+                        fields="name,email,picture"
+                        callback={responseFacebook}
+                        cssClass="btn btn-block border-black"
+                        icon="fa-facebook"
+                        textButton="&nbsp;&nbsp;Sign in with facebook"
+                      />
+                    </Fragment>
+                  )}
+                </div>
+              </div>
               <span className="signin">doesn't have an account? <Link to="/register">sign up</Link></span>
             </div>
             <footer className="policy"><span>privacy policy and terms of service</span></footer>

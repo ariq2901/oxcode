@@ -5,9 +5,16 @@ import Dufan from '../../img/dufan.jpg';
 import {NavLink} from 'react-router-dom';
 import Axios from 'axios';
 import {config} from '../../config';
+import { useSelector } from 'react-redux';
 
 // import '../../feature';
 const ListGrid = (props) => {
+  const MegamenuReducer = useSelector(state => state.MegamenuReducer);
+
+  React.useEffect(() => {
+    console.log('MegamenuReducer ListGrid', MegamenuReducer);
+  })
+
   const [long, setLong] = React.useState('');
   const [lat, setLat] = React.useState('');
   const [cdistance, setCdistance] = React.useState(false);
@@ -16,7 +23,6 @@ const ListGrid = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [list, setList] = React.useState([]);
   const [gridfilter, setGridfilter] = React.useState(false);
-  console.log('props resulta length', props.resulta.length);
 
   const getList = async () => {
     try {
@@ -25,6 +31,14 @@ const ListGrid = (props) => {
       if(props.type) {
         var respon = await Axios.get(`${config.api_host}/api/${props.type}/attractions`);
         console.log('bypopular', respon);
+      }
+      if(MegamenuReducer.category) {
+        const url = `${config.api_host}/api/search/attractions`;
+        const payloadc = {
+          categories : [MegamenuReducer.category]
+        }
+        var respon = await Axios.post(url, payloadc);
+        console.log('byCategory', respon);
       } else {
         var respon = await Axios.get(`${config.api_host}/api/attractions`);
         console.log('bygeneral', respon);
@@ -40,7 +54,7 @@ const ListGrid = (props) => {
   
   React.useEffect(() => {
     getList();
-  }, [props]);
+  }, [props, MegamenuReducer]);
   
   function skeletonCard(jumlah) {
     const skeleton = [];
@@ -113,7 +127,7 @@ const ListGrid = (props) => {
   const filterList = () => {
     if(creviews || calphabet) {
       setLoading(true);
-      const url = `${config.api_host}/api/attractions/search`;
+      const url = `${config.api_host}/api/search/attractions`;
   
       if( creviews ) {
         var payloadf = {
@@ -180,7 +194,7 @@ const ListGrid = (props) => {
 
             var latit = latitu.toString();
             var longit = longitu.toString();
-            const url = `${config.api_host}/api/attractions/search`;
+            const url = `${config.api_host}/api/search/attractions`;
             const payload = {
               sort_by : "distance",
               latitude : latit,
@@ -201,7 +215,7 @@ const ListGrid = (props) => {
     }
   }
 
-  React.useEffect(() => {
+  React.useMemo(() => {
     byDistance();
   }, [cdistance]);
 
@@ -216,9 +230,6 @@ const ListGrid = (props) => {
             <label htmlFor="filter-toggle">
               <span></span>
             </label>
-            {console.log('latitude', lat)}
-            {console.log('longitude', long)}
-            {console.log('cdistance', cdistance)}
           </div>
           <p>list attractions</p>
         </div>
@@ -233,7 +244,7 @@ const ListGrid = (props) => {
                   <label htmlFor="reviews" className="sortby-label r">reviews</label>
                 </div>
                 <div className="reviews-btn">
-                  <input type="checkbox" name="distance" onClick={e => setCdistance(!cdistance)} className="visually-hidden" id="distance"/>
+                  <input type="checkbox" name="distance" onClick={_ => setCdistance(!cdistance)} className="visually-hidden" id="distance"/>
                   <label htmlFor="distance" className="sortby-label d">distance</label>
                 </div>
                 <div className="reviews-btn">

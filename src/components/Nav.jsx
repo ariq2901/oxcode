@@ -1,16 +1,18 @@
 import React, { Fragment } from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useHistory} from 'react-router-dom';
 import Skytours from '../img/logo/logo.png';
 import Axios from 'axios';
 import { config } from '../config';
 import Loader from 'react-loader-spinner';
-import FacebookLogin from 'react-facebook-login';
 import '../App.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { GoogleLogout } from 'react-google-login';
+import swal from 'sweetalert';
 
 const Nav = () => {
   const LoginReducer = useSelector(state => state.LoginReducer);
   const dispatch = useDispatch();
+  let history = useHistory();
 
   const [auth, setAuth] = React.useState(false);
   const [email, setEmail] = React.useState('');
@@ -22,6 +24,33 @@ const Nav = () => {
   const [navbar, setNavbar] = React.useState(false);
   const [hamburger, setHamburger] = React.useState(false);
   const [profilePop, setProfilePop] = React.useState(false);
+  const [typeLogin, setTypeLogin] = React.useState('');
+
+  const loginType = () => {
+    switch( sessionStorage.getItem("typeLogin") ) {
+      case 'facebook' :
+        return (<div className="logoutBtn" onClick={(e)=>{logOutFacebook(e)}}><i class="fas fa-sign-out-alt"></i><span>logout facebook</span></div>)
+      case 'google' :
+        return (
+          <GoogleLogout 
+            clientId="237905800096-t4qvpgqhmkis3dpa8ce9pdhem7d5dgi2.apps.googleusercontent.com"
+            render={renderProps => (
+              <div className="logoutBtn" onClick={renderProps.onClick}><i class="fas fa-sign-out-alt"></i><span>logout google</span></div>
+            )}
+            onLogoutSuccess={logoutGoogle}
+            onFailure={logoutFailure}
+          />
+        )
+      case 'skytours' :
+        return <div className="logoutBtn" onClick={logoutSkytours} ><i class="fas fa-sign-out-alt"></i><span>logout skytours</span></div>
+      default :
+        return null;
+    }
+  }
+
+  React.useEffect(() => {
+    loginType();
+  }, [auth])
 
   const getCategory = async () => {
     try {
@@ -29,6 +58,7 @@ const Nav = () => {
       const respon = await Axios.get(`${config.api_host}/api/popular/categories`);
       // setList(respon.data);
       setCategory(respon.data.data);
+      // dispatch({type: 'SET_CATEGORY', categories: respon.data.data});
       setLoading(false);
     } catch(e) {
       console.error('error feching data', e);
@@ -69,6 +99,36 @@ const Nav = () => {
     setAuth(false);
     sessionStorage.clear();
   }
+
+  const logoutGoogle = () => {
+    dispatch({type: 'SET_lOGOUT'});
+    setEmail('');
+    setName('');
+    setPicture('');
+    setAuth(false);
+    sessionStorage.clear();
+  }
+
+  const logoutSkytours = () => {
+    const url = `${config.api_host}/api/auth/logout`
+    const tokenB = `Bearer `.concat(sessionStorage.getItem("tokenB"));
+    Axios.get(url, { headers : {'Authorization': tokenB} })
+    .then(_ => {
+      dispatch({type: 'SET_lOGOUT'});
+      setEmail('');
+      setName('');
+      setPicture('');
+      setAuth(false);
+      sessionStorage.clear();
+    })
+    .catch(err => {
+      swal("oops...", "Something went wrong, try again later", "error");
+    })
+  }
+
+  const logoutFailure = () => {
+    swal('Oops...', 'Something went wrong!', 'error');
+  }
   
   window.addEventListener('scroll', changeNavbar);
   
@@ -82,6 +142,11 @@ const Nav = () => {
 
   const onProfilePop = () => {
     setProfilePop(!profilePop);
+  }
+
+  function GlobalMegamenu(name) {
+    dispatch({type: 'SET_CAT', cat: name});
+    history.push('/list-attraction');
   }
   
 
@@ -115,9 +180,9 @@ const Nav = () => {
                       <img className="userPic" src={picture} alt="profile" />
                     </button>
                     <div className={profilePop ? "status-wrapper" : "status-wrapper hidden"}>
-                      <div><span>{name}</span></div>
-                      <div><span>{email}</span></div>
-                      <div className="logoutBtn" onClick={(e)=>{logOutFacebook(e)}}><i class="fas fa-sign-out-alt"></i><span>logout</span></div>
+                      <div><i class="fas fa-user-circle"></i><span>{name}</span></div>
+                      <div><i class="far fa-envelope-open"></i><span>{email}</span></div>
+                      {loginType()}
                     </div>
                   </div>
                 ) : 
@@ -153,7 +218,7 @@ const Nav = () => {
               ) : (
               <div className="category-list">
               {category.map((item, index) => 
-                <div className="category-wrapper" key={index}>
+                <div className="category-wrapper" onClick={() => GlobalMegamenu(item.name)} key={index}>
                   <img src={`${config.api_host}/api/images/${item.image.id}`} alt="icon" />
                   <p>{item.name}</p>
                 </div>

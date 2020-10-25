@@ -8,7 +8,7 @@ const Side = (props) => {
   const radButton = props.radButton;
 
   return (
-    <div className="col" style={{ backgroundColor: 'rgb(60, 120, 255)' }}>
+    <div className="col sider">
       <div className="center lr-3" ref={image}>
         <img src="" alt="" />
         <span style={{ color: 'rgba(255, 255, 255, 50%)' }}>best place</span>
