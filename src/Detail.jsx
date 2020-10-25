@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 
 const Detail = (props) => {
 
@@ -37,105 +37,107 @@ const Detail = (props) => {
 
   return (
     <Fragment>
-      <div className="row ia color block align-items-center pb-2">
-        <div className="col-8 ia">
-          {/* <div> */}
-          <div className="row ia mt-5">
-            <div className="col ia">
-              <span className="breadcumb">recreation / jungle land</span>
-              <h1 className="title">Jungle Land</h1>
-              <h1 className="title">Adventure Theme Park</h1>
-              <span className="rating ia">
-                <i className="material-icons">star</i>
-                <i className="material-icons">star</i>
-                <i className="material-icons">star</i>
-                <i className="material-icons">star</i>
-                <i className="material-icons">star</i>
-                <span>32 Reviews</span>
-                <span className="material-icons favorite">favorite</span>
-              </span>
-              <div className="button-row">
-                <button className="btn-ia">
-                  <i className="material-icons">location_on</i>
+      <section className="header">
+        <div className="container ia">
+          <div className="row ia">
+            <div className="title-header ia">
+              <div className="title-box ia">
+                <span className="breadcumb">recreation / jungle land</span>
+                <p className="title">Jungle Land <br />Adventure Theme Park</p>
+                <span className="rating ia">
+                  <i className="material-icons">star</i>
+                  <i className="material-icons">star</i>
+                  <i className="material-icons">star</i>
+                  <i className="material-icons">star</i>
+                  <i className="material-icons">star</i>
+                  <span>32 Reviews</span>
+                  <span className="material-icons favorite">favorite</span>
+                </span>
+                <div className="button-row">
+                  <button className="btn-ia">
+                    <i className="material-icons">location_on</i>
                   sentul
                 </button>
-                <button className="btn-ia">
-                  <i className="material-icons">location_on</i>
+                  <button className="btn-ia">
+                    <i className="material-icons">location_on</i>
                   bogor
                 </button>
+                </div>
+                <div className="about">
+                  <p>Contact</p>
+                  <div className="about-grid">
+                    <i className="material-icons">call</i>
+                    <span>+8989898</span>
+                  </div>
+                </div>
+                <div className="about">
+                  <p>Ticket Price</p>
+                  <div className="about-grid">
+                    <i className="material-icons-outlined">confirmation_number</i>
+                    <span>
+                      <p>weekday: RP.165.000,00 / person</p>
+                      <p>weekday: RP.165.000,00 / person</p>
+                    </span>
+                  </div>
+                </div>
+                <div className="about">
+                  <p>locations</p>
+                  <div className="about-grid">
+                    <i className="material-icons">location_on</i>
+                    <span>Kawasan Santul Nirwana</span>
+                  </div>
+                </div>
+                <div className="about">
+                  <p>Operational Hour</p>
+                  <div className="about-grid">
+                    <i className="material-icons-outlined">access_time</i>
+                    <span>09.00 - 20.00</span>
+                  </div>
+                </div>
               </div>
-              <div className="about">
-                <p>Contact</p>
-                <i className="material-icons">call</i>
-                <span>
-                  +8989898
-                </span>
-              </div>
-              <div className="about">
-                <p>Ticket Price</p>
-                <i className="material-icons-outlined">confirmation_number</i>
-                <span>
-                  <p>weekday: RP.165.000,00 / person</p>
-                  <p>weekday: RP.165.000,00 / person</p>
-                </span>
-              </div>
-              <div className="about">
-                <p>locations</p>
-                <i className="material-icons">location_on</i>
-                <span>
-                  Kawasan Santul Nirwana
-                </span>
-              </div>
-              <div className="about">
-                <p>Operational Hour</p>
-                <i className="material-icons-outlined">access_time</i>
-                <span>
-                  09.00 - 20.00
-                </span>
-              </div>
-            </div>
-            <div className="col ia m-auto">
-              <div className="img-main" ref={img} style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-              <div className="img-bar" ref={imgBar}>
-                <button className="image-on" onClick={imgHandler}>
-                  <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                </button>
-                <button className="image-on" onClick={imgHandler}>
-                  <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo2.jpg'})` }}></div>
-                </button>
-                <button className="image-on" onClick={imgHandler}>
-                  <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                </button>
-                <button className="image-on" onClick={imgHandler}>
-                  <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                </button>
-                <button className="image-on" onClick={imgHandler}>
-                  <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                </button>
-                <button className="image-on" onClick={imgHandler}>
-                  <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                </button>
-                <button className="image-on" onClick={imgHandler}>
-                  <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                </button>
+              <div className="image-title">
+                <div className="img-main" ref={img} style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
+                <div className="img-bar" ref={imgBar}>
+                  <button className="image-on" onClick={imgHandler}>
+                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
+                  </button>
+                  <button className="image-on" onClick={imgHandler}>
+                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo2.jpg'})` }}></div>
+                  </button>
+                  <button className="image-on" onClick={imgHandler}>
+                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
+                  </button>
+                  <button className="image-on" onClick={imgHandler}>
+                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
+                  </button>
+                  <button className="image-on" onClick={imgHandler}>
+                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
+                  </button>
+                  <button className="image-on" onClick={imgHandler}>
+                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
+                  </button>
+                  <button className="image-on" onClick={imgHandler}>
+                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="row ia align-items-center mt-2">
-        <div className="col-8 ia">
+      </section>
+      <section className="body ia">
+        <div className="container ia">
           <div className="row ia">
-            <div className="col ia mr-1">
-              <div className="card ia color">
-                <p>
-                  Merupakan wahana aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            <div className="main-body">
+              <div className="body-text">
+                <div className="card ia color">
+                  <p>
+                    Merupakan wahana aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                 </p>
-              </div>
-              <div className="mt-1">
-                <div className="mb-1">
-                  <h3 className="valign-super">Review</h3>
-                  <button className="float-right btn-ia" onClick={modal}>add review</button>
+                </div>
+                <div className="card-title-ia">
+                  <p>Review</p>
+                  <button className="btn-ia" onClick={modal}>add review</button>
                 </div>
                 <div className="card ia color">
                   <div className="review">
@@ -180,63 +182,47 @@ const Detail = (props) => {
                   </button>
                 </div>
               </div>
-            </div>
-            <div className="col-3 ia">
-              <div className="mb-1">
-                <p>Weather in sentul,</p>
-                <p>Bogor</p>
-              </div>
-              <div className="color card ia">
-                <div className="weather">
-                  <p>Today</p>
-                  {/* <i className="material-icons">weather</i> */}
-                  <p className="float-right">32&#xb0;</p>
+              <div className="body-det">
+                <p className="text-first-mb">Weather in sentul, <br />Bogor</p>
+                <div className="color card ia">
+                  <div className="weather">
+                    <p>Today</p>
+                    {/* <i className="material-icons">weather</i> */}
+                    <p className="float-right">32&#xb0;</p>
+                  </div>
+                  <hr className="hr ia" />
+                  <div className="weather">
+                    <p>Tomorrow</p>
+                    {/* <i className="material-icons">weather</i> */}
+                    <p className="float-right">32&#xb0;</p>
+                  </div>
+                  <hr className="hr ia" />
+                  <div className="weather">
+                    <p>Saturday</p>
+                    {/* <i className="material-icons">weather</i> */}
+                    <p className="float-right">32&#xb0;</p>
+                  </div>
+                  <hr className="hr ia" />
+                  <div className="weather">
+                    <p>Sunday</p>
+                    {/* <i className="material-icons">weather</i> */}
+                    <p className="float-right">32&#xb0;</p>
+                  </div>
                 </div>
-                <hr className="hr ia" />
-                <div className="weather">
-                  <p>Tomorrow</p>
-                  {/* <i className="material-icons">weather</i> */}
-                  <p className="float-right">32&#xb0;</p>
+                <div className="mt-1 mb-1 card-title-ia">
+                  <p>Direction</p>
+                  <span><i className="material-icons-outlined">gps_fixed</i></span>
                 </div>
-                <hr className="hr ia" />
-                <div className="weather">
-                  <p>Saturday</p>
-                  {/* <i className="material-icons">weather</i> */}
-                  <p className="float-right">32&#xb0;</p>
-                </div>
-                <hr className="hr ia" />
-                <div className="weather">
-                  <p>Sunday</p>
-                  {/* <i className="material-icons">weather</i> */}
-                  <p className="float-right">32&#xb0;</p>
-                </div>
-              </div>
-              <div className="mt-1 mb-1">
-                <h3>Direction</h3>
-                <span className="float-right"><i className="material-icons-outlined">gps_fixed</i></span>
-              </div>
-              <div className="color card ia">
-                <span>
+                <div className="color card ia">
+                  <span>
 
-                </span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <Footer />
-      <div className="modal" ref={modalRef}>
-        <div className="modal-content">
-          <div className="modal-header">
-            <p className="modal-title">Add Review</p>
-            <span className="close" onClick={closeModal}>X</span>
-          </div>
-          <div className="modal-body">
-            <p>JKJKJKJKJKJKJ</p>
-          </div>
-        </div>
-      </div>
-      {/* </div> */}
+      </section>
     </Fragment>
   );
 }
