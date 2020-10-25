@@ -340,6 +340,10 @@ nav {
   align-items: center;
 }
 
+.nav-logo:hover {
+  text-decoration: none;
+}
+
 .nav-logo img {
   vertical-align: middle;
   max-width: 65%;
@@ -995,7 +999,7 @@ select.select-category option {
   transition: transform 0.3s;
 }
 
-.filter-wrapper span:last-child::after {
+.filter-wrapper span.fil-span:last-child::after {
   top: 50%;
   right: 13px;
   width: 12px;
@@ -1007,18 +1011,18 @@ select.select-category option {
   background-size: 12px 12px;
 }
 
-.filter-wrapper [type='checkbox']:checked + label span:last-child {
+.filter-wrapper [type='checkbox']:checked + label span.fil-span:last-child {
   background: var(--blue-primary);
 }
 
-.filter-wrapper [type='checkbox']:checked + label span:last-child::before {
+.filter-wrapper [type='checkbox']:checked + label span.fil-span:last-child::before {
   transform: translateX(34px);
 }
 
-.filter-wrapper [type='checkbox']:checked + label span:last-child::after {
+.filter-wrapper [type='checkbox']:checked + label span.fil-span:last-child::after {
   width: 14px;
   height: 14px;
-  /*right: auto;*/
+  /* right: auto; */
   left: 13px;
   background-image: url(./svg/check.svg);
   filter: invert(100%) sepia(94%) saturate(24%) hue-rotate(352deg)
@@ -1240,7 +1244,7 @@ label .checkmark::after {
 }
 
 .type-checkbox input:checked + label .checkmark::after {
-  background: url(./svg/check.svg);
+  /* background: url(./svg/check.svg); */
   filter: invert(100%) sepia(94%) saturate(24%) hue-rotate(352deg)
     brightness(105%) contrast(107%);
   background-repeat: no-repeat;
@@ -1686,14 +1690,10 @@ ul>li {
   padding: 7px 20px;
   border: none;
   background-color: blue;
-  color: white;
+  color: white!important;
   outline: none;
   border-radius: 5px;
-}
-
-.header.ia {
-  margin-top: 2em;
-  text-align: start;
+  cursor: pointer;
 }
 
 .clear {
@@ -1956,14 +1956,14 @@ h3 {
 
 .rating.ia > i {
   color: orange;
-  vertical-align: bottom;
-  font-size: 18px;
+  vertical-align: middle;
+  font-size: 2.1em;
   padding-right: 3px;
 }
 
 .rating.ia > span {
   margin-left: 10px;
-  vertical-align: bottom;
+  vertical-align: middle;
 }
 
 .location {
@@ -2048,7 +2048,7 @@ h3 {
 .img-main {
   overflow: hidden;
   border-radius: 5px;
-  height: 40vh;
+  height: 40em;
   width: 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -2086,7 +2086,7 @@ h3 {
   display: inline-block;
   border-radius: 5px;
   width: 100%;
-  height: 10vh;
+  height: 7.5em;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -2116,8 +2116,8 @@ h3 {
 }
 
 .card.ia {
-  border-radius: 5px;
-  padding: 1em;
+  border-radius: 1em;
+  padding: 2em;
   overflow-wrap: anywhere;
 }
 
@@ -2126,10 +2126,14 @@ h3 {
   margin: 0;
 }
 
-.review,
 .weather {
   margin-bottom: 1em;
   margin-top: 2em;
+}
+
+.review {
+  margin-bottom: 3%;
+  margin-top: 4em;
 }
 
 .review:first-child,
@@ -2138,7 +2142,13 @@ h3 {
 }
 
 .review-head {
-  height: 7vh;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  margin-bottom: 3%;
+}
+
+.review-head .rating {
+  margin-bottom: 0;
 }
 
 .review-head div {
@@ -2146,8 +2156,9 @@ h3 {
 }
 
 .review-head .head-img {
-  height: 5vh;
-  width: 5vw;
+  height: 100%;
+  width: 62px;
+  border-radius: 1em;
   display: inline-block;
   background-position: center;
   background-size: cover;
@@ -2159,18 +2170,17 @@ h3 {
 }
 
 .review-head p {
+  color: rgb(63, 61, 86)!important;
   display: inline-block;
 }
 
 .review-head span {
-  color: rgba(0, 0, 0, 30%);
+  color: rgba(0, 0, 0, 30%)!important;
 }
 
 /* .review-body {
-  /* margin-top: 1em; */
-/* margin-bottom: 1em; */
-/* border-bottom: 1px solid rgba(0, 0, 0, 40%); */
-/* } */
+  margin-bottom: 1em;
+} */
 
 .hr.ia {
   margin: 1em 0;
@@ -2208,11 +2218,19 @@ h1 {
 
 .breadcumb {
   margin-bottom: 1em;
+  font-size: 1.5em!important;
 }
 
-h1.title {
-  color: #282c34;
-  font-weight: 500;
+.title-box p, .title-box span, .title-box button {
+  font-weight: 300;
+  font-size: 2.1em;
+  color: rgba(63, 61, 86, 0.7);
+}
+
+p.title {
+  font-weight: normal;
+  color: rgb(63, 61, 86);
+  font-size: 4.5em;
 }
 
 .button-row button:not(:last-child) {
@@ -2223,17 +2241,28 @@ h1.title {
   margin-top: 1em;
 }
 
+.about i {
+  align-self: center;
+}
+
+.about i:nth-child(2) {
+  align-self: start;
+  margin-top: 5px;
+}
+
 .about p {
   margin-bottom: 10px;
+  color: rgb(63, 61, 86);
 }
 
 .about span {
   display: inline-grid;
-  color: rgba(0, 0, 0, 40%);
   margin-left: 5px;
 }
 
 .about span p {
+  color: inherit;
+  font-size: unset;
   display: inline-block;
   margin: 0;
 }
@@ -2698,6 +2727,78 @@ footer.footer {
   font-weight: 300;
 }
 
+@media (min-width: 576px) {
+  .container.ia {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container.ia {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container.ia {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container.ia {
+    max-width: 1140px;
+  }
+}
+
+.container.ia {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.title-header.ia {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 5%;
+}
+
+.main-body {
+  margin-top: 5%;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  grid-gap: 5%;
+}
+
+.main-body p, .main-body button, .main-body span {
+  font-weight: 300;
+  font-size: 2.1em;
+  color: rgba(63, 61, 86, 0.7);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.card-title-ia {
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.card-title-ia p {
+  color: rgb(63, 61, 86)!important;
+  align-self: center;
+}
+
+.card-title-ia span, .card-title-ia button {
+  justify-self: end;
+}
+
+.text-first-mb {
+  margin-bottom: 20px;
+}
 /*^ login */
 
 .add-on {
@@ -2920,7 +3021,7 @@ footer.footer {
 
   .status-wrapper {
     position: absolute;
-    top: 9%;
+    top: 3%;
     left: 0%;
     display: flex;
     flex-direction: column;
@@ -2953,7 +3054,7 @@ footer.footer {
   .userPicBtn {
     position: absolute;
     left: 3%;
-    top: 1.5%;
+    top: 0.6%;
     outline: none;
     border: none;
     background: transparent;
@@ -3192,7 +3293,7 @@ footer.footer {
   }
 
   .btn-search-box {
-    width: 12%;
+    width: 20%;
     font-size: 1.4em;
   }
 

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import {NavLink, useHistory} from 'react-router-dom';
+import {Link, NavLink, useHistory} from 'react-router-dom';
 import Skytours from '../img/logo/logo.png';
 import Axios from 'axios';
 import { config } from '../config';
@@ -11,6 +11,7 @@ import swal from 'sweetalert';
 
 const Nav = () => {
   const LoginReducer = useSelector(state => state.LoginReducer);
+  const CategoryReducer = useSelector(state => state.CategoryReducer);
   const dispatch = useDispatch();
   let history = useHistory();
 
@@ -55,13 +56,12 @@ const Nav = () => {
   const getCategory = async () => {
     try {
       setLoading(true);
-      const respon = await Axios.get(`${config.api_host}/api/popular/categories`);
-      // setList(respon.data);
-      setCategory(respon.data.data);
-      // dispatch({type: 'SET_CATEGORY', categories: respon.data.data});
+      const respon = await Axios.get(`https://peaceful-river-55348.herokuapp.com/api/popular/categories`);
+      setCategory(respon.data.categories);
+      dispatch({type: 'SET_CATEGORY', categories: respon.data.categories});
       setLoading(false);
     } catch(e) {
-      console.error('error feching data', e);
+      console.error('ini error ngapa ', e);
     }
   }
 
@@ -155,10 +155,10 @@ const Nav = () => {
       <nav className={ navbar ? 'nav-scrolled' : megamenu ? 'nav-white' : ''}>
         <div className="container">
           <div className="row row-nav">
-            <div className="nav-logo">
+            <Link to="/" className="nav-logo">
               <img src={Skytours} alt="skytours" />
               <span>Skytours</span>
-            </div>
+            </Link>
             <ul className={hamburger ? "nav-links slide" : "nav-links"}>
               <li><NavLink activeClassName="navbar__link--active" className="navbar__link" exact={true} to="/">home</NavLink></li>
               <li><NavLink activeClassName="navbar__link--active" className="navbar__link" to="list-attraction">list attractions</NavLink></li>

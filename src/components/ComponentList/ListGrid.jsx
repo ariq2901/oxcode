@@ -228,7 +228,7 @@ const ListGrid = (props) => {
             <p>filter</p>
             <input type="checkbox" onClick={handleClick} id="filter-toggle"/>
             <label htmlFor="filter-toggle">
-              <span></span>
+              <span className="fil-span"></span>
             </label>
           </div>
           <p>list attractions</p>
@@ -236,7 +236,6 @@ const ListGrid = (props) => {
         <div className={gridfilter ? "grid-filter" : "grid-wrapper"}>
           <div className={gridfilter ? "filter-panel show" : "filter-panel none"}>
             <div className="sortby-tunel">
-              {console.log('list', list)}
               <p>sort by</p>
               <div className="sort-checkbox">
                 <div className="reviews-btn">
