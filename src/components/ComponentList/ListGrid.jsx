@@ -8,10 +8,16 @@ import {config} from '../../config';
 
 // import '../../feature';
 const ListGrid = (props) => {
+  const [long, setLong] = React.useState('');
+  const [lat, setLat] = React.useState('');
+  const [cdistance, setCdistance] = React.useState(false);
+  const [calphabet, setCalphabet] = React.useState(false);
+  const [creviews, setCreviews] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [list, setList] = React.useState([]);
   const [gridfilter, setGridfilter] = React.useState(false);
-  
+  console.log('props resulta length', props.resulta.length);
+
   const getList = async () => {
     try {
       setLoading(true);
@@ -34,7 +40,7 @@ const ListGrid = (props) => {
   
   React.useEffect(() => {
     getList();
-  }, []);
+  }, [props]);
   
   function skeletonCard(jumlah) {
     const skeleton = [];
@@ -92,11 +98,55 @@ const ListGrid = (props) => {
   }
 
   // function getUserLocation() {
-  //   navigator.geolocation.getCurrentPosition(function(position) {
-  //     console.log("lat : ", position.coords.latitude);
-  //     console.log("long : ", position.coords.longitude);
-  //   })
+  //   if(navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(function(position) {
+  //       setLat(position.coords.latitude.toString());
+  //       setLong(position.coords.longitude.toString());
+  //       console.log('lat long set');
+  //     })
+  //   }
+  //   else {
+  //     alert('your browser is not supported gps feature');
+  //   }
   // }
+
+  const filterList = () => {
+    if(creviews || calphabet) {
+      setLoading(true);
+      const url = `${config.api_host}/api/attractions/search`;
+  
+      if( creviews ) {
+        var payloadf = {
+          sort_by : "reviews"
+        }
+        console.log('by reviews');
+      }
+      if( calphabet ) {
+        var payloadf = {
+          sort_by : "alphabet"
+        }
+        console.log('by alphabet');
+      }
+      console.log('payloadf ', payloadf);
+      Axios.post(url, payloadf)
+      .then(respons => {
+        setList(respons.data.data);
+        setLoading(false)
+      })
+      .catch(e => {
+        console.log('failure ', e);
+        setLoading(false)
+      })
+    }
+  }
+
+  React.useEffect(() => {
+    if(creviews || calphabet) {
+      filterList();
+    } else {
+      getList();
+    }
+  }, [creviews, calphabet]);
   
   const handleClick = () => {
     setGridfilter(!gridfilter);
@@ -112,11 +162,49 @@ const ListGrid = (props) => {
     // console.log(i);
     if( i < 5 ) {
       tag.push(<i class="far fa-star"></i>);
-    } else {
-      console.log('pass');
+    }
+    if( i < 4 ) {
+      tag.push(<i class="far fa-star"></i>);
     }
     return tag;
   }
+
+  const byDistance = () => {
+    if( cdistance ) {
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            setLoading(true);
+            var latitu = position.coords.latitude;
+            var longitu = position.coords.longitude;
+
+            var latit = latitu.toString();
+            var longit = longitu.toString();
+            const url = `${config.api_host}/api/attractions/search`;
+            const payload = {
+              sort_by : "distance",
+              latitude : latit,
+              longitude : longit
+            }
+            Axios.post(url, payload)
+            .then(resp => {
+              setLoading(false)
+              setList(resp.data.data);
+            })
+            .catch(er => {
+              setLoading(false)
+              console.log('failure ', er);
+            })
+          }
+        )
+      }
+    }
+  }
+
+  React.useEffect(() => {
+    byDistance();
+  }, [cdistance]);
+
 
   return(
     <Fragment>
@@ -128,24 +216,28 @@ const ListGrid = (props) => {
             <label htmlFor="filter-toggle">
               <span></span>
             </label>
+            {console.log('latitude', lat)}
+            {console.log('longitude', long)}
+            {console.log('cdistance', cdistance)}
           </div>
           <p>list attractions</p>
         </div>
         <div className={gridfilter ? "grid-filter" : "grid-wrapper"}>
           <div className={gridfilter ? "filter-panel show" : "filter-panel none"}>
             <div className="sortby-tunel">
+              {console.log('list', list)}
               <p>sort by</p>
               <div className="sort-checkbox">
                 <div className="reviews-btn">
-                  <input type="checkbox" name="reviews" className="visually-hidden" id="reviews"/>
+                  <input type="checkbox" name="reviews" onClick={_ => setCreviews(!creviews)} className="visually-hidden" id="reviews"/>
                   <label htmlFor="reviews" className="sortby-label r">reviews</label>
                 </div>
                 <div className="reviews-btn">
-                  <input type="checkbox" name="distance" className="visually-hidden" id="distance"/>
+                  <input type="checkbox" name="distance" onClick={e => setCdistance(!cdistance)} className="visually-hidden" id="distance"/>
                   <label htmlFor="distance" className="sortby-label d">distance</label>
                 </div>
                 <div className="reviews-btn">
-                  <input type="checkbox" name="alphabet" className="visually-hidden" id="alphabet"/>
+                  <input type="checkbox" name="alphabet" onClick={_ => setCalphabet(!calphabet)} className="visually-hidden" id="alphabet"/>
                   <label htmlFor="alphabet" className="sortby-label a">alphabet</label>
                 </div>
               </div>
@@ -249,7 +341,8 @@ const ListGrid = (props) => {
               </Fragment>
             ) : (
               <Fragment>
-                {list.map((wisata) => 
+                {props.resulta.length > 0 ? 
+                  props.resulta.map((wisata) => 
                   <NavLink className="crd" to="/detail">
                     <div className="img-wrapper">
                       <img src={`${config.api_host}/api/images/${wisata.id}`} alt="place img" />
@@ -268,7 +361,27 @@ const ListGrid = (props) => {
                       <p className="location-name">{wisata.city}</p>
                     </div>
                   </NavLink>
-                )}
+                ) : list.map((wisata) => 
+                    <NavLink className="crd" to="/detail">
+                      <div className="img-wrapper">
+                        <img src={`${config.api_host}/api/images/${wisata.id}`} alt="place img" />
+                      </div>
+                      <div className="title-wrapper">
+                        <span>{wisata.name}</span>
+                      </div>
+                      <div className="rate-wrapper">
+                        <div className="rating">
+                          {starLoop(wisata.rating)}
+                        </div>
+                        <p className="total-reviews">175 reviews</p>
+                      </div>
+                      <div className="location-wrapper">
+                        {loading ? '' : <i class="fas fa-map-marker-alt"></i>}
+                        <p className="location-name">{wisata.city}</p>
+                      </div>
+                    </NavLink>
+                  )
+                }
               </Fragment>
             )}
           </div>

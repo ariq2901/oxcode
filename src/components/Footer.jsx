@@ -14,7 +14,7 @@ const Footer = () => {
 
   return(
     <Fragment>
-      <section className="footer">
+      <footer className="footer">
         <div className="row">
           <div className="footer-wrapper">
             <div className="footer-main">
@@ -68,7 +68,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </section>
+      </footer>
     </Fragment>
   );
 }
