@@ -28,7 +28,7 @@ const Nav = () => {
       setLoading(true);
       const respon = await Axios.get(`${config.api_host}/api/popular/categories`);
       // setList(respon.data);
-      setCategory(respon.data.data);
+      setCategory(respon.data.categories);
       setLoading(false);
     } catch(e) {
       console.error('error feching data', e);
