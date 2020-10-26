@@ -1065,8 +1065,8 @@ select.select-category option {
   /* active filter main */
   width: 100%;
   display: grid;
+  height: 50%;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(2, 2fr);
   grid-gap: 40px 30px;
   transition: 1s;
 }
@@ -1259,7 +1259,7 @@ label .checkmark::after {
 }
 
 .type-checkbox input:checked + label .checkmark::after {
-  /* background: url(./svg/check.svg); */
+  background: url(./svg/check.svg);
   filter: invert(100%) sepia(94%) saturate(24%) hue-rotate(352deg)
     brightness(105%) contrast(107%);
   background-repeat: no-repeat;

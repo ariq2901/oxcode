@@ -280,7 +280,7 @@ const Login = (props) => {
                         onSuccess={responseGoogle}
                         className="btn btn-block border-black goog"
                         icon="fa-google"
-                        clientId="237905800096-t4qvpgqhmkis3dpa8ce9pdhem7d5dgi2.apps.googleusercontent.com"
+                        clientId="51117970599-dcj1v25r3rclnbg51k3jr7nbu5a81nas.apps.googleusercontent.com"
                         buttonText="sign in with google"
                       />
                       <FacebookLogin

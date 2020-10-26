@@ -1,0 +1,15 @@
+{
+  "short_name": "Skytours App",
+  "name": "Skytours App",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "type": "image/png",
+      "sizes": "300x300"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#3f3d56",
+  "background_color": "#ffffff"
+}

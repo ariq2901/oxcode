@@ -34,7 +34,7 @@ const Nav = () => {
       case 'google' :
         return (
           <GoogleLogout 
-            clientId="237905800096-t4qvpgqhmkis3dpa8ce9pdhem7d5dgi2.apps.googleusercontent.com"
+            clientId="51117970599-dcj1v25r3rclnbg51k3jr7nbu5a81nas.apps.googleusercontent.com"
             render={renderProps => (
               <div className="logoutBtn" onClick={renderProps.onClick}><i class="fas fa-sign-out-alt"></i><span>logout google</span></div>
             )}

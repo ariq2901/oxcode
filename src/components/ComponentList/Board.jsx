@@ -70,8 +70,7 @@ const Board = ({ result }) => {
     console.log('payload onKydown ', payloadk);
     Axios.post(url, payloadk)
     .then(respons => {
-      console.log('kena, ', respons);
-      setOptions(respons.data.data)
+      setOptions(respons.data.attractions)
     })
     .catch(err => {
       console.log('failure ', err);
@@ -143,7 +142,7 @@ const Board = ({ result }) => {
 
     Axios.post(url, payloads)
     .then(respons => {
-      result(respons.data.data)
+      result(respons.data.attractions)
     })
     .catch(e => {
       console.log("error ", e);
@@ -172,7 +171,7 @@ const Board = ({ result }) => {
               <input type="text" name="searchCity" id="searchCity" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setSearchKota(event.target.value)}} placeholder="anywhere" value={searchKota}/>
             </div>
             <div className="category-search-box">
-              <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={CategoryReducer.category ? CategoryReducer.category : categories} class="select-category">
+              <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={categories} class="select-category">
                 <option selected value="" key="">All</option>
                 {CategoryReducer.category.map((c) =>
                   <option value={c.name} key={c.name}>{c.name}</option>

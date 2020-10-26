@@ -5,12 +5,20 @@ import '../../App.css';
 import Axios from 'axios';
 import { config } from '../../config';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import swal from 'sweetalert';
 
 const Board = ({result}) => {
+
+  const CategoryReducer = useSelector(state => state.CategoryReducer);
+  const dispatch = useDispatch();
+  let history = useHistory();
 
   const [options, setOptions] = useState([]);
   const [display, setDisplay] = useState(false);
   const [search, setSearch] = useState([]);
+  const [searchKota, setSearchKota] = React.useState("");
+  const [categories, setCategories] = React.useState("");
   const wrapperRef = useRef(null);
   const [hasil, setHasil] = useState([]);
   const [searchName, setSearchName] = useState("");
@@ -22,12 +30,53 @@ const Board = ({result}) => {
   const keyDownHandler = event => {
     event.preventDefault()
     const url = `${config.api_host}/api/search/attractions`;
-    const payload = {
-      name : event.target.value
+    var namaa = document.getElementById("searchName").value;
+    var cityy = document.getElementById("searchCity").value;
+    var category = document.getElementById("searchCategory").value;
+    if( namaa.length > 0 && cityy.length > 0 && category !== null ) {
+      var payloadk = {
+        name : namaa,
+        city : cityy,
+        categories : [category]
+      }
     }
-    Axios.post(url, payload)
+    if( namaa.length > 0 && cityy.length > 0 && category === null ) {
+      var payloadk = {
+        name : namaa,
+        city : cityy
+      }
+    }
+    if( namaa.length > 0 && cityy.length < 1 && category !== null ) {
+      var payloadk = {
+        name : namaa,
+        categories : [category]
+      }
+    }
+    if( cityy.length > 0 && namaa.length < 1 && category !== null ) {
+      var payloadk = {
+        city : cityy,
+        categories : [category]
+      }
+    }
+    if( namaa.length > 0 && cityy.length < 1 && category === null ) {
+      var payloadk = {
+        name : namaa
+      }
+    }
+    if( namaa.length < 1 && cityy.length > 0 && category === null ) {
+      var payloadk = {
+        city : cityy
+      }
+    }
+    if( namaa.length < 1 && cityy.length < 1 && category !== null ) {
+      var payloadk = {
+        categories : [category]
+      }
+    }
+    console.log('payload onKydown ', payloadk);
+    Axios.post(url, payloadk)
     .then(respons => {
-      setOptions(respons.data.data)
+      setOptions(respons.data.attractions)
     })
     .catch(err => {
       console.log('failure ', err);
@@ -52,15 +101,58 @@ const Board = ({result}) => {
   const onSubmit = event => {
     event.preventDefault()
     const url = `${config.api_host}/api/search/attractions`;
-    const payload = {
-      name : search
-    }
+    var namaa = document.getElementById("searchName").value
+    var cityy = document.getElementById("searchCity").value
+    var category = document.getElementById("searchCategory").value;
 
-    Axios.post(url, payload)
+    if( namaa.length > 0 && cityy.length > 0 && category !== null ) {
+      var payloads = {
+        name : namaa,
+        city : cityy,
+        categories : [category]
+      }
+    }
+    if( namaa.length > 0 && cityy.length > 0 && category === null ) {
+      var payloads = {
+        name : namaa,
+        city : cityy
+      }
+    }
+    if( namaa.length > 0 && cityy.length < 1 && category !== null ) {
+      var payloads = {
+        name : namaa,
+        categories : [category]
+      }
+    }
+    if( cityy.length > 0 && namaa.length < 1 && category !== null ) {
+      var payloads = {
+        city : cityy,
+        categories : [category]
+      }
+    }
+    if( namaa.length > 0 && cityy.length < 1 && category === null ) {
+      var payloads = {
+        name : namaa
+      }
+    }
+    if( namaa.length < 1 && cityy.length > 0 && category === null ) {
+      var payloads = {
+        city : cityy
+      }
+    }
+    if( namaa.length < 1 && cityy.length < 1 && category !== null ) {
+      var payloads = {
+        categories : [category]
+      }
+    }
+    Axios.post(url, payloads)
     .then(respons => {
-      result(respons.data)
+      result(respons.data.attractions)
+      dispatch({type: 'SET_RESULT', result: respons.data.attractions});
+      history.push('/list-attraction');
     })
     .catch(e => {
+      swal("ooops...", "there is an internal error, try again later", "error");
       console.log("error ", e);
     })
   }
@@ -75,7 +167,7 @@ const Board = ({result}) => {
     <Fragment>
       <div className="wrapper">
         <div className="slogant">
-          <p className="big-title"><Typical steps={[`find your destination`, 4000, 'find your exploration', 4000, 'find your happiness', 4000]} loop="1" wrapper="p"/></p>
+          <p className="big-title">{display ? "find your destination" : <Typical steps={[`find your destination`, 4000, 'find your exploration', 4000, 'find your happiness', 4000]} loop="1" wrapper="p"/>}</p>
           <p className="slogant-title">this is the start of your journey, don't let other people hold your move. get your own way</p>
         </div>
         <div className="worldmap-img">
@@ -88,19 +180,19 @@ const Board = ({result}) => {
           <form autoComplete="off" onSubmit={onSubmit}>
             <div className="find">
               <i class="fas fa-search"></i>
-              <input type="text" name="searchName" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event); setSearch(event.target.value)}} placeholder="what you would like to find?" value={search} />
+              <input type="text" name="searchName" id="searchName" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event); setSearch(event.target.value)}} placeholder="what you would like to find?" value={search} />
             </div>
             <div className="vl"></div>
             <div className="anywhere">
               <i class="fas fa-map-marker-alt"></i>
-              <input type="text" name="searchCity" onChange={event => setSearchCity(event.target.value)} placeholder="anywhere"/>
+              <input type="text" name="searchCity" id="searchCity" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setSearchKota(event.target.value)}} placeholder="anywhere" value={searchKota}/>
             </div>
             <div className="category-search-box">
-              <select onChange={event => setSearchCat(event.target.value)} class="select-category">
-                <option selected>All</option>
-                <option value="waterpark">One</option>
-                <option value="zoo">Two</option>
-                <option value="mountain">Three</option>
+            <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={CategoryReducer.category ? CategoryReducer.category : categories} class="select-category">
+                <option selected value="" key="">All</option>
+                {CategoryReducer.category.map((c) =>
+                  <option value={c.name} key={c.name}>{c.name}</option>
+                )}
               </select>
               <i class="fas fa-chevron-up"></i>
               <i class="fas fa-chevron-down"></i>

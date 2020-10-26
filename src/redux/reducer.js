@@ -58,6 +58,20 @@ const LoginReducer = (state = initialStateLogin, action) => {
   return state;
 }
 
+const initialResult = {
+  data: []
+}
+
+const ResultReducer = (state = initialResult, action) => {
+  if( action.type === 'SET_RESULT' ) {
+    return {
+      ...state,
+      data: action.result
+    }
+  }
+  return state;
+}
+
 const initialStateCategory = {
   category: []
 }
@@ -91,7 +105,8 @@ const reducer = combineReducers({
   RegisterReducer,
   LoginReducer,
   CategoryReducer,
-  MegamenuReducer
+  MegamenuReducer,
+  ResultReducer
 })
 
 export default reducer;

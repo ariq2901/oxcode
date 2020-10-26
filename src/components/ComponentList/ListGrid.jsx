@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 // import '../../feature';
 const ListGrid = (props) => {
   const MegamenuReducer = useSelector(state => state.MegamenuReducer);
+  const BoardHome = useSelector(state => state.ResultReducer);
 
   React.useEffect(() => {
     console.log('MegamenuReducer ListGrid', MegamenuReducer);
@@ -21,6 +22,7 @@ const ListGrid = (props) => {
   const [calphabet, setCalphabet] = React.useState(false);
   const [creviews, setCreviews] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [categories, setCategories] = React.useState([]);
   const [list, setList] = React.useState([]);
   const [gridfilter, setGridfilter] = React.useState(false);
 
@@ -39,6 +41,12 @@ const ListGrid = (props) => {
         }
         var respon = await Axios.post(url, payloadc);
         console.log('byCategory', respon);
+      }
+      if(BoardHome.data.length > 0) {
+        setList(BoardHome.data);
+        console.log('kena boardhome', BoardHome);
+        setLoading(false);
+        return false;
       } else {
         var respon = await Axios.get(`${config.api_host}/api/attractions`);
         console.log('bygeneral', respon);
@@ -125,7 +133,7 @@ const ListGrid = (props) => {
   // }
 
   const filterList = () => {
-    if(creviews || calphabet) {
+    if(creviews || calphabet || categories.length > 0) {
       setLoading(true);
       const url = `${config.api_host}/api/search/attractions`;
   
@@ -141,10 +149,15 @@ const ListGrid = (props) => {
         }
         console.log('by alphabet');
       }
+      if( categories.length > 0 ) {
+        var payloadf = {
+          categories : categories
+        }
+      }
       console.log('payloadf ', payloadf);
       Axios.post(url, payloadf)
       .then(respons => {
-        setList(respons.data.data);
+        setList(respons.data.attractions);
         setLoading(false)
       })
       .catch(e => {
@@ -155,12 +168,12 @@ const ListGrid = (props) => {
   }
 
   React.useEffect(() => {
-    if(creviews || calphabet) {
+    if(creviews || calphabet || categories.length > 0) {
       filterList();
     } else {
       getList();
     }
-  }, [creviews, calphabet]);
+  }, [creviews, calphabet, categories]);
   
   const handleClick = () => {
     setGridfilter(!gridfilter);
@@ -203,7 +216,8 @@ const ListGrid = (props) => {
             Axios.post(url, payload)
             .then(resp => {
               setLoading(false)
-              setList(resp.data.data);
+              console.log('list distance ', resp);
+              setList(resp.data.attractions);
             })
             .catch(er => {
               setLoading(false)
@@ -218,6 +232,20 @@ const ListGrid = (props) => {
   React.useMemo(() => {
     byDistance();
   }, [cdistance]);
+
+  const categoryHandle = (item) => {
+    if( categories.includes(item) ) {
+      setCategories(categories.filter(cat => cat != item));
+    } else {
+      setCategories([...categories, item]);
+    }
+  }
+
+  const checkHandler = e => {
+    const value = e.target.value;
+
+    categoryHandle(value);
+  }
 
 
   return(
@@ -253,6 +281,7 @@ const ListGrid = (props) => {
               </div>
             </div>
             <hr className="line-divider"/>
+            {console.log('CATEGORIES ', categories)}
             <div className="types-tunel">
               <div className="types-tunel-title">
                 <p>types of attractions</p>
@@ -262,7 +291,7 @@ const ListGrid = (props) => {
                 <ul>
                   <li>
                     <div className="type-checkbox">
-                      <input type="checkbox" id="mountain-box"/>
+                      <input type="checkbox" value="mountain" onClick={e => checkHandler(e)} id="mountain-box"/>
                       <label htmlFor="mountain-box">
                         <span className="checkmark"></span>
                       </label>
@@ -271,7 +300,7 @@ const ListGrid = (props) => {
                   </li>
                   <li>
                     <div className="type-checkbox">
-                      <input type="checkbox" id="beach-box"/>
+                      <input type="checkbox" value="beach" onClick={e => checkHandler(e)} id="beach-box"/>
                       <label htmlFor="beach-box">
                         <span className="checkmark"></span>
                       </label>
@@ -280,7 +309,7 @@ const ListGrid = (props) => {
                   </li>
                   <li>
                     <div className="type-checkbox">
-                      <input type="checkbox" id="museum-box"/>
+                      <input type="checkbox" value="museum" onClick={e => checkHandler(e)} id="museum-box"/>
                       <label htmlFor="museum-box">
                         <span className="checkmark"></span>
                       </label>
@@ -289,7 +318,7 @@ const ListGrid = (props) => {
                   </li>
                   <li>
                     <div className="type-checkbox">
-                      <input type="checkbox" id="zoo-box"/>
+                      <input type="checkbox" value="zoo" onClick={e => checkHandler(e)} id="zoo-box"/>
                       <label htmlFor="zoo-box">
                         <span className="checkmark"></span>
                       </label>
@@ -302,7 +331,16 @@ const ListGrid = (props) => {
                     <ul>
                       <li>
                         <div className="type-checkbox">
-                          <input type="checkbox" id="lake-box"/>
+                          <input type="checkbox" value="recreation" onClick={e => checkHandler(e)} id="recreation-box"/>
+                          <label htmlFor="recreation-box">
+                            <span className="checkmark"></span>
+                          </label>
+                          <p className="label-title">recreation</p>
+                        </div>
+                      </li>
+                      <li>
+                        <div className="type-checkbox">
+                          <input type="checkbox" value="lake" onClick={e => checkHandler(e)} id="lake-box"/>
                           <label htmlFor="lake-box">
                             <span className="checkmark"></span>
                           </label>
@@ -311,7 +349,7 @@ const ListGrid = (props) => {
                       </li>
                       <li>
                         <div className="type-checkbox">
-                          <input type="checkbox" id="waterpark-box"/>
+                          <input type="checkbox" value="waterpark" onClick={e => checkHandler(e)} id="waterpark-box"/>
                           <label htmlFor="waterpark-box">
                             <span className="checkmark"></span>
                           </label>
@@ -320,7 +358,7 @@ const ListGrid = (props) => {
                       </li>
                       <li>
                         <div className="type-checkbox">
-                          <input type="checkbox" id="waterfall-box"/>
+                          <input type="checkbox" value="waterfall" onClick={e => checkHandler(e)} id="waterfall-box"/>
                           <label htmlFor="waterfall-box">
                             <span className="checkmark"></span>
                           </label>
@@ -364,7 +402,7 @@ const ListGrid = (props) => {
                       <div className="rating">
                         {starLoop(wisata.rating)}
                       </div>
-                      <p className="total-reviews">175 reviews</p>
+                      <p className="total-reviews">{wisata.total_reviews} reviews</p>
                     </div>
                     <div className="location-wrapper">
                       {loading ? '' : <i class="fas fa-map-marker-alt"></i>}
