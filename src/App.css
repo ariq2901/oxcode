@@ -2744,6 +2744,17 @@ footer.footer {
   margin-left: 0.5%;
   font-weight: 300;
 }
+/* 
+** Map
+*/
+.map {
+  height: 260px;
+  width: 100%;
+}
+.map .leaflet-container {
+  height: 100%;
+  width: 100%;
+}
 
 @media (min-width: 576px) {
   .container.ia {

@@ -194,8 +194,8 @@ const Board = ({result}) => {
                   <option value={c.name} key={c.name}>{c.name}</option>
                 )}
               </select>
-              <i class="fas fa-chevron-up"></i>
-              <i class="fas fa-chevron-down"></i>
+              <i className="fas fa-chevron-up"></i>
+              <i className="fas fa-chevron-down"></i>
             </div>
             <button type="submit" className="btn-search-box">search</button>
           </form>
@@ -208,7 +208,7 @@ const Board = ({result}) => {
               <div onClick={() => setPlace(v.name)} className="autoOption" key={i} tabIndex="0">
                 {console.log('v', v)}
                 <div className="iconOption">
-                  <i class="fas fa-map-marker-alt"></i>
+                  <i className="fas fa-map-marker-alt"></i>
                 </div>
                 <div className="nameOption">
                   <span>{v.name}</span>

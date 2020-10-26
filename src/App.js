@@ -22,7 +22,7 @@ const App = () => {
           <Route path="/" exact>
             <Home />
           </Route>
-          <Route path="/list-attraction/:type?">
+          <Route path="/list-attraction/:type?">``
             <ListAttraction/>
           </Route>
           <Route path="/about" component={About} />

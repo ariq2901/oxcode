@@ -6,15 +6,12 @@ import {NavLink} from 'react-router-dom';
 import Axios from 'axios';
 import {config} from '../../config';
 import { useSelector } from 'react-redux';
+import MapContainer from '../MapContainer';
 
 // import '../../feature';
 const ListGrid = (props) => {
   const MegamenuReducer = useSelector(state => state.MegamenuReducer);
   const BoardHome = useSelector(state => state.ResultReducer);
-
-  React.useEffect(() => {
-    console.log('MegamenuReducer ListGrid', MegamenuReducer);
-  })
 
   const [long, setLong] = React.useState('');
   const [lat, setLat] = React.useState('');
@@ -51,6 +48,7 @@ const ListGrid = (props) => {
         var respon = await Axios.get(`${config.api_host}/api/attractions`);
         console.log('bygeneral', respon);
       }
+    console.log('ini isi:',respon);
       // setList(respon.data);
       setList(respon.data.attractions);
       setLoading(false)
@@ -61,7 +59,7 @@ const ListGrid = (props) => {
 
   
   React.useEffect(() => {
-    getList();
+    // getList();
   }, [props, MegamenuReducer]);
   
   function skeletonCard(jumlah) {
@@ -69,7 +67,7 @@ const ListGrid = (props) => {
     var n;
     for( n = 0; n < jumlah; n++ ) {
       skeleton.push(
-        <div className="crd">
+        <div className="crd" key={n}>
           <div className="img-wrapper loading"></div>
           <div className="title-wrapper loading">
             <span></span>
@@ -381,13 +379,18 @@ const ListGrid = (props) => {
                 <input type="text" name="to-op" id="to-op"/>
               </div>
             </div>
+            <hr className="line-divider dua"/>
+            <div className="map">
+              <MapContainer center={[-6.200000, 106.816666]} zoom={16}/>
+            </div>
           </div>
-          <div className={gridfilter ? "main-list-filter" : "main-list"}>
+          <div className={gridfilter ? "main-list-filtelr" : "main-list"}>
             {loading ? (
               <Fragment>
                 {skeletonCard(6)}
               </Fragment>
-            ) : (
+            ) : 
+            (
               <Fragment>
                 {props.resulta.length > 0 ? 
                   props.resulta.map((wisata) => 
@@ -431,7 +434,8 @@ const ListGrid = (props) => {
                   )
                 }
               </Fragment>
-            )}
+            )
+            }
           </div>
         </div>
       </div>

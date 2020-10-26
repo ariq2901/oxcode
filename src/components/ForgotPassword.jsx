@@ -4,8 +4,7 @@ import { config } from '../config';
 import { Link } from 'react-router-dom';
 import ForgotIMG from '../img/home/forgot.jpg';
 import Axios from 'axios';
-import swal from 'sweetalert';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert';
 import Loader from 'react-loader-spinner';
 
 const Forgotpassword= () => {
@@ -35,10 +34,11 @@ const Forgotpassword= () => {
     }
     Axios.post(url, body)
     .then(_ => {
-      swal("Done!", "we've sent the reset password request to your mailbox.", "success");
+      Swal("Done!", "we've sent the reset password request to your mailbox.", "success");
       setLoading(false);
     })
     .catch(err => {
+<<<<<<< HEAD
 
       if(err.response.status == 404) {
         swal({
@@ -49,6 +49,9 @@ const Forgotpassword= () => {
       } else {
         swal("oops...!", "we've got some trouble, try again later", "error");
       }
+=======
+      Swal("oops...!", "we've got some trouble, try again later" + err, "error");
+>>>>>>> 43d69633be54ae20b401163c49ad92ab0e978862
       setLoading(false);
     })
   }
