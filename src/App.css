@@ -3009,6 +3009,17 @@ footer.footer {
     transition: all 0.5s;
   }
 
+  #root > nav.nav-scrolled {
+    opacity: 1;
+  }
+
+  li.dropdown {
+    display: none;
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
+  }
+
   .nav-links.slide {
     z-index: 2;
     opacity: 1;

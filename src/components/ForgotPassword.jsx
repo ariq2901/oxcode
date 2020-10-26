@@ -39,7 +39,16 @@ const Forgotpassword= () => {
       setLoading(false);
     })
     .catch(err => {
-      swal("oops...!", "we've got some trouble, try again later" + err, "error");
+
+      if(err.response.status == 404) {
+        swal({
+          title: "Email isn't registered",
+          text: email + " " + "is not registered in our server",
+          icon: "warning"
+        })
+      } else {
+        swal("oops...!", "we've got some trouble, try again later", "error");
+      }
       setLoading(false);
     })
   }
