@@ -379,7 +379,7 @@ const ListGrid = (props) => {
             </div>
             <hr className="line-divider dua"/>
             <div className="map">
-              <MapContainer center={[-6.200000, 106.816666]} zoom={16}/>
+              <MapContainer center={[-6.200000, 106.816666]} zoom={5}/>
             </div>
           </div>
           <div className={gridfilter ? "main-list-filter" : "main-list"}>
