@@ -79,8 +79,8 @@ const PopularSpots = () => {
               </Fragment>
             ) : (
               <Fragment>
-              {list.slice(0, 3).map((wisata) =>
-                <NavLink className="crd" to="/detail">
+              {list.slice(0, 3).map((wisata, index) =>
+                <NavLink className="crd" to="/detail" key={index}>
                   <div className="img-wrapper">
                   <img src={`${config.api_host}/api/images/${wisata.images[0].id}`} alt="img" />
                   </div>

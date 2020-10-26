@@ -87,23 +87,23 @@ const Board = ({result}) => {
         <div className="search-box list-page">
           <form autoComplete="off" onSubmit={onSubmit}>
             <div className="find">
-              <i class="fas fa-search"></i>
+              <i className="fas fa-search"></i>
               <input type="text" name="searchName" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event); setSearch(event.target.value)}} placeholder="what you would like to find?" value={search} />
             </div>
             <div className="vl"></div>
             <div className="anywhere">
-              <i class="fas fa-map-marker-alt"></i>
+              <i className="fas fa-map-marker-alt"></i>
               <input type="text" name="searchCity" onChange={event => setSearchCity(event.target.value)} placeholder="anywhere"/>
             </div>
             <div className="category-search-box">
-              <select onChange={event => setSearchCat(event.target.value)} class="select-category">
+              <select onChange={event => setSearchCat(event.target.value)} className="select-category">
                 <option selected>All</option>
                 <option value="waterpark">One</option>
                 <option value="zoo">Two</option>
                 <option value="mountain">Three</option>
               </select>
-              <i class="fas fa-chevron-up"></i>
-              <i class="fas fa-chevron-down"></i>
+              <i className="fas fa-chevron-up"></i>
+              <i className="fas fa-chevron-down"></i>
             </div>
             <button type="submit" className="btn-search-box">search</button>
           </form>
@@ -116,7 +116,7 @@ const Board = ({result}) => {
               <div onClick={() => setPlace(v.name)} className="autoOption" key={i} tabIndex="0">
                 {console.log('v', v)}
                 <div className="iconOption">
-                  <i class="fas fa-map-marker-alt"></i>
+                  <i className="fas fa-map-marker-alt"></i>
                 </div>
                 <div className="nameOption">
                   <span>{v.name}</span>

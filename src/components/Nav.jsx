@@ -69,7 +69,6 @@ const Nav = () => {
     setEmail(sessionStorage.getItem("email"))
     setName(sessionStorage.getItem("name"))
     setPicture(sessionStorage.getItem("picture"))
-    console.log('has been set');
     const isBoolean = (sessionStorage.getItem("isLogin") == 'true');
     setAuth(isBoolean);
   }, [LoginReducer]);
@@ -161,7 +160,7 @@ const Nav = () => {
             </Link>
             <ul className={hamburger ? "nav-links slide" : "nav-links"}>
               <li><NavLink activeClassName="navbar__link--active" className="navbar__link" exact={true} to="/">home</NavLink></li>
-              <li><NavLink activeClassName="navbar__link--active" className="navbar__link" to="list-attraction">list attractions</NavLink></li>
+              <li><NavLink activeClassName="navbar__link--active" className="navbar__link" to="/list-attraction">list attractions</NavLink></li>
               <li className="dropdown">
                 <label htmlFor="megamenu-check" className="megamenu-check-label">
                   category

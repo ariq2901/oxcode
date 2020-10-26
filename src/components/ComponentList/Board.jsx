@@ -71,7 +71,7 @@ const Board = ({ result }) => {
     Axios.post(url, payloadk)
     .then(respons => {
       console.log('kena, ', respons);
-      setOptions(respons.data.data)
+      setOptions(respons.data.attractions)
     })
     .catch(err => {
       console.log('failure ', err);
@@ -143,7 +143,7 @@ const Board = ({ result }) => {
 
     Axios.post(url, payloads)
     .then(respons => {
-      result(respons.data.data)
+      result(respons.data.attractions)
     })
     .catch(e => {
       console.log("error ", e);
@@ -163,24 +163,24 @@ const Board = ({ result }) => {
         <div className="search-box list-page">
           <form autoComplete="off" onSubmit={onSubmit}>
             <div className="find">
-              <i class="fas fa-search"></i>
+              <i className="fas fa-search"></i>
               <input type="text" name="searchName" id="searchName" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event); setSearch(event.target.value)}} placeholder="what you would like to find?" value={search} />
             </div>
             <div className="vl"></div>
             <div className="anywhere">
-              <i class="fas fa-map-marker-alt"></i>
+              <i className="fas fa-map-marker-alt"></i>
               <input type="text" name="searchCity" id="searchCity" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setSearchKota(event.target.value)}} placeholder="anywhere" value={searchKota}/>
             </div>
             <div className="category-search-box">
-              <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={CategoryReducer.category ? CategoryReducer.category : categories} class="select-category">
-                <option selected value="" key="">All</option>
+              <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={CategoryReducer.category ? CategoryReducer.category : categories} multiple={false} className="select-category">
+                <option defaultValue value="" key="">All</option>
                 {CategoryReducer.category.map((c) =>
                   <option value={c.name} key={c.name}>{c.name}</option>
                 )}
               </select>
               <div className="chev-option">
-                <i class="fas fa-chevron-up"></i>
-                <i class="fas fa-chevron-down"></i>
+                <i className="fas fa-chevron-up"></i>
+                <i className="fas fa-chevron-down"></i>
               </div>
             </div>
             <button type="submit" className="btn-search-box">search</button>
@@ -194,7 +194,7 @@ const Board = ({ result }) => {
               <div onClick={() => setPlace(v.name)} className="autoOption" key={i} tabIndex="0">
                 {console.log('v', v)}
                 <div className="iconOption">
-                  <i class="fas fa-map-marker-alt"></i>
+                  <i className="fas fa-map-marker-alt"></i>
                 </div>
                 <div className="nameOption">
                   <span>{v.name}</span>
