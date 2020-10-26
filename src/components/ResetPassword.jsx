@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import React, { Fragment } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert';
 import Footer from './Footer';
 import { config } from '../config';
 
