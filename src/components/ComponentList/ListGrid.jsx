@@ -23,8 +23,9 @@ const ListGrid = (props) => {
     try {
       setLoading(true);
       console.log('props list-grid ', props.type);
+      let respon;
       if(props.type) {
-        var respon = await Axios.get(`${config.api_host}/api/${props.type}/attractions`);
+        respon = await Axios.get(`${config.api_host}/api/${props.type}/attractions`);
         console.log('bypopular', respon);
       }
       if(MegamenuReducer.category) {
@@ -32,7 +33,7 @@ const ListGrid = (props) => {
         const payloadc = {
           categories : [MegamenuReducer.category]
         }
-        var respon = await Axios.post(url, payloadc);
+        respon = await Axios.post(url, payloadc);
         console.log('byCategory', respon);
       }
       if(BoardHome.data.length > 0) {
@@ -41,11 +42,9 @@ const ListGrid = (props) => {
         setLoading(false);
         return false;
       } else {
-        var respon = await Axios.get(`${config.api_host}/api/attractions`);
+        respon = await Axios.get(`${config.api_host}/api/attractions`);
         console.log('bygeneral', respon);
       }
-    console.log('ini isi:',respon);
-      // setList(respon.data);
       setList(respon.data.attractions);
       setLoading(false)
     } catch(e) {
@@ -55,7 +54,7 @@ const ListGrid = (props) => {
 
   
   React.useEffect(() => {
-    // getList();
+    getList();
   }, [props, MegamenuReducer]);
   
   function skeletonCard(jumlah) {
@@ -95,16 +94,16 @@ const ListGrid = (props) => {
           </div>
           <div className="rate-wrapper">
             <div className="rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
             </div>
             <p className="total-reviews">439 reviews</p>
           </div>
           <div className="location-wrapper">
-            <i class="fas fa-map-marker-alt"></i>
+            <i className="fas fa-map-marker-alt"></i>
             <p className="location-name">jakarta</p>
           </div>
         </NavLink>
@@ -114,6 +113,7 @@ const ListGrid = (props) => {
   }
 
   const filterList = () => {
+    console.log('filter list jalan');
     if(creviews || calphabet || categories.length > 0) {
       setLoading(true);
       const url = `${config.api_host}/api/search/attractions`;
@@ -125,16 +125,10 @@ const ListGrid = (props) => {
         console.log('by alphabet');
       }
       if( creviews ) {
-        var payloadf = {
+        payloadf = {
           sort_by : "reviews"
         }
         console.log('by reviews');
-      }
-      if( categories.length > 0 ) {
-        var payloadf = {
-          categories : categories
-        }
-        console.log('cuman category');
       }
       if( categories.length > 0 && creviews ) {
         var payloadf = {
@@ -149,6 +143,12 @@ const ListGrid = (props) => {
           categories : categories
         }
         console.log('category & alphabet');
+      }
+      if( categories.length > 0 && !creviews && !calphabet) {
+        var payloadf = {
+          categories : categories
+        }
+        console.log('cuman category');
       }
       
       console.log('payloadf ', payloadf);
@@ -174,21 +174,20 @@ const ListGrid = (props) => {
   
   const handleClick = () => {
     setGridfilter(!gridfilter);
-    console.log(gridfilter);
   }
 
   function starLoop(stars) {
     var tag = [];
     var i;
     for( i = 0; i < stars; i++ ) {
-      tag.push(<i class='fas fa-star'></i>);
+      tag.push(<i key={i} className='fas fa-star'></i>);
     }
     // console.log(i);
     if( i < 5 ) {
-      tag.push(<i class="far fa-star"></i>);
+      tag.push(<i key={i} className="far fa-star"></i>);
     }
     if( i < 4 ) {
-      tag.push(<i class="far fa-star"></i>);
+      tag.push(<i key={i} className="far fa-star"></i>);
     }
     return tag;
   }
@@ -197,13 +196,12 @@ const ListGrid = (props) => {
     if( cdistance ) {
       if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          function(position) {
+          async function(position) {
             setLoading(true);
-            var latitu = position.coords.latitude;
-            var longitu = position.coords.longitude;
 
-            var latit = latitu.toString();
-            var longit = longitu.toString();
+            var latit = position.coords.latitude.toString();
+            var longit = position.coords.longitude.toString();
+
             const url = `${config.api_host}/api/search/attractions`;
             if( cdistance && categories.length < 1 ) {  
               var payload = {
@@ -241,6 +239,7 @@ const ListGrid = (props) => {
   }, [cdistance]);
 
   const categoryHandle = (item) => {
+    console.log('item: ',item);
     if( categories.includes(item) ) {
       setCategories(categories.filter(cat => cat != item));
     } else {
@@ -288,15 +287,15 @@ const ListGrid = (props) => {
               <p>sort by</p>
               <div className="sort-checkbox">
                 <div className="reviews-btn">
-                  <input type="checkbox" name="reviews" onClick={_ => setCreviews(!creviews)} className="visually-hidden" id="reviews"/>
+                  <input type="radio" name="sortBy" onClick={_ => setCreviews(!creviews)} className="visually-hidden" id="reviews"/>
                   <label htmlFor="reviews" className="sortby-label r">reviews</label>
                 </div>
                 <div className="reviews-btn">
-                  <input type="checkbox" name="distance" onClick={_ => setCdistance(!cdistance)} className="visually-hidden" id="distance"/>
+                  <input type="radio" name="sortBy" onClick={_ => setCdistance(!cdistance)} className="visually-hidden" id="distance"/>
                   <label htmlFor="distance" className="sortby-label d">distance</label>
                 </div>
                 <div className="reviews-btn">
-                  <input type="checkbox" name="alphabet" onClick={_ => setCalphabet(!calphabet)} className="visually-hidden" id="alphabet"/>
+                  <input type="radio" name="sortBy" onClick={_ => setCalphabet(!calphabet)} className="visually-hidden" id="alphabet"/>
                   <label htmlFor="alphabet" className="sortby-label a">alphabet</label>
                 </div>
               </div>
@@ -431,12 +430,12 @@ const ListGrid = (props) => {
                       <p className="total-reviews">{wisata.total_reviews} reviews</p>
                     </div>
                     <div className="location-wrapper">
-                      {loading ? '' : <i class="fas fa-map-marker-alt"></i>}
+                      {loading ? '' : <i className="fas fa-map-marker-alt"></i>}
                       <p className="location-name">{wisata.city}</p>
                     </div>
                   </NavLink>
-                ) : list.map((wisata) => 
-                    <NavLink className="crd" to="/detail">
+                ) : list.map((wisata, index) => 
+                    <NavLink className="crd" to="/detail" key={index}>
                       <div className="img-wrapper">
                         <img src={`${config.api_host}/api/images/${wisata.images[0].id}`} alt="place img" />
                       </div>
@@ -450,7 +449,7 @@ const ListGrid = (props) => {
                         <p className="total-reviews">{wisata.total_reviews} reviews</p>
                       </div>
                       <div className="location-wrapper">
-                        {loading ? '' : <i class="fas fa-map-marker-alt"></i>}
+                        {loading ? '' : <i className="fas fa-map-marker-alt"></i>}
                         <p className="location-name">{wisata.city}</p>
                       </div>
                     </NavLink>

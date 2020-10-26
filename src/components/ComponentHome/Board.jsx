@@ -20,12 +20,12 @@ const Board = ({result}) => {
   const [searchKota, setSearchKota] = React.useState("");
   const [categories, setCategories] = React.useState("");
   const wrapperRef = useRef(null);
-  const [hasil, setHasil] = useState([]);
-  const [searchName, setSearchName] = useState("");
-  const [searchCity, setSearchCity] = useState("");
-  const [searchCat, setSearchCat] = useState("");
-  const [searchFrom, setSearchFrom] = useState("00:00");
-  const [searchTo, setSearchTo] = useState("00:00");
+  // const [hasil, setHasil] = useState([]);
+  // const [searchName, setSearchName] = useState("");
+  // const [searchCity, setSearchCity] = useState("");
+  // const [searchCat, setSearchCat] = useState("");
+  // const [searchFrom, setSearchFrom] = useState("00:00");
+  // const [searchTo, setSearchTo] = useState("00:00");
 
   const keyDownHandler = event => {
     event.preventDefault()
@@ -33,43 +33,44 @@ const Board = ({result}) => {
     var namaa = document.getElementById("searchName").value;
     var cityy = document.getElementById("searchCity").value;
     var category = document.getElementById("searchCategory").value;
+    let payloadk = {};
     if( namaa.length > 0 && cityy.length > 0 && category !== null ) {
-      var payloadk = {
+      payloadk = {
         name : namaa,
         city : cityy,
         categories : [category]
       }
     }
     if( namaa.length > 0 && cityy.length > 0 && category === null ) {
-      var payloadk = {
+      payloadk = {
         name : namaa,
         city : cityy
       }
     }
     if( namaa.length > 0 && cityy.length < 1 && category !== null ) {
-      var payloadk = {
+      payloadk = {
         name : namaa,
         categories : [category]
       }
     }
     if( cityy.length > 0 && namaa.length < 1 && category !== null ) {
-      var payloadk = {
+      payloadk = {
         city : cityy,
         categories : [category]
       }
     }
     if( namaa.length > 0 && cityy.length < 1 && category === null ) {
-      var payloadk = {
+      payloadk = {
         name : namaa
       }
     }
     if( namaa.length < 1 && cityy.length > 0 && category === null ) {
-      var payloadk = {
+      payloadk = {
         city : cityy
       }
     }
     if( namaa.length < 1 && cityy.length < 1 && category !== null ) {
-      var payloadk = {
+      payloadk = {
         categories : [category]
       }
     }
@@ -104,44 +105,45 @@ const Board = ({result}) => {
     var namaa = document.getElementById("searchName").value
     var cityy = document.getElementById("searchCity").value
     var category = document.getElementById("searchCategory").value;
-
+    let payloads = {};
+    
     if( namaa.length > 0 && cityy.length > 0 && category !== null ) {
-      var payloads = {
+      payloads = {
         name : namaa,
         city : cityy,
         categories : [category]
       }
     }
     if( namaa.length > 0 && cityy.length > 0 && category === null ) {
-      var payloads = {
+      payloads = {
         name : namaa,
         city : cityy
       }
     }
     if( namaa.length > 0 && cityy.length < 1 && category !== null ) {
-      var payloads = {
+      payloads = {
         name : namaa,
         categories : [category]
       }
     }
     if( cityy.length > 0 && namaa.length < 1 && category !== null ) {
-      var payloads = {
+      payloads = {
         city : cityy,
         categories : [category]
       }
     }
     if( namaa.length > 0 && cityy.length < 1 && category === null ) {
-      var payloads = {
+      payloads = {
         name : namaa
       }
     }
     if( namaa.length < 1 && cityy.length > 0 && category === null ) {
-      var payloads = {
+      payloads = {
         city : cityy
       }
     }
     if( namaa.length < 1 && cityy.length < 1 && category !== null ) {
-      var payloads = {
+      payloads = {
         categories : [category]
       }
     }
@@ -179,12 +181,12 @@ const Board = ({result}) => {
         <div className="search-box list-page">
           <form autoComplete="off" onSubmit={onSubmit}>
             <div className="find">
-              <i class="fas fa-search"></i>
+              <i className="fas fa-search"></i>
               <input type="text" name="searchName" id="searchName" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event); setSearch(event.target.value)}} placeholder="what you would like to find?" value={search} />
             </div>
             <div className="vl"></div>
             <div className="anywhere">
-              <i class="fas fa-map-marker-alt"></i>
+              <i className="fas fa-map-marker-alt"></i>
               <input type="text" name="searchCity" id="searchCity" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setSearchKota(event.target.value)}} placeholder="anywhere" value={searchKota}/>
             </div>
             <div className="category-search-box">

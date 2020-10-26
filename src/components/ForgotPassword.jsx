@@ -38,7 +38,7 @@ const Forgotpassword= () => {
       setLoading(false);
     })
     .catch(err => {
-      if(err.response.status == 404) {
+      if(err.response.status === 404) {
         Swal({
           title: "Email isn't registered",
           text: email + " " + "is not registered in our server",

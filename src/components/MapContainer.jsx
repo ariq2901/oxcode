@@ -11,12 +11,13 @@ const MapContainer = (props) => {
         center={props.center}
         attributionControl={false}
         zoom={props.zoom}
+        zoomControl={false}
       >
         <TileLayer
-        attribution='&copy; HERE 2020'
-        url={hereTileURL}
-      />
-      <Marker position={props.center} />
+          attribution='&copy; HERE 2020'
+          url={hereTileURL}
+        />
+        <Marker position={props.center} />
       </Map>
     </React.Fragment>
   )
