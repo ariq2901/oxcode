@@ -18,7 +18,7 @@ const ResetPassword = () => {
 
   const checkToken = async () => {
     try {
-      const result =  (await Axios.get(`http://127.0.0.1:8000/api/password/find/${params.token}`)).data;
+      const result =  (await Axios.get(`http://127.0.0.1:8000/api/password/find/${params.token}`)).data.reset_password_token;
       setEmail(result.email);
       setToken(result.token);
     } catch (error) {
@@ -53,6 +53,7 @@ const ResetPassword = () => {
       const result = await Axios.post(`http://127.0.0.1:8000/api/password/reset/`, payload);
       Swal.fire('Success', 'Your password has been changed successfully!','success');
     } catch (error) {
+      console.log(error);
       Swal.fire('Something went wrong', 'Please try again.','error');
     }
 
