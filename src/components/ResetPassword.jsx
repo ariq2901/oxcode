@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import React, { Fragment } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert';
 import Footer from './Footer';
 import { config } from '../config';
 
@@ -19,7 +19,7 @@ const ResetPassword = () => {
 
   const checkToken = async () => {
     try {
-      const result =  (await Axios.get(`${config.api_host}/api/password/find/${params.token}`)).data;
+      const result =  (await Axios.get(`${config.api_host}/api/password/find/${params.token}`)).data.reset_password_token;
       setEmail(result.email);
       setToken(result.token);
     } catch (error) {
@@ -55,6 +55,7 @@ const ResetPassword = () => {
       console.log('error ', result);
       Swal.fire('Success', 'Your password has been changed successfully!','success');
     } catch (error) {
+      console.log(error);
       Swal.fire('Something went wrong', 'Please try again.','error');
     }
 

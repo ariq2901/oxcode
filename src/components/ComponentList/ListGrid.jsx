@@ -374,7 +374,7 @@ const ListGrid = (props) => {
                 ) : list.map((wisata) => 
                     <NavLink className="crd" to="/detail">
                       <div className="img-wrapper">
-                        <img src={`${config.api_host}/api/images/${wisata.id}`} alt="place img" />
+                        <img src={`${config.api_host}/api/images/${wisata.images[0].id}`} alt="place img" />
                       </div>
                       <div className="title-wrapper">
                         <span>{wisata.name}</span>
@@ -383,7 +383,7 @@ const ListGrid = (props) => {
                         <div className="rating">
                           {starLoop(wisata.rating)}
                         </div>
-                        <p className="total-reviews">175 reviews</p>
+                        <p className="total-reviews">{wisata.total_reviews} reviews</p>
                       </div>
                       <div className="location-wrapper">
                         {loading ? '' : <i class="fas fa-map-marker-alt"></i>}
