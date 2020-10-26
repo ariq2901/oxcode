@@ -1,24 +1,19 @@
 import React, { Fragment, useRef } from 'react'
-import Axios from 'axios';
+import { useSelector } from 'react-redux';
 import { config } from '../../config';
 import { useEffect } from 'react';
-import { event } from 'jquery';
-import { useSelector } from 'react-redux';
+import Axios from 'axios';
+import swal from 'sweetalert';
 
 const Board = ({ result }) => {
   const CategoryReducer = useSelector(state => state.CategoryReducer);
 
-  const [options, setOptions] = React.useState([]);
-  const [display, setDisplay] = React.useState(false);
-  const [search, setSearch] = React.useState([]);
   const [searchKota, setSearchKota] = React.useState("");
   const [categories, setCategories] = React.useState("");
+  const [display, setDisplay] = React.useState(false);
+  const [options, setOptions] = React.useState([]);
+  const [search, setSearch] = React.useState([]);
   const wrapperRef = useRef(null);
-  // const [searchName, setSearchName] = React.useState("");
-  // const [searchCity, setSearchCity] = React.useState("");
-  const [searchCat, setSearchCat] = React.useState("");
-  // const [searchFrom, setSearchFrom] = React.useState("00:00");
-  // const [searchTo, setSearchTo] = React.useState("00:00");
 
   const keyDownHandler = event => {
     event.preventDefault()
@@ -67,14 +62,12 @@ const Board = ({ result }) => {
         categories : [category]
       }
     }
-    console.log('payload onKydown ', payloadk);
     Axios.post(url, payloadk)
     .then(respons => {
-      console.log('kena, ', respons);
       setOptions(respons.data.attractions)
     })
     .catch(err => {
-      console.log('failure ', err);
+      swal("ooops...", "there is an internal server error, try again later", "error");
     })
   }
 
@@ -146,13 +139,12 @@ const Board = ({ result }) => {
       result(respons.data.attractions)
     })
     .catch(e => {
-      console.log("error ", e);
+      swal("ooops...", "there is an internal server error, try again later", "error");
     })
   }
 
   const setPlace = place => {
     setSearch(place);
-    console.log('place', place);
     setDisplay(false);
   }
 
@@ -192,7 +184,6 @@ const Board = ({ result }) => {
           {options.slice(0, 5).map((v, i) => {
             return (
               <div onClick={() => setPlace(v.name)} className="autoOption" key={i} tabIndex="0">
-                {console.log('v', v)}
                 <div className="iconOption">
                   <i className="fas fa-map-marker-alt"></i>
                 </div>

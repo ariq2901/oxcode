@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
-import { useState } from 'react';
-import { config } from '../config';
-import { Link } from 'react-router-dom';
 import ForgotIMG from '../img/home/forgot.jpg';
-import Axios from 'axios';
-import Swal from 'sweetalert';
 import Loader from 'react-loader-spinner';
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { config } from '../config';
+import { useState } from 'react';
+import Swal from 'sweetalert';
+import Axios from 'axios';
 
 const Forgotpassword= () => {
   const [email, setEmail] = useState('');
@@ -19,12 +19,12 @@ const Forgotpassword= () => {
   const sendRequest = () => {
     setLoading(true);
     if( email.length == '' ){
-      Swal.fire('Something went wrong', 'The email can\'t be empty','error')
+      Swal('Something went wrong', 'The email can\'t be empty','error')
       setLoading(false);
       return false;
     }
     if( !validateEmail(email) ) {
-      Swal.fire('Something went wrong', 'The email is not valid','error')
+      Swal('Something went wrong', 'The email is not valid','error')
       setLoading(false);
       return false;
     }
@@ -38,20 +38,15 @@ const Forgotpassword= () => {
       setLoading(false);
     })
     .catch(err => {
-<<<<<<< HEAD
-
       if(err.response.status == 404) {
-        swal({
+        Swal({
           title: "Email isn't registered",
           text: email + " " + "is not registered in our server",
           icon: "warning"
         })
       } else {
-        swal("oops...!", "we've got some trouble, try again later", "error");
+        Swal("oops...!", "we've got some trouble, try again later", "error");
       }
-=======
-      Swal("oops...!", "we've got some trouble, try again later" + err, "error");
->>>>>>> 43d69633be54ae20b401163c49ad92ab0e978862
       setLoading(false);
     })
   }
