@@ -38,20 +38,16 @@ const Forgotpassword= () => {
       setLoading(false);
     })
     .catch(err => {
-<<<<<<< HEAD
 
-      if(err.response.status == 404) {
-        swal({
+      if(err.response.status === 404) {
+        Swal({
           title: "Email isn't registered",
           text: email + " " + "is not registered in our server",
           icon: "warning"
         })
       } else {
-        swal("oops...!", "we've got some trouble, try again later", "error");
+        Swal("oops...!", "we've got some trouble, try again later", "error");
       }
-=======
-      Swal("oops...!", "we've got some trouble, try again later" + err, "error");
->>>>>>> 43d69633be54ae20b401163c49ad92ab0e978862
       setLoading(false);
     })
   }

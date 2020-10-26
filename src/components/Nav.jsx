@@ -30,20 +30,20 @@ const Nav = () => {
   const loginType = () => {
     switch( sessionStorage.getItem("typeLogin") ) {
       case 'facebook' :
-        return (<div className="logoutBtn" onClick={(e)=>{logOutFacebook(e)}}><i class="fas fa-sign-out-alt"></i><span>logout facebook</span></div>)
+        return (<div className="logoutBtn" onClick={(e)=>{logOutFacebook(e)}}><i className="fas fa-sign-out-alt"></i><span>logout facebook</span></div>)
       case 'google' :
         return (
           <GoogleLogout 
             clientId="51117970599-dcj1v25r3rclnbg51k3jr7nbu5a81nas.apps.googleusercontent.com"
             render={renderProps => (
-              <div className="logoutBtn" onClick={renderProps.onClick}><i class="fas fa-sign-out-alt"></i><span>logout google</span></div>
+              <div className="logoutBtn" onClick={renderProps.onClick}><i className="fas fa-sign-out-alt"></i><span>logout google</span></div>
             )}
             onLogoutSuccess={logoutGoogle}
             onFailure={logoutFailure}
           />
         )
       case 'skytours' :
-        return <div className="logoutBtn" onClick={logoutSkytours} ><i class="fas fa-sign-out-alt"></i><span>logout skytours</span></div>
+        return <div className="logoutBtn" onClick={logoutSkytours} ><i className="fas fa-sign-out-alt"></i><span>logout skytours</span></div>
       default :
         return null;
     }
@@ -179,8 +179,8 @@ const Nav = () => {
                       <img className="userPic" src={picture} alt="profile" />
                     </button>
                     <div className={profilePop ? "status-wrapper" : "status-wrapper hidden"}>
-                      <div><i class="fas fa-user-circle"></i><span>{name}</span></div>
-                      <div><i class="far fa-envelope-open"></i><span>{email}</span></div>
+                      <div><i className="fas fa-user-circle"></i><span>{name}</span></div>
+                      <div><i className="far fa-envelope-open"></i><span>{email}</span></div>
                       {loginType()}
                     </div>
                   </div>
