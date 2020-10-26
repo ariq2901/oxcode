@@ -1,31 +1,33 @@
-import React, { Fragment, Component, useRef, useEffect } from 'react';
+import React, { Fragment, Component, useRef, useEffect, useState } from 'react';
 import WorldMap from '../../img/home/worldmap.png';
 import Typical from 'react-typical';
 import '../../App.css';
 import Axios from 'axios';
 import { config } from '../../config';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Board = ({result}) => {
-  const [options, setOptions] = React.useState([]);
-  const [display, setDisplay] = React.useState(false);
-  const [search, setSearch] = React.useState([]);
+
+  const [options, setOptions] = useState([]);
+  const [display, setDisplay] = useState(false);
+  const [search, setSearch] = useState([]);
   const wrapperRef = useRef(null);
-  const [hasil, setHasil] = React.useState([]);
-  const [searchName, setSearchName] = React.useState("");
-  const [searchCity, setSearchCity] = React.useState("");
-  const [searchCat, setSearchCat] = React.useState("");
-  const [searchFrom, setSearchFrom] = React.useState("00:00");
-  const [searchTo, setSearchTo] = React.useState("00:00");
+  const [hasil, setHasil] = useState([]);
+  const [searchName, setSearchName] = useState("");
+  const [searchCity, setSearchCity] = useState("");
+  const [searchCat, setSearchCat] = useState("");
+  const [searchFrom, setSearchFrom] = useState("00:00");
+  const [searchTo, setSearchTo] = useState("00:00");
 
   const keyDownHandler = event => {
     event.preventDefault()
-    const url = `${config.api_host}/api/attractions/search`;
+    const url = `${config.api_host}/api/search/attractions`;
     const payload = {
       name : event.target.value
     }
     Axios.post(url, payload)
     .then(respons => {
-      setOptions(respons.data)
+      setOptions(respons.data.data)
     })
     .catch(err => {
       console.log('failure ', err);
@@ -49,7 +51,7 @@ const Board = ({result}) => {
 
   const onSubmit = event => {
     event.preventDefault()
-    const url = `${config.api_host}/api/attractions/search`;
+    const url = `${config.api_host}/api/search/attractions`;
     const payload = {
       name : search
     }
@@ -73,7 +75,7 @@ const Board = ({result}) => {
     <Fragment>
       <div className="wrapper">
         <div className="slogant">
-          <p className="big-title"><Typical steps={[`find your destination`, 10000, 'find your exploration', 10000, 'find your happiness', 10000]} loop={Infinity} wrapper="p"/></p>
+          <p className="big-title"><Typical steps={[`find your destination`, 4000, 'find your exploration', 4000, 'find your happiness', 4000]} loop="1" wrapper="p"/></p>
           <p className="slogant-title">this is the start of your journey, don't let other people hold your move. get your own way</p>
         </div>
         <div className="worldmap-img">
@@ -113,8 +115,13 @@ const Board = ({result}) => {
             return (
               <div onClick={() => setPlace(v.name)} className="autoOption" key={i} tabIndex="0">
                 {console.log('v', v)}
-                <span><i class="fas fa-map-marker-alt"></i> &nbsp;{v.name}</span>
-                <span>{v.address}</span>
+                <div className="iconOption">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div className="nameOption">
+                  <span>{v.name}</span>
+                  <span>{v.city}</span>
+                </div>
               </div>
             )
           })}

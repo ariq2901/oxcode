@@ -3,7 +3,7 @@ import FacebookLogin from 'react-facebook-login';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { Input, Button } from './property/Form';
-import swal from 'sweetalert2';
+import swal from 'sweetalert';
 import { config } from './config';
 import Side from './side';
 import Axios from 'axios';
@@ -44,6 +44,9 @@ const Register = (props) =>{
   const [password, setPassword] = useState('');
   const [passwordCon, setPasswordCon] = useState('');
   const [picture, setPicture] = useState('');
+
+  // ^ Breakpoint
+  const breakpoint = 1200;
 
   const submitReg = (e) => {
     e.preventDefault()
@@ -173,10 +176,11 @@ const Register = (props) =>{
     <Fragment>
       <div className="container-fluid no-select" style={{ height: '100vh' }}>
         <div className="row" style={{ height: '100%' }}>
-          <div className="col-4 not-active">
+          <div className={width < breakpoint ? "col-12 login-area not-active" : "col-4 login-area not-active"}>
             <div className="form-login center">
               <p>register for free</p>
               <h2>Create An Account</h2>
+              <div className="user-choice">
               <form onSubmit={submitReg}>
                 <ul className="ul-form">
                   <li>
@@ -205,25 +209,28 @@ const Register = (props) =>{
                   <Button className="btn btn-primary btn-block mt-5" type="submit" label="sign up" />
                 )}
 
+              </form>
+              <div className="social-login">
                 <button className="btn btn-block border-black"><img src={`${process.env.PUBLIC_URL + '/google.png'}`} height='20px' /> sign in with google</button>
                 {auth ? (
                   <Fragment>
                     {/* <a href="#" onClick={(e)=>{e.preventDefault(); window.FB.logout(); logOutFacebook()}}>logout</a> */}
                   <button className="btn btn-block border-black"><img src={`${process.env.PUBLIC_URL + '/facebook.png'}`} height='20px' /> getting your info... </button>
                   </Fragment>
-                ) : (
-                  <FacebookLogin
-                    appId="2363350287365556"
-                    autoLoad={false}
-                    onClick={getUserFacebook}
-                    fields="name,email,picture"
-                    callback={responseFacebook}
-                    cssClass="btn btn-block border-black"
-                    icon="fa-facebook"
-                    textButton="&nbsp;&nbsp;Sign in with facebook"
-                  />
-                )}
-              </form>
+                  ) : (
+                    <FacebookLogin
+                      appId="2363350287365556"
+                      autoLoad={false}
+                      onClick={getUserFacebook}
+                      fields="name,email,picture"
+                      callback={responseFacebook}
+                      cssClass="btn btn-block border-black"
+                      icon="fa-facebook"
+                      textButton="&nbsp;&nbsp;Sign in with facebook"
+                    />
+                  )}
+                </div>
+              </div>
               <span className="signin">already have an account? <Link to="/login">sign in</Link></span>
             </div>
             <footer className="policy"><span>privacy policy and terms of service</span></footer>

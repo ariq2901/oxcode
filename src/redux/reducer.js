@@ -20,14 +20,16 @@ const initialStateLogin = {
     picture: ''
   },
   isLogin: false,
-  logoutBtn: false
+  logoutBtn: false,
+  typeLogin: ''
 }
 
 const LoginReducer = (state = initialStateLogin, action) => {
   if( action.type === 'SET_ISLOGIN' ) {
     return {
       ...state,
-      isLogin: true
+      isLogin: true,
+      typeLogin: action.typeLogin
     }
   }
   if( action.type === 'SET_PROFILE' ) {
@@ -45,7 +47,7 @@ const LoginReducer = (state = initialStateLogin, action) => {
     return {
       ...state,
       isLogin: false,
-      isLogin: true,
+      typeLogin: '',
       profile: {
         email: '',
         name: '',
@@ -56,9 +58,40 @@ const LoginReducer = (state = initialStateLogin, action) => {
   return state;
 }
 
+const initialStateCategory = {
+  category: []
+}
+
+const CategoryReducer = (state = initialStateCategory, action) => {
+  if( action.type === 'SET_CATEGORY' ) {
+    return {
+      ...state,
+      category: action.categories
+    }
+  }
+  return state;
+}
+
+const initialMegamenu = {
+  category: '',
+  searches: ''
+}
+
+const MegamenuReducer = (state = initialMegamenu, action) => {
+  if( action.type === 'SET_CAT' ) {
+    return {
+      ...state,
+      category: action.cat
+    }
+  }
+  return state;
+}
+
 const reducer = combineReducers({
   RegisterReducer,
-  LoginReducer
+  LoginReducer,
+  CategoryReducer,
+  MegamenuReducer
 })
 
 export default reducer;

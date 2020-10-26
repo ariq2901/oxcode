@@ -16,7 +16,7 @@ const PopularCity = () => {
       setLoading(true);
       const respon = await Axios.get(`${config.api_host}/api/popular/cities`);
       // setList(respon.data);
-    setPopcity(respon.data.cities);
+      setPopcity(respon.data.cities);
       setLoading(false);
     } catch(e) {
       console.error('error feching data', e);
