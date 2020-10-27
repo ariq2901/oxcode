@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Axios from 'axios';
 import {config} from '../../config';
 import '../../App.css';
-import Listgrid from '../ComponentList/ListGrid';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const PopularSpots = () => {
   const [loading, setLoading] = React.useState(false);
@@ -82,7 +83,7 @@ const PopularSpots = () => {
               {list.slice(0, 3).map((wisata, index) =>
                 <NavLink className="crd" to="/detail" key={index}>
                   <div className="img-wrapper">
-                  <img src={`${config.api_host}/api/images/${wisata.images[0].id}`} alt="img" />
+                    <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png"  alt="place img"/>                  
                   </div>
                   <div className="title-wrapper">
                     <span>{wisata.name}</span>
