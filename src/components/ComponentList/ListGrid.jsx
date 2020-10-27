@@ -116,64 +116,12 @@ const ListGrid = (props) => {
     return skeleton;
   }
 
-  const filterList = () => {
-    if(filter !== '' && filter !== 'distance' || categories.length > 0) {
-      setLoading(true);
-      const url = `${config.api_host}/api/search/attractions`;
-      let payloadf = {};
-      if( filter === 'alphabet' && filter !== 'reviews' ) {
-        payloadf = {
-          sort_by : "alphabet"
-        }
-        console.log('by alphabet');
-      }
-      if( filter == 'reviews' && filter != 'alphabet' ) {
-        payloadf = {
-          sort_by : "reviews"
-        }
-        console.log('by reviews');
-      }
-      if( categories.length > 0 && filter == 'reviews' ) {
-        payloadf = {
-          sort_by : "reviews",
-          categories : categories
-        }
-        console.log('category & reviews');
-      }
-      if( categories.length > 0 && filter == 'alphabet' ) {
-        payloadf = {
-          sort_by : "alphabet",
-          categories : categories
-        }
-        console.log('category & alphabet');
-      }
-      if( categories.length > 0 && filter != 'reviews' && filter != 'alphabet' ) {
-        payloadf = {
-          categories : categories
-        }
-        console.log('cuman category');
-      }
-      
-      console.log('payloadf ', payloadf);
-      Axios.post(url, payloadf)
-      .then(respons => {
-        setList(respons.data.attractions);
-        setLoading(false)
-      })
-      .catch(e => {
-        console.log('failure ', e);
-        setLoading(false)
-      })
-    }
-  }
-
+  // if(filter != '' || categories.length > 0) {
+  //   filterList();
+  // } else {
   React.useEffect(() => {
-    if(filter !== '' || categories.length > 0) {
-      filterList();
-    } else {
       getList();
-    }
-  }, [filter, categories]);
+  }, []);
   
   const handleClick = () => {
     setGridfilter(!gridfilter);
@@ -196,7 +144,8 @@ const ListGrid = (props) => {
   }
 
   const byDistance = () => {
-    if( filter === 'distance' ) {
+    if( filter == 'distance' || categories.length > 0 ) {
+      console.log('masuk ke distance');
       if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           async function(position) {
@@ -221,6 +170,12 @@ const ListGrid = (props) => {
                 categories : categories
               }
             }
+            if( filter == '' && categories.length > 0 ) {
+              var payload = {
+                categories : categories
+              }
+            }
+            
             console.log('BODY D', payload);
             Axios.post(url, payload)
             .then(resp => {
@@ -238,9 +193,91 @@ const ListGrid = (props) => {
     }
   }
 
+  const byReviews = () => {
+    if( filter == 'reviews' || categories.length > 0 ) {
+      console.log('masuk ke reviews');
+      setLoading(true);
+      const url = `${config.api_host}/api/search/attractions`;
+      
+      if( filter == 'reviews' && categories.length < 1 ) {  
+        var payload = {
+          sort_by : "reviews",
+        }
+      }
+      if( filter == 'reviews' && categories.length > 0 ) {
+        var payload = {
+          sort_by : "reviews",
+          categories : categories
+        }
+      }
+      if( filter == '' && categories.length > 0 ) {
+        var payload = {
+          categories : categories
+        }
+      }
+
+      console.log('BODY D', payload);
+      Axios.post(url, payload)
+      .then(resp => {
+        setLoading(false)
+        console.log('list reviews ', resp);
+        setList(resp.data.attractions);
+      })
+      .catch(er => {
+        setLoading(false)
+        console.log('failure ', er);
+      })
+    }
+  }
+
+  const byAlphabet = () => {
+    if( filter == 'alphabet' || categories.length > 0 ) {
+      console.log('masuk ke alphabet');
+      setLoading(true);
+      const url = `${config.api_host}/api/search/attractions`;
+
+      if( filter == 'alphabet' && categories.length < 1 ) {  
+        var payload = {
+          sort_by : "alphabet",
+        }
+      }
+      if( filter == 'alphabet' && categories.length > 0 ) {
+        var payload = {
+          sort_by : "alphabet",
+          categories : categories
+        }
+      }
+      if( filter == '' && categories.length > 0 ) {
+        var payload = {
+          categories : categories
+        }
+      }
+
+      console.log('BODY D', payload);
+      Axios.post(url, payload)
+      .then(resp => {
+        setLoading(false)
+        console.log('list alphabet ', resp);
+        setList(resp.data.attractions);
+      })
+      .catch(er => {
+        setLoading(false)
+        console.log('failure ', er);
+      })
+    }
+  }
+
   React.useEffect(() => {
-    byDistance();
-  }, [filter]);
+    if(filter == 'distance' || categories.length > 0 && filter != 'reviews' && filter != 'alphabet') {
+      byDistance();
+    }
+    if(filter == 'reviews' || categories.length > 0 && filter != 'alphabet' && filter != 'distance') {
+      byReviews();
+    }
+    if(filter == 'alphabet' || categories.length > 0 && filter != 'reviews' && filter != 'distance') {
+      byAlphabet();
+    }
+  }, [filter, categories]);
 
   const categoryHandle = (item) => {
     if( categories.includes(item) ) {
@@ -282,6 +319,7 @@ const ListGrid = (props) => {
             </label>
           </div>
           <p>list attractions</p>
+          {console.log('list', list)}
         </div>
         <div className={gridfilter ? "grid-filter" : "grid-wrapper"}>
           <div className={gridfilter ? "filter-panel show" : "filter-panel none"}>
@@ -289,7 +327,7 @@ const ListGrid = (props) => {
               <p>sort by</p>
               <div className="sort-checkbox">
                 <div className="reviews-btn">
-                  <input type="radio" name="sortBy" onChange={e=> {filterList(e); setFilter(e.target.value)}} className="visually-hidden" value="reviews" id="reviews"/>
+                  <input type="radio" name="sortBy" onChange={e=> {byReviews(e); setFilter(e.target.value)}} className="visually-hidden" value="reviews" id="reviews"/>
                   <label htmlFor="reviews" className="sortby-label r">reviews</label>
                 </div>
                 <div className="reviews-btn">
@@ -297,7 +335,7 @@ const ListGrid = (props) => {
                   <label htmlFor="distance" className="sortby-label d">distance</label>
                 </div>
                 <div className="reviews-btn">
-                  <input type="radio" name="sortBy" onChange={e=> {filterList(e); setFilter(e.target.value)}} className="visually-hidden" value="alphabet" id="alphabet"/>
+                  <input type="radio" name="sortBy" onChange={e=> {byAlphabet(e); setFilter(e.target.value)}} className="visually-hidden" value="alphabet" id="alphabet"/>
                   <label htmlFor="alphabet" className="sortby-label a">alphabet</label>
                 </div>
               </div>
@@ -312,7 +350,7 @@ const ListGrid = (props) => {
                 <ul>
                   <li>
                     <div className="type-checkbox">
-                      <input type="checkbox" value="mountain" onClick={e => checkHandler(e)} id="mountain-box"/>
+                      <input type="checkbox" value="mountain" onChange={e => checkHandler(e)} id="mountain-box"/>
                       <label htmlFor="mountain-box">
                         <span className="checkmark"></span>
                       </label>
@@ -321,7 +359,7 @@ const ListGrid = (props) => {
                   </li>
                   <li>
                     <div className="type-checkbox">
-                      <input type="checkbox" value="beach" onClick={e => checkHandler(e)} id="beach-box"/>
+                      <input type="checkbox" value="beach" onChange={e => checkHandler(e)} id="beach-box"/>
                       <label htmlFor="beach-box">
                         <span className="checkmark"></span>
                       </label>
@@ -330,7 +368,7 @@ const ListGrid = (props) => {
                   </li>
                   <li>
                     <div className="type-checkbox">
-                      <input type="checkbox" value="museum" onClick={e => checkHandler(e)} id="museum-box"/>
+                      <input type="checkbox" value="museum" onChange={e => checkHandler(e)} id="museum-box"/>
                       <label htmlFor="museum-box">
                         <span className="checkmark"></span>
                       </label>
