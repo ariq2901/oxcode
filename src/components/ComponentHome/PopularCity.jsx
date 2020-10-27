@@ -6,6 +6,8 @@ import Axios from 'axios';
 import {config} from '../../config';
 import '../../App.css';
 import {Link, NavLink} from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const PopularCity = () => {
   const [loading, setLoading] = React.useState(false);
@@ -66,7 +68,7 @@ const PopularCity = () => {
             popcity.map((kota) =>
               <NavLink className="crd" to="/list-attraction">
                 <div className="img-wrapper">
-                  <img src={`${config.api_host}/api/images/${kota.image[0].id}`} alt="img"/>
+                  <LazyLoadImage src={`${config.api_host}/api/images/${kota.image[0].id}`} width="100%" placeholderSrc="/images/placeholder.png"  alt="place img"/>    
                 </div>
                 <div className="title-wrapper">
                   <span>{kota.name}</span>

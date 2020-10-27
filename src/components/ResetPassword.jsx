@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import React, { Fragment } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import Swal from 'sweetalert';
+import swal from 'sweetalert';
 import Footer from './Footer';
 import { config } from '../config';
 
@@ -12,6 +12,7 @@ const ResetPassword = () => {
   let [email, setEmail] = React.useState('');
   let [token, setToken] = React.useState('');
   let [passwordConfirmation, setPasswordConfirmation] = React.useState('');
+  let [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     checkToken();
@@ -27,37 +28,47 @@ const ResetPassword = () => {
     }
   }
 
-  const changePassword = async () => {
+  const validation = () => {
     if (password !== passwordConfirmation ) {
-      Swal.fire('Something went wrong', 'The password must be same with Password Confirmation','error');
-      return;
+      swal({title: 'Something went wrong', text: 'The password must be same with Password Confirmation',icon:'error'});
+      return false;
     }
     
     if (password === '') {
-      Swal.fire('Something went wrong', 'The password can\'t be empty','error');
-      return;
+      swal({title: 'Something went wrong', text: 'The password can\'t be empty',icon:'error'});
+      return false;
     }
     
     if (password.length < 8) {
-      Swal.fire('Something went wrong', 'The password must be at least 8 characters.','error');
+      swal({title: 'Something went wrong', text: 'The password must be at least 8 characters.',icon:'error'});
+      return false;
+    }
+    return true;
+  }
+  
+  const changePassword = async () => {
+    const isValidated = validation();
+    if (!isValidated) {
       return;
     }
-
+    const payload = {
+      email,
+      password,
+      password_confirmation: passwordConfirmation,
+      token
+    };
+    setLoading(true);
     try {
-      const payload = {
-        email,
-        password,
-        password_confirmation: passwordConfirmation,
-        token
-      };
-
       const result = await Axios.post(`${config.api_host}/api/password/reset`, payload);
-      console.log('error ', result);
-      Swal.fire('Success', 'Your password has been changed successfully!','success');
+      if (!result.error) {
+        swal({title: 'Success', text: 'Your password has been changed successfully!',icon:'success'});
+      }
     } catch (error) {
       console.log(error);
-      Swal.fire('Something went wrong', 'Please try again.','error');
+      swal({title: 'Something went wrong', text: 'Please try again.',icon:'error'});
     }
+
+    setLoading(false);
 
   }
 
@@ -75,7 +86,7 @@ const ResetPassword = () => {
                 <label htmlFor="password">Password Confirmation</label>
                 <input type="password" className="form-control" onChange={(e) => setPasswordConfirmation(e.target.value.trim().toString())} id="password_confirmation" placeholder="Password Confirmation"/>
               </div>
-              <button className="btn btn-sm btn-primary" onClick={changePassword}>Change Password</button>
+  <button className="btn btn-sm btn-primary" disabled={loading} onClick={changePassword}>{loading ? 'changing your password' : 'Change Password'}</button>
             </div>
           </div>
         </div>

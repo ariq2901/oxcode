@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import Instagram2 from '../svg/instagram2.svg';
 import Facebook2 from '../svg/facebook2.svg';
 import Skytours from '../img/logo/logo.png';
-import { NavLink } from 'react-router-dom';
 import Youtube2 from '../svg/youtube2.svg';
 import Email2 from '../svg/email2.svg';
 
@@ -26,19 +25,19 @@ const Footer = () => {
                   </div>
                   <div className="location-footer">
                     <i className="material-icons">location_on</i>
-                    <a href="https://goo.gl/maps/6VS7aCJJwP3WGn53A" target="_blank"><span><span className="locone">Singasari, Kec. Jonggol</span><span className="loctwo">Bogor, Jawa Barat 16830</span></span></a>
+                    <a href="https://goo.gl/maps/6VS7aCJJwP3WGn53A" rel="noopener noreferrer" target="_blank"><span><span className="locone">Singasari, Kec. Jonggol</span><span className="loctwo">Bogor, Jawa Barat 16830</span></span></a>
                   </div>
                   <div className="call-footer">
                     <i className="material-icons">call</i>
                     <span><span className="locone">0812 6900 457</span><span className="loctwo">info@skytours.com</span></span>
                   </div>
                   <div className="social-footer">
-                    <a href="https://www.facebook.com/smktimadinatulquran" target="_blank">
+                    <a href="https://www.facebook.com/smktimadinatulquran" rel="noopener noreferrer" target="_blank">
                       <div className="social-button">
                         <img src={Facebook2} alt="fb" />
                       </div>
                     </a>
-                    <a href="https://www.instagram.com/smktimadinatulquran/" target="_blank">
+                    <a href="https://www.instagram.com/smktimadinatulquran/" rel="noopener noreferrer" target="_blank">
                       <div className="social-button">
                         <img src={Instagram2} alt="ig" />
                       </div>
@@ -48,7 +47,7 @@ const Footer = () => {
                         <img src={Email2} alt="email" />
                       </div>
                     </a>
-                    <a href="https://www.youtube.com/channel/UCLQ2_4V-t11pUG0pATDXK6g" target="_blank">
+                    <a href="https://www.youtube.com/channel/UCLQ2_4V-t11pUG0pATDXK6g" rel="noopener noreferrer" target="_blank">
                       <div className="social-button">
                         <img src={Youtube2} alt="yt" />
                       </div>

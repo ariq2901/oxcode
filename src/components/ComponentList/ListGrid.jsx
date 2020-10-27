@@ -5,6 +5,8 @@ import Dufan from '../../img/dufan.jpg';
 import React, { Fragment } from 'react';
 import {config} from '../../config';
 import Axios from 'axios';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const ListGrid = (props) => {
   const MegamenuReducer = useSelector(state => state.MegamenuReducer);
@@ -55,6 +57,7 @@ const ListGrid = (props) => {
 
   
   React.useEffect(() => {
+    console.log(props.resulta);
     getList();
   }, [props, MegamenuReducer]);
   
@@ -338,7 +341,6 @@ const ListGrid = (props) => {
               </div>
             </div>
             <hr className="line-divider"/>
-            {console.log('CATEGORIES ', categories)}
             <div className="types-tunel">
               <div className="types-tunel-title">
                 <p>types of attractions</p>
@@ -452,10 +454,10 @@ const ListGrid = (props) => {
             (
               <Fragment>
                 {props.resulta.length > 0 ? 
-                  props.resulta.map((wisata) => 
-                  <NavLink className="crd" to="/detail">
+                  props.resulta.map((wisata, index) => 
+                  <NavLink className="crd" to="/detail" key={index}>
                     <div className="img-wrapper">
-                      <img src={`${config.api_host}/api/images/${wisata.id}`} alt="place img" />
+                      <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png"  alt="place img"/>
                     </div>
                     <div className="title-wrapper">
                       <span>{wisata.name}</span>
@@ -474,7 +476,7 @@ const ListGrid = (props) => {
                 ) : list.map((wisata, index) => 
                     <NavLink className="crd" to="/detail" key={index}>
                       <div className="img-wrapper">
-                        <img src={`${config.api_host}/api/images/${wisata.images[0].id}`} alt="place img" />
+                        <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png" effect="blur" alt="place img"/>
                       </div>
                       <div className="title-wrapper">
                         <span>{wisata.name}</span>

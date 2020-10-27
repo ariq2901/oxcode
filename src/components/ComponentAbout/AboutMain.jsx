@@ -90,7 +90,7 @@ const AboutMain = () => {
             </a>
           </div>
           <div className="social-media" data-aos="fade-up" data-aos-delay="1100" data-aos-offset="300">
-            <a href="https://www.facebook.com/smktimadinatulquran" target="_blank">
+            <a href="https://www.facebook.com/smktimadinatulquran" target="_blank" rel="noopener noreferrer">
               <div className="info-social">
                 <img src={Facebook} className="icon-svg" alt="facebook"/>
                 <p>smktimadinatulquran</p>
@@ -98,7 +98,7 @@ const AboutMain = () => {
             </a>
           </div>
           <div className="social-media" data-aos="fade-up" data-aos-delay="1400" data-aos-offset="300">
-            <a href="https://www.youtube.com/channel/UCLQ2_4V-t11pUG0pATDXK6g" target="_blank">
+            <a href="https://www.youtube.com/channel/UCLQ2_4V-t11pUG0pATDXK6g" target="_blank"  rel="noopener noreferrer">
               <div className="info-social">
                 <img src={Youtube} className="icon-svg" alt="youtube"/>
                 <p>smk madinatulquran</p>
@@ -106,7 +106,7 @@ const AboutMain = () => {
             </a>
           </div>
           <div className="social-media" data-aos="fade-up" data-aos-delay="1700" data-aos-offset="300">
-            <a href="https://www.instagram.com/smktimadinatulquran/" target="_blank">
+            <a href="https://www.instagram.com/smktimadinatulquran/" target="_blank" rel="noopener noreferrer">
               <div className="info-social">
                 <img src={Instagram} className="icon-svg" alt="instagram"/>
                 <p>smktimadinatulquran</p>
