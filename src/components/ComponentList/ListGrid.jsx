@@ -57,6 +57,7 @@ const ListGrid = (props) => {
 
   
   React.useEffect(() => {
+    console.log(props.resulta);
     getList();
   }, [props, MegamenuReducer]);
   
@@ -116,12 +117,12 @@ const ListGrid = (props) => {
   }
 
   const filterList = () => {
-    if(filter != '' && filter != 'distance' || categories.length > 0) {
+    if(filter !== '' && filter !== 'distance' || categories.length > 0) {
       setLoading(true);
       const url = `${config.api_host}/api/search/attractions`;
-      
-      if( filter == 'alphabet' && filter != 'reviews' ) {
-        var payloadf = {
+      let payloadf = {};
+      if( filter === 'alphabet' && filter !== 'reviews' ) {
+        payloadf = {
           sort_by : "alphabet"
         }
         console.log('by alphabet');
@@ -133,21 +134,21 @@ const ListGrid = (props) => {
         console.log('by reviews');
       }
       if( categories.length > 0 && filter == 'reviews' ) {
-        var payloadf = {
+        payloadf = {
           sort_by : "reviews",
           categories : categories
         }
         console.log('category & reviews');
       }
       if( categories.length > 0 && filter == 'alphabet' ) {
-        var payloadf = {
+        payloadf = {
           sort_by : "alphabet",
           categories : categories
         }
         console.log('category & alphabet');
       }
       if( categories.length > 0 && filter != 'reviews' && filter != 'alphabet' ) {
-        var payloadf = {
+        payloadf = {
           categories : categories
         }
         console.log('cuman category');
@@ -167,7 +168,7 @@ const ListGrid = (props) => {
   }
 
   React.useEffect(() => {
-    if(filter != '' || categories.length > 0) {
+    if(filter !== '' || categories.length > 0) {
       filterList();
     } else {
       getList();
@@ -195,7 +196,7 @@ const ListGrid = (props) => {
   }
 
   const byDistance = () => {
-    if( filter == 'distance' ) {
+    if( filter === 'distance' ) {
       if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           async function(position) {
@@ -302,7 +303,6 @@ const ListGrid = (props) => {
               </div>
             </div>
             <hr className="line-divider"/>
-            {console.log('CATEGORIES ', categories)}
             <div className="types-tunel">
               <div className="types-tunel-title">
                 <p>types of attractions</p>
@@ -416,8 +416,8 @@ const ListGrid = (props) => {
             (
               <Fragment>
                 {props.resulta.length > 0 ? 
-                  props.resulta.map((wisata) => 
-                  <NavLink className="crd" to="/detail">
+                  props.resulta.map((wisata, index) => 
+                  <NavLink className="crd" to="/detail" key={index}>
                     <div className="img-wrapper">
                       <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png"  alt="place img"/>
                     </div>
