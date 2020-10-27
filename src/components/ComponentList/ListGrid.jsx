@@ -18,6 +18,7 @@ const ListGrid = (props) => {
   const [categories, setCategories] = React.useState([]);
   const [creviews, setCreviews] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [filter, setFilter] = React.useState('');
   const [list, setList] = React.useState([]);
   const dispatch = useDispatch();
 
@@ -115,38 +116,37 @@ const ListGrid = (props) => {
   }
 
   const filterList = () => {
-    console.log('filter list jalan');
-    if(creviews || calphabet || categories.length > 0) {
+    if(filter != '' && filter != 'distance' || categories.length > 0) {
       setLoading(true);
       const url = `${config.api_host}/api/search/attractions`;
-  
-      if( calphabet ) {
+      
+      if( filter == 'alphabet' && filter != 'reviews' ) {
         var payloadf = {
           sort_by : "alphabet"
         }
         console.log('by alphabet');
       }
-      if( creviews ) {
+      if( filter == 'reviews' && filter != 'alphabet' ) {
         payloadf = {
           sort_by : "reviews"
         }
         console.log('by reviews');
       }
-      if( categories.length > 0 && creviews ) {
+      if( categories.length > 0 && filter == 'reviews' ) {
         var payloadf = {
           sort_by : "reviews",
           categories : categories
         }
         console.log('category & reviews');
       }
-      if( categories.length > 0 && calphabet ) {
+      if( categories.length > 0 && filter == 'alphabet' ) {
         var payloadf = {
           sort_by : "alphabet",
           categories : categories
         }
         console.log('category & alphabet');
       }
-      if( categories.length > 0 && !creviews && !calphabet) {
+      if( categories.length > 0 && filter != 'reviews' && filter != 'alphabet' ) {
         var payloadf = {
           categories : categories
         }
@@ -167,12 +167,12 @@ const ListGrid = (props) => {
   }
 
   React.useEffect(() => {
-    if(creviews || calphabet || categories.length > 0) {
+    if(filter != '' || categories.length > 0) {
       filterList();
     } else {
       getList();
     }
-  }, [creviews, calphabet, categories]);
+  }, [filter, categories]);
   
   const handleClick = () => {
     setGridfilter(!gridfilter);
@@ -195,24 +195,24 @@ const ListGrid = (props) => {
   }
 
   const byDistance = () => {
-    if( cdistance ) {
+    if( filter == 'distance' ) {
       if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           async function(position) {
             setLoading(true);
 
-            var latit = position.coords.latitude.toString();
-            var longit = position.coords.longitude.toString();
+            const latit = position.coords.latitude.toString();
+            const longit = position.coords.longitude.toString();
 
             const url = `${config.api_host}/api/search/attractions`;
-            if( cdistance && categories.length < 1 ) {  
+            if( filter == 'distance' && categories.length < 1 ) {  
               var payload = {
                 sort_by : "distance",
                 latitude : latit,
                 longitude : longit
               }
             }
-            if( cdistance && categories.length > 0 ) {
+            if( filter == 'distance' && categories.length > 0 ) {
               var payload = {
                 sort_by : "distance",
                 latitude : latit,
@@ -220,6 +220,7 @@ const ListGrid = (props) => {
                 categories : categories
               }
             }
+            console.log('BODY D', payload);
             Axios.post(url, payload)
             .then(resp => {
               setLoading(false)
@@ -236,12 +237,11 @@ const ListGrid = (props) => {
     }
   }
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     byDistance();
-  }, [cdistance]);
+  }, [filter]);
 
   const categoryHandle = (item) => {
-    console.log('item: ',item);
     if( categories.includes(item) ) {
       setCategories(categories.filter(cat => cat != item));
     } else {
@@ -251,7 +251,6 @@ const ListGrid = (props) => {
 
   const checkHandler = e => {
     const value = e.target.value;
-
     categoryHandle(value);
   }
 
@@ -289,15 +288,15 @@ const ListGrid = (props) => {
               <p>sort by</p>
               <div className="sort-checkbox">
                 <div className="reviews-btn">
-                  <input type="radio" name="sortBy" onClick={_ => setCreviews(!creviews)} className="visually-hidden" id="reviews"/>
+                  <input type="radio" name="sortBy" onChange={e=> {filterList(e); setFilter(e.target.value)}} className="visually-hidden" value="reviews" id="reviews"/>
                   <label htmlFor="reviews" className="sortby-label r">reviews</label>
                 </div>
                 <div className="reviews-btn">
-                  <input type="radio" name="sortBy" onClick={_ => setCdistance(!cdistance)} className="visually-hidden" id="distance"/>
+                  <input type="radio" name="sortBy" onChange={e=> {byDistance(e); setFilter(e.target.value)}} className="visually-hidden" value="distance" id="distance"/>
                   <label htmlFor="distance" className="sortby-label d">distance</label>
                 </div>
                 <div className="reviews-btn">
-                  <input type="radio" name="sortBy" onClick={_ => setCalphabet(!calphabet)} className="visually-hidden" id="alphabet"/>
+                  <input type="radio" name="sortBy" onChange={e=> {filterList(e); setFilter(e.target.value)}} className="visually-hidden" value="alphabet" id="alphabet"/>
                   <label htmlFor="alphabet" className="sortby-label a">alphabet</label>
                 </div>
               </div>
@@ -405,7 +404,7 @@ const ListGrid = (props) => {
             </div>
             <hr className="line-divider dua"/>
             <div className="map">
-              <MapContainer center={[PositionReducer.lat, PositionReducer.long]} zoom={10}/>
+              <MapContainer center={[PositionReducer.lat, PositionReducer.long]} zoom={5}/>
             </div>
           </div>
           <div className={gridfilter ? "main-list-filter" : "main-list"}>
