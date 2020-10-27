@@ -109,8 +109,9 @@ const Nav = () => {
   }
 
   const logoutSkytours = () => {
-    const url = `${config.api_host}/api/auth/logout`
-    const tokenB = `Bearer `.concat(sessionStorage.getItem("tokenB"));
+    const url = `${config.api_host}/api/auth/logout`;
+    console.log(sessionStorage.getItem("tokenB"));
+    const tokenB = sessionStorage.getItem("tokenB");
     Axios.get(url, { headers : {'Authorization': tokenB} })
     .then(_ => {
       dispatch({type: 'SET_lOGOUT'});

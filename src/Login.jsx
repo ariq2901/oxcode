@@ -45,7 +45,6 @@ const useWindowDimensions = () => {
 // }
 
 const Login = (props) => {
-
   const LoginReducer = useSelector(state => state.LoginReducer);
   const dispatch = useDispatch();
 
@@ -92,7 +91,7 @@ const Login = (props) => {
           sessionStorage.setItem("isLogin", true);
           sessionStorage.setItem("email", u.data.user.email);
           sessionStorage.setItem("name", u.data.user.name);
-          sessionStorage.setItem("tokenB", token);
+          sessionStorage.setItem("tokenB", tokenB);
           sessionStorage.setItem("picture", `${config.api_host}/api/images/${u.data.user.image.id}`);
           dispatch({type: 'SET_ISLOGIN', typeLogin: 'skytours'});
           dispatch({type: 'SET_ISLOGIN'});

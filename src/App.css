@@ -27,7 +27,7 @@ body {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   font-size: 10px;
-  text-transform: lowercase;
+  /* text-transform: lowercase; */
 }
 
 .swal-modal .swal-text {
@@ -791,7 +791,7 @@ select.select-category option {
 }
 
 .crd:hover .img-wrapper span img {
-  transform: translate(-50%, -50%) scale(1.3);
+  transform: translate(-50%, -50%) scale(1.3) !important;
   position: absolute;
   transition: 0.4s;
   width: 100%;
@@ -903,7 +903,7 @@ select.select-category option {
 }
 
 .location-wrapper {
-  margin-top: 8%;
+  margin-top: 12px;
   display: flex;
 }
 
@@ -2603,6 +2603,7 @@ main.reset-password {
 /*^ Footer */
 footer.footer {
   background-color: #096bc5;
+  margin-top: 50px;
 }
 
 .footer-wrapper {
@@ -3017,6 +3018,81 @@ footer.footer {
   }
 }
 
+/** ukuran tablet */
+@media screen and (max-width: 991px) {
+  .nav-links {
+    width: 70%;
+  }
+
+  .worldmap-img img {
+    width: 100%;
+    pointer-events: none;
+  }
+
+  .find input {
+    font-size: 1.2em;
+  }
+
+  .anywhere input {
+    font-size: 1.2em;
+  }
+
+  .category-search-box select {
+    font-size: 1.6em;
+  }
+
+  .category-search-box i.fa-chevron-up {
+    left: 40%;
+  }
+
+  .category-search-box i.fa-chevron-down {
+    left: 40%;
+  }
+
+  .btn-search-box {
+    width: 20%;
+    font-size: 1.4em;
+  }
+
+  .login-area {
+    position: relative;
+  }
+
+  .form-login > p,
+  .form-login > h2 {
+    text-align: center;
+  }
+
+  .sider {
+    display: none;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .user-choice {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .user-choice form {
+    margin: 0;
+  }
+
+  .spots-list {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .forgot-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .illustration-wrapper {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
 /** ukuran mobile */
 @media screen and (max-width: 576px) {
   nav {
@@ -3125,16 +3201,12 @@ footer.footer {
   }
 
   .main-list {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     grid-gap: 20px 10px;
   }
 
   .title-wrapper {
     font-size: 2em;
-  }
-
-  .img-wrapper span img {
-    transform: scale(2);
   }
 
   .list-title {
@@ -3181,8 +3253,8 @@ footer.footer {
     width: 100%;
     margin-top: 2.3%;
     display: flex;
+    margin-left: 6px;
     align-items: center;
-    padding-left: 4%;
   }
 
   .grid-filter {
@@ -3227,7 +3299,7 @@ footer.footer {
   }
 
   .spots-list {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .desc-city p {
@@ -3305,88 +3377,40 @@ footer.footer {
     opacity: 0;
     pointer-events: none;
   }
-}
 
-/** ukuran tablet */
-@media screen and (max-width: 991px) {
-  .nav-links {
-    width: 70%;
-  }
-
-  .worldmap-img img {
-    width: 100%;
-    pointer-events: none;
-  }
-
-  .img-wrapper span img {
-    transform: scale(2.1);
-  }
-
-  .crd:hover .img-wrapper span img {
-    transform: scale(2.4);
-    transition: transform 0.2s;
-  }
-
-  .find input {
-    font-size: 1.2em;
-  }
-
-  .anywhere input {
-    font-size: 1.2em;
-  }
-
-  .category-search-box select {
-    font-size: 1.6em;
-  }
-
-  .category-search-box i.fa-chevron-up {
-    left: 40%;
-  }
-
-  .category-search-box i.fa-chevron-down {
-    left: 40%;
-  }
-
-  .btn-search-box {
-    width: 20%;
-    font-size: 1.4em;
-  }
-
-  .login-area {
-    position: relative;
-  }
-
-  .form-login > p,
-  .form-login > h2 {
-    text-align: center;
-  }
-
-  .sider {
-    display: none;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  .user-choice {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .user-choice form {
-    margin: 0;
-  }
-
-  .spots-list {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .forgot-wrapper {
+  .about-us {
     grid-template-columns: 1fr;
+    padding: 14px;
   }
 
-  .illustration-wrapper {
-    display: none;
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
+  .started-wrapper {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .our-team-title {
+    padding: 14px;
+  }
+
+  .our-team-grid {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .person-card {
+    margin: auto;
+  }
+
+  .person-img-wrapper {
+    width: 100%;
+  }
+
+  .contact {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .map-wrapperaj {
+    height: 180px;
   }
 }

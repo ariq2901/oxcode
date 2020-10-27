@@ -22,6 +22,7 @@ const initialStateLogin = {
 
 const LoginReducer = (state = initialStateLogin, action) => {
   if( action.type === 'SET_ISLOGIN' ) {
+    
     return {
       ...state,
       isLogin: true,
