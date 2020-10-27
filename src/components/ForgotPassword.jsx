@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
-import { useState } from 'react';
-import { config } from '../config';
-import { Link } from 'react-router-dom';
 import ForgotIMG from '../img/home/forgot.jpg';
-import Axios from 'axios';
-import Swal from 'sweetalert';
 import Loader from 'react-loader-spinner';
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { config } from '../config';
+import { useState } from 'react';
+import Swal from 'sweetalert';
+import Axios from 'axios';
 
 const Forgotpassword= () => {
   const [email, setEmail] = useState('');
@@ -19,12 +19,12 @@ const Forgotpassword= () => {
   const sendRequest = () => {
     setLoading(true);
     if( email.length == '' ){
-      Swal.fire('Something went wrong', 'The email can\'t be empty','error')
+      Swal('Something went wrong', 'The email can\'t be empty','error')
       setLoading(false);
       return false;
     }
     if( !validateEmail(email) ) {
-      Swal.fire('Something went wrong', 'The email is not valid','error')
+      Swal('Something went wrong', 'The email is not valid','error')
       setLoading(false);
       return false;
     }
@@ -38,7 +38,6 @@ const Forgotpassword= () => {
       setLoading(false);
     })
     .catch(err => {
-
       if(err.response.status === 404) {
         Swal({
           title: "Email isn't registered",

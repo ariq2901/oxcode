@@ -1,6 +1,8 @@
+import { useSelector } from 'react-redux';
 import * as React from 'react';
 
 export const DisplayMapFC = () => {
+  const PositionReducer = useSelector(state => state.PositionReducer);
   // Create a reference to the HTML element we want to put the map on
   const mapRef = React.useRef(null);
 
@@ -18,7 +20,7 @@ export const DisplayMapFC = () => {
     });
     const defaultLayers = platform.createDefaultLayers();
     const hMap = new H.Map(mapRef.current, defaultLayers.vector.normal.map, {
-      center: { lat: 50, lng: 5 },
+      center: { lat: PositionReducer.lat, lng: PositionReducer.long },
       zoom: 4,
       pixelRatio: window.devicePixelRatio || 1
     });

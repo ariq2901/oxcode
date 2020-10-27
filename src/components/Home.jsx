@@ -1,13 +1,12 @@
-import React, { Fragment } from 'react';
-import '../App.css';
-import Board from './ComponentHome/Board';
 import PopularSpots from './ComponentHome/PopularSpots';
+import { useDispatch, useSelector } from 'react-redux';
 import PopularCity from './ComponentHome/PopularCity';
+import Board from './ComponentHome/Board';
+import React, { Fragment } from 'react';
 import Footer from './Footer';
-import { useSelector } from 'react-redux';
+import '../App.css';
 
 const Home = () => {
-  const LoginReducer = useSelector(state => state.LoginReducer);
 
   const [result, setResult] = React.useState([]);
   return(

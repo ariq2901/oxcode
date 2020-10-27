@@ -1,26 +1,23 @@
-import React, { Fragment } from 'react';
-import Bromo from '../../img/bromo.jpg';
-import Waterbom from '../../img/waterbom.jpg';
-import Dufan from '../../img/dufan.jpg';
-import {NavLink} from 'react-router-dom';
-import Axios from 'axios';
-import {config} from '../../config';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MapContainer from '../MapContainer';
+import {NavLink} from 'react-router-dom';
+import Dufan from '../../img/dufan.jpg';
+import React, { Fragment } from 'react';
+import {config} from '../../config';
+import Axios from 'axios';
 
 const ListGrid = (props) => {
   const MegamenuReducer = useSelector(state => state.MegamenuReducer);
+  const PositionReducer = useSelector(state => state.PositionReducer);
   const BoardHome = useSelector(state => state.ResultReducer);
-
-  const [lng, setLng] = React.useState('');
-  const [lat, setLat] = React.useState('');
+  const [gridfilter, setGridfilter] = React.useState(false);
   const [cdistance, setCdistance] = React.useState(false);
   const [calphabet, setCalphabet] = React.useState(false);
+  const [categories, setCategories] = React.useState([]);
   const [creviews, setCreviews] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [categories, setCategories] = React.useState([]);
   const [list, setList] = React.useState([]);
-  const [gridfilter, setGridfilter] = React.useState(false);
+  const dispatch = useDispatch();
 
   const getList = async () => {
     try {
@@ -115,43 +112,45 @@ const ListGrid = (props) => {
     return skeleton;
   }
 
-  // function getUserLocation() {
-  //   if(navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(function(position) {
-  //       setLat(position.coords.latitude.toString());
-  //       setLong(position.coords.longitude.toString());
-  //       console.log('lat long set');
-  //     })
-  //   }
-  //   else {
-  //     alert('your browser is not supported gps feature');
-  //   }
-  // }
-
   const filterList = () => {
     console.log('filter list jalan');
     if(creviews || calphabet || categories.length > 0) {
       setLoading(true);
       const url = `${config.api_host}/api/search/attractions`;
-      let payloadf = {};  
-
+  
+      if( calphabet ) {
+        var payloadf = {
+          sort_by : "alphabet"
+        }
+        console.log('by alphabet');
+      }
       if( creviews ) {
         payloadf = {
           sort_by : "reviews"
         }
         console.log('by reviews');
       }
-      if( calphabet ) {
-        payloadf = {
-          sort_by : "alphabet"
-        }
-        console.log('by alphabet');
-      }
-      if( categories.length > 0 ) {
-        payloadf = {
+      if( categories.length > 0 && creviews ) {
+        var payloadf = {
+          sort_by : "reviews",
           categories : categories
         }
+        console.log('category & reviews');
       }
+      if( categories.length > 0 && calphabet ) {
+        var payloadf = {
+          sort_by : "alphabet",
+          categories : categories
+        }
+        console.log('category & alphabet');
+      }
+      if( categories.length > 0 && !creviews && !calphabet) {
+        var payloadf = {
+          categories : categories
+        }
+        console.log('cuman category');
+      }
+      
       console.log('payloadf ', payloadf);
       Axios.post(url, payloadf)
       .then(respons => {
@@ -199,14 +198,25 @@ const ListGrid = (props) => {
         navigator.geolocation.getCurrentPosition(
           async function(position) {
             setLoading(true);
-            setLat(position.coords.latitude.toString());
-            setLng(position.coords.longitude.toString());
+
+            var latit = position.coords.latitude.toString();
+            var longit = position.coords.longitude.toString();
 
             const url = `${config.api_host}/api/search/attractions`;
-            const payload = {
-              sort_by : "distance",
-              latitude : position.coords.latitude.toString(),
-              longitude : position.coords.latitude.toString()
+            if( cdistance && categories.length < 1 ) {  
+              var payload = {
+                sort_by : "distance",
+                latitude : latit,
+                longitude : longit
+              }
+            }
+            if( cdistance && categories.length > 0 ) {
+              var payload = {
+                sort_by : "distance",
+                latitude : latit,
+                longitude : longit,
+                categories : categories
+              }
             }
             Axios.post(url, payload)
             .then(resp => {
@@ -243,6 +253,20 @@ const ListGrid = (props) => {
     categoryHandle(value);
   }
 
+  const GPSHandle = () => {
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var lati = position.coords.latitude;
+        var longi = position.coords.longitude;
+        dispatch({type: 'SET_LOC', lati: lati, longi: longi});
+        console.log('lat long set');
+      })
+    }
+    else {
+      alert('your browser is not supported gps feature');
+    }
+  }
+
 
   return(
     <Fragment>
@@ -250,7 +274,7 @@ const ListGrid = (props) => {
         <div className="list-title">
           <div className="filter-wrapper">
             <p>filter</p>
-            <input type="checkbox" onClick={handleClick} id="filter-toggle"/>
+            <input type="checkbox" onClick={e => {handleClick(e);GPSHandle(e)}} id="filter-toggle"/>
             <label htmlFor="filter-toggle">
               <span className="fil-span"></span>
             </label>
@@ -379,7 +403,7 @@ const ListGrid = (props) => {
             </div>
             <hr className="line-divider dua"/>
             <div className="map">
-              <MapContainer center={[-6.200000, 106.816666]} zoom={5}/>
+              <MapContainer center={[PositionReducer.lat, PositionReducer.long]} zoom={10}/>
             </div>
           </div>
           <div className={gridfilter ? "main-list-filter" : "main-list"}>
@@ -413,7 +437,7 @@ const ListGrid = (props) => {
                 ) : list.map((wisata, index) => 
                     <NavLink className="crd" to="/detail" key={index}>
                       <div className="img-wrapper">
-                        <img src={`${config.api_host}/api/images/${wisata.images[0].id}`} alt="place img" />
+                        <img src={`${config.api_host}/api/images/${wisata.images[0].id}`} className="lazyload" alt="place img" />
                       </div>
                       <div className="title-wrapper">
                         <span>{wisata.name}</span>

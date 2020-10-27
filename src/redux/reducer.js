@@ -1,9 +1,5 @@
 import { combineReducers } from "redux";
 
-const initialState = {
-  name: 'Ariq jusuf habibie',
-}
-
 const initialStateRegister = {
   title: 'Register Page',
   desc: 'ini adalah desc untuk register'
@@ -101,12 +97,29 @@ const MegamenuReducer = (state = initialMegamenu, action) => {
   return state;
 }
 
+const initialPosition = {
+  lat: '',
+  long: ''
+}
+
+const PositionReducer = (state = initialPosition, action) => {
+  if( action.type === 'SET_LOC' ) {
+    return {
+      ...state,
+      lat: action.lati,
+      long: action.longi
+    }
+  }
+  return state;
+}
+
 const reducer = combineReducers({
   RegisterReducer,
   LoginReducer,
   CategoryReducer,
   MegamenuReducer,
-  ResultReducer
+  ResultReducer,
+  PositionReducer
 })
 
 export default reducer;

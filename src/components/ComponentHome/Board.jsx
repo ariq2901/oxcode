@@ -1,12 +1,12 @@
 import React, { Fragment, useRef, useEffect, useState } from 'react';
-import WorldMap from '../../img/home/worldmap.png';
-import Typical from 'react-typical';
-import '../../App.css';
-import Axios from 'axios';
-import { config } from '../../config';
 import { useDispatch, useSelector } from 'react-redux';
+import WorldMap from '../../img/home/worldmap.png';
 import { useHistory } from 'react-router-dom';
+import { config } from '../../config';
+import Typical from 'react-typical';
 import swal from 'sweetalert';
+import Axios from 'axios';
+import '../../App.css';
 
 const Board = ({result}) => {
 
@@ -190,14 +190,16 @@ const Board = ({result}) => {
               <input type="text" name="searchCity" id="searchCity" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setSearchKota(event.target.value)}} placeholder="anywhere" value={searchKota}/>
             </div>
             <div className="category-search-box">
-            <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={CategoryReducer.category ? CategoryReducer.category : categories} className="select-category">
+            <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={categories} class="select-category">
                 <option selected value="" key="">All</option>
                 {CategoryReducer.category.map((c) =>
                   <option value={c.name} key={c.name}>{c.name}</option>
                 )}
               </select>
-              <i className="fas fa-chevron-up"></i>
-              <i className="fas fa-chevron-down"></i>
+              <div className="chev-option">
+                <i className="fas fa-chevron-up"></i>
+                <i className="fas fa-chevron-down"></i>
+              </div>
             </div>
             <button type="submit" className="btn-search-box">search</button>
           </form>
