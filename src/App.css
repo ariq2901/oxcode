@@ -2750,6 +2750,8 @@ footer.footer {
 .map {
   height: 260px;
   width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
 }
 .map .leaflet-container {
   height: 100%;
