@@ -55,14 +55,15 @@ const LoginReducer = (state = initialStateLogin, action) => {
 }
 
 const initialResult = {
-  data: []
+  data: [],
+  aksi: false
 }
 
 const ResultReducer = (state = initialResult, action) => {
-  if( action.type === 'SET_RESULT' ) {
+  if( action.type == 'SET_RESULT' ) {
     return {
       ...state,
-      data: action.result
+      [action.aData]: action.aValue,
     }
   }
   return state;
@@ -76,7 +77,7 @@ const CategoryReducer = (state = initialStateCategory, action) => {
   if( action.type === 'SET_CATEGORY' ) {
     return {
       ...state,
-      category: action.categories
+      category: action.categories,
     }
   }
   return state;
