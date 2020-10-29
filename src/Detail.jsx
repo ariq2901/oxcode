@@ -1,13 +1,19 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useRef, useEffect } from 'react';
 import Footer from './components/Footer';
+import { render } from 'react-dom'
+import { Map as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet'
 
 const Detail = (props) => {
 
   const img = useRef();
   const imgBar = useRef();
   const modalRef = useRef();
+  const map = useRef();
 
   let before = null;
+
+  const position = [51.505, -0.09];
+  const name = 'Wisata';
 
   const imgHandler = (e) => {
     let arr = [...imgBar.current.children];
@@ -34,6 +40,26 @@ const Detail = (props) => {
     modalRefs.display = '';
     body.overflow = '';
   }
+
+  const location = (
+    <LeafletMap center={position} zoom={13}>
+      <TileLayer
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
+      />
+      <Marker position={position}>
+        <Popup>
+          {name}
+        </Popup>
+      </Marker>
+    </LeafletMap>
+  );
+
+  useEffect(() => {
+    // map.current.innerHTML = location;
+    render(location, map.current)
+    console.log(location);
+  }, [location])
 
   return (
     <Fragment>
