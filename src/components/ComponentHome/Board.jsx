@@ -11,6 +11,7 @@ import '../../App.css';
 const Board = ({result}) => {
 
   const CategoryReducer = useSelector(state => state.CategoryReducer);
+  const BoardHome = useSelector(state => state.ResultReducer);
   const dispatch = useDispatch();
   let history = useHistory();
 
@@ -107,19 +108,6 @@ const Board = ({result}) => {
     var category = document.getElementById("searchCategory").value;
     let payloads = {};
     
-    if( namaa.length > 0 && cityy.length > 0 && category !== null ) {
-      payloads = {
-        name : namaa,
-        city : cityy,
-        categories : [category]
-      }
-    }
-    if( namaa.length > 0 && cityy.length > 0 && category === null ) {
-      payloads = {
-        name : namaa,
-        city : cityy
-      }
-    }
     if( namaa.length > 0 && cityy.length < 1 && category !== null ) {
       payloads = {
         name : namaa,
@@ -147,11 +135,27 @@ const Board = ({result}) => {
         categories : [category]
       }
     }
+    if( namaa.length > 0 && cityy.length > 0 && category !== null ) {
+      payloads = {
+        name : namaa,
+        city : cityy,
+        categories : [category]
+      }
+    }
+    if( namaa.length > 0 && cityy.length > 0 && category === null ) {
+      payloads = {
+        name : namaa,
+        city : cityy
+      }
+    }
+    console.log('payload board HOME ', payloads);
     Axios.post(url, payloads)
     .then(respons => {
       result(respons.data.attractions)
-      dispatch({type: 'SET_RESULT', result: respons.data.attractions});
-      history.push('/list-attraction');
+      console.log('respon board submit', respons);
+      dispatch({type: 'SET_RESULT', aData: "data", aValue: respons.data.attractions});
+      dispatch({type: 'SET_RESULT', aData: "aksi", aValue: true});
+      history.push("/list-attraction");
     })
     .catch(e => {
       swal("ooops...", "there is an internal error, try again later", "error");
@@ -173,6 +177,7 @@ const Board = ({result}) => {
           <p className="slogant-title">this is the start of your journey, don't let other people hold your move. get your own way</p>
         </div>
         <div className="worldmap-img">
+          {console.log('BOARDHOME ', BoardHome)}
           <img src={WorldMap} alt="worldmap image"/>
         </div>
       </div>

@@ -7,6 +7,7 @@ import {config} from '../../config';
 import Axios from 'axios';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import Board from '../ComponentHome/Board';
 
 const ListGrid = (props) => {
   const MegamenuReducer = useSelector(state => state.MegamenuReducer);
@@ -19,6 +20,7 @@ const ListGrid = (props) => {
   const [creviews, setCreviews] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [filter, setFilter] = React.useState('');
+  const [emptyList, setEmptyList] = React.useState([]);
   const [list, setList] = React.useState([]);
   const dispatch = useDispatch();
 
@@ -43,11 +45,20 @@ const ListGrid = (props) => {
         setList(BoardHome.data);
         console.log('kena boardhome', BoardHome);
         setLoading(false);
-        return false;
-      } else {
+      }
+      if(BoardHome.data.length < 1 && BoardHome.aksi == true) {
+        console.log('masuk ke notFOUND');
+        setList(BoardHome.data);
+        setLoading(false);
+      } 
+      if(BoardHome.data.length < 1 && BoardHome.aksi === false && !MegamenuReducer.category && !props.type) {
         respon = await Axios.get(`${config.api_host}/api/attractions`);
         console.log('bygeneral', respon);
       }
+      console.log('boardhome', BoardHome);
+      console.log('BOARDHOME TYPE AKSI ', BoardHome.aksi);
+      console.log('BOARDHOME DATA LENGTH ', BoardHome.data);
+      console.log('masuk ke setList DEFAULT');
       setList(respon.data.attractions);
       setLoading(false)
     } catch(e) {
@@ -116,9 +127,6 @@ const ListGrid = (props) => {
     return skeleton;
   }
 
-  // if(filter != '' || categories.length > 0) {
-  //   filterList();
-  // } else {
   React.useEffect(() => {
       getList();
   }, []);
@@ -306,6 +314,62 @@ const ListGrid = (props) => {
     }
   }
 
+  const IsiKonten = () => {
+    if(list.length > 0) {
+      return(
+        <Fragment>
+          {props.resulta.length > 0 ? 
+            props.resulta.map((wisata, index) => 
+            <NavLink className="crd" to="/detail" key={index}>
+              <div className="img-wrapper">
+                <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png"  alt="place img"/>
+              </div>
+              <div className="title-wrapper">
+                <span>{wisata.name}</span>
+              </div>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  {starLoop(wisata.rating)}
+                </div>
+                <p className="total-reviews">{wisata.total_reviews} reviews</p>
+              </div>
+              <div className="location-wrapper">
+                {loading ? '' : <i className="fas fa-map-marker-alt"></i>}
+                <p className="location-name">{wisata.city}</p>
+              </div>
+            </NavLink>
+          ) : list.map((wisata, index) => 
+              <NavLink className="crd" to="/detail" key={index}>
+                <div className="img-wrapper">
+                  <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png" effect="blur" alt="place img"/>
+                </div>
+                <div className="title-wrapper">
+                  <span>{wisata.name}</span>
+                </div>
+                <div className="rate-wrapper">
+                  <div className="rating">
+                    {starLoop(wisata.rating)}
+                  </div>
+                  <p className="total-reviews">{wisata.total_reviews} reviews</p>
+                </div>
+                <div className="location-wrapper">
+                  {loading ? '' : <i className="fas fa-map-marker-alt"></i>}
+                  <p className="location-name">{wisata.city}</p>
+                </div>
+              </NavLink>
+            )
+          }
+        </Fragment>
+      );
+    } else {
+      return(
+        <Fragment>
+          <p>Result not found</p>
+        </Fragment>
+      );
+    }
+  }  
+
 
   return(
     <Fragment>
@@ -452,49 +516,7 @@ const ListGrid = (props) => {
               </Fragment>
             ) : 
             (
-              <Fragment>
-                {props.resulta.length > 0 ? 
-                  props.resulta.map((wisata, index) => 
-                  <NavLink className="crd" to="/detail" key={index}>
-                    <div className="img-wrapper">
-                      <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png"  alt="place img"/>
-                    </div>
-                    <div className="title-wrapper">
-                      <span>{wisata.name}</span>
-                    </div>
-                    <div className="rate-wrapper">
-                      <div className="rating">
-                        {starLoop(wisata.rating)}
-                      </div>
-                      <p className="total-reviews">{wisata.total_reviews} reviews</p>
-                    </div>
-                    <div className="location-wrapper">
-                      {loading ? '' : <i className="fas fa-map-marker-alt"></i>}
-                      <p className="location-name">{wisata.city}</p>
-                    </div>
-                  </NavLink>
-                ) : list.map((wisata, index) => 
-                    <NavLink className="crd" to="/detail" key={index}>
-                      <div className="img-wrapper">
-                        <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png" effect="blur" alt="place img"/>
-                      </div>
-                      <div className="title-wrapper">
-                        <span>{wisata.name}</span>
-                      </div>
-                      <div className="rate-wrapper">
-                        <div className="rating">
-                          {starLoop(wisata.rating)}
-                        </div>
-                        <p className="total-reviews">{wisata.total_reviews} reviews</p>
-                      </div>
-                      <div className="location-wrapper">
-                        {loading ? '' : <i className="fas fa-map-marker-alt"></i>}
-                        <p className="location-name">{wisata.city}</p>
-                      </div>
-                    </NavLink>
-                  )
-                }
-              </Fragment>
+              <IsiKonten />
             )
             }
           </div>
@@ -503,4 +525,5 @@ const ListGrid = (props) => {
     </Fragment>
   );
 }
+
 export default ListGrid;

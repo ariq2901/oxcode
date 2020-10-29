@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { config } from '../../config';
 import { useEffect } from 'react';
 import Axios from 'axios';
@@ -7,7 +7,7 @@ import swal from 'sweetalert';
 
 const Board = ({ result }) => {
   const CategoryReducer = useSelector(state => state.CategoryReducer);
-
+  const dispatch = useDispatch();
   const [searchKota, setSearchKota] = React.useState("");
   const [categories, setCategories] = React.useState("");
   const [display, setDisplay] = React.useState(false);
@@ -36,9 +36,9 @@ const Board = ({ result }) => {
     }
   }
 
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault()
-    const attractions =  await getFilteredAttractions();
+    const attractions = getFilteredAttractions();
     result(attractions);
   }
 
@@ -66,14 +66,15 @@ const Board = ({ result }) => {
     if (category !== null) {
       payload = {...payload, categories: [category]};
     }
-
+    console.log('payload board list ', payload);
     try {
       result = await Axios.post(url, payload);
-
     } catch (error) {
       swal("ooops...", "there is an internal server error, try again later", "error");
     }
     
+    dispatch({type: 'SET_RESULT', aData: "data", aValue: result.data.attractions});
+    dispatch({type: 'SET_RESULT', aData: "aksi", aValue: true});
     return result.data.attractions;
   }
 
