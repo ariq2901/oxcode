@@ -239,10 +239,8 @@ const Detail = (props) => {
                   <p>Direction</p>
                   <span><i className="material-icons-outlined">gps_fixed</i></span>
                 </div>
-                <div className="color card ia">
-                  <span>
+                <div className="color card ia" ref={map}>
 
-                  </span>
                 </div>
               </div>
             </div>
