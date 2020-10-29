@@ -34,7 +34,7 @@ const PopularCity = () => {
     var n;
     for( n = 0; n < jumlah; n++ ) {
       skeleton.push(
-        <div className="crd">
+        <div className="crd" key={n}>
           <div className="img-wrapper loading"></div>
           <div className="title-wrapper loading">
             <span></span>
@@ -57,7 +57,7 @@ const PopularCity = () => {
       <div className="city-wrapper">
         <div className="spots-title">
           <span className="s-title">most popular city</span>
-          <Link className="s-view" to={'list-attraction/popular'}>view all<span><i class="fas fa-arrow-right"></i></span></Link>
+          <Link className="s-view" to={'list-attraction/popular'}>view all<span><i className="fas fa-arrow-right"></i></span></Link>
         </div>
         <div className="spots-list">
           {loading ? (

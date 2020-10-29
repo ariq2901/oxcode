@@ -7,8 +7,7 @@ import {config} from '../../config';
 import Axios from 'axios';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import Board from '../ComponentHome/Board';
-import NotFound from '../NotFound';
+import NotfoundIMG from '../../img/home/noData.jpg';
 
 const ListGrid = (props) => {
   const MegamenuReducer = useSelector(state => state.MegamenuReducer);
@@ -28,32 +27,28 @@ const ListGrid = (props) => {
   const attractions = async () => {
     try {
       setLoading(true);
-      console.log('props list-grid ', props.type);
       let respon;
       if(props.type) {
        getAttractionByType();
-       return;
       }
 
       if(MegamenuReducer.category) {
         getAttractionByCategory();
-        return;
       }
 
-       if(BoardHome.data.length < 1 && BoardHome.aksi === true) {
+      if(BoardHome.data.length < 1 && BoardHome.aksi === true) {
+        console.log('boardhome empty: ', BoardHome);
         setList(BoardHome.data);
       } 
       if(BoardHome.data.length > 0) {
         setList(BoardHome.data);
-        console.log('kena boardhome', BoardHome);
       }
        if(BoardHome.data.length < 1 && BoardHome.aksi === false && !MegamenuReducer.category && !props.type) {
         respon = await Axios.get(`${config.api_host}/api/attractions`);
         console.log('bygeneral', respon);
+        setList(respon.data.attractions);
       }
 
-      console.log('biasa');
-      setList(respon.data.attractions);
       setLoading(false);
     } catch(e) {
       console.error('error feching data', e);
@@ -73,7 +68,6 @@ const ListGrid = (props) => {
     }
     console.log('byCategory', result);
     setList(result.data.attractions);
-    setLoading(false)
   }
 
   const getAttractionByType = async () => {
@@ -345,7 +339,19 @@ const ListGrid = (props) => {
       );
     } else {
       return(
-        <NotFound/>
+        <Fragment>
+          <div></div>
+          <div className="search-notfound">
+            <div className="notfound-img">
+              <img src={NotfoundIMG} alt="notfound img"/>
+            </div>
+            <div className="notfound-text">
+              <p className="info-ttl">Sad no result!</p>
+              <p className="info-txt">We cannot find the tourist attraction you're searching for. maybe a little spelling mistake</p>
+            </div>
+          </div>
+          <div></div>
+        </Fragment>
       );
     }
   }  

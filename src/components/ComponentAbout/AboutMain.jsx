@@ -75,7 +75,7 @@ const AboutMain = () => {
       <div className="contact">
         <div className="map-wrapperaj" data-aos="zoom-out" data-aos-offset="400">
           {/* <DisplayMapFC lat="-6.175522" longi="106.827175" /> */}
-          <iframe title="our location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.2241183703695!2d107.00565171434327!3d-6.493282565289409!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69bdb8f6c50289%3A0xb7a33d4d5721ad5f!2sSMK%20MADINATULQURAN!5e0!3m2!1sen!2sid!4v1602928798982!5m2!1sen!2sid" frameborder="0" className="map-contact" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+          <iframe title="our location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.2241183703695!2d107.00565171434327!3d-6.493282565289409!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69bdb8f6c50289%3A0xb7a33d4d5721ad5f!2sSMK%20MADINATULQURAN!5e0!3m2!1sen!2sid!4v1602928798982!5m2!1sen!2sid" frameBorder="0" className="map-contact" allowFullScreen="" aria-hidden="false" tabIndex="0"></iframe>
         </div>
         <div className="contact-info">
           <div className="info-title" data-aos="fade-up" data-aos-delay="500" data-aos-offset="400">

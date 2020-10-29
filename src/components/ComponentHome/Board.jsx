@@ -138,8 +138,8 @@ const Board = ({result}) => {
               <input type="text" name="searchCity" id="searchCity" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setSearchKota(event.target.value)}} placeholder="anywhere" value={searchKota}/>
             </div>
             <div className="category-search-box">
-            <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={categories} class="select-category">
-                <option selected value="" key="">All</option>
+            <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={categories} className="select-category">
+                <option defaultValue value="" key="">All</option>
                 {CategoryReducer.category.map((c) =>
                   <option value={c.name} key={c.name}>{c.name}</option>
                 )}
