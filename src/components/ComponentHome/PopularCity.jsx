@@ -65,8 +65,8 @@ const PopularCity = () => {
               {skeletonCard(3)}
             </Fragment>
           ) : (
-            popcity.map((kota) =>
-              <NavLink className="crd" to="/list-attraction">
+            popcity.map((kota, index) =>
+              <NavLink className="crd" to="/list-attraction" key={index}>
                 <div className="img-wrapper">
                   <LazyLoadImage src={`${config.api_host}/api/images/${kota.image[0].id}`} width="100%" placeholderSrc="/images/placeholder.png"  alt="place img"/>    
                 </div>

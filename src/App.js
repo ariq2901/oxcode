@@ -23,18 +23,17 @@ const App = () => {
           <Route path="/" exact>
             <Home />
           </Route>
-          <Route path="/list-attraction/:type?">``
+          <Route path="/list-attraction/:type?">
             <ListAttraction/>
           </Route>
           <Route path="/about" component={About} />
           <Route path="/detail" component={Detail} />
           <AuthGuarder path='/login'>
-              <Login/>
+            <Login/>
           </AuthGuarder>
           <AuthGuarder path='/register'>
             <Register/>
           </AuthGuarder>
-          {/* <Route path='/register' component={Register} /> */}
           <Route path='/forgot-password' component={ForgotPassword} />
           <Route path='/reset-password/:token' component={ResetPassword} />
         </Switch>
