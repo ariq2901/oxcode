@@ -7,7 +7,7 @@ import {config} from '../../config';
 import Axios from 'axios';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import Board from '../ComponentHome/Board';
+import NotfoundIMG from '../../img/home/noData.jpg';
 
 const ListGrid = (props) => {
   const MegamenuReducer = useSelector(state => state.MegamenuReducer);
@@ -364,7 +364,17 @@ const ListGrid = (props) => {
     } else {
       return(
         <Fragment>
-          <p>Result not found</p>
+          <div></div>
+          <div className="search-notfound">
+            <div className="notfound-img">
+              <img src={NotfoundIMG} alt="notfound img"/>
+            </div>
+            <div className="notfound-text">
+              <p className="info-ttl">Sad no result!</p>
+              <p className="info-txt">We cannot find the tourist attraction you're searching for. maybe a little spelling mistake</p>
+            </div>
+          </div>
+          <div></div>
         </Fragment>
       );
     }
