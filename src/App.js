@@ -28,15 +28,15 @@ const App = () => {
             <ListAttraction/>
           </Route>
           <Route path="/about" component={About} />
-          <Route path="/detail" component={Detail} />
+          <Route path="/detail/:id" component={Detail} />
           <AuthGuarder path='/oauth/:provider/callback'>
-            <LoginCallback/>
+            <LoginCallback />
           </AuthGuarder>
           <AuthGuarder path='/login'>
-            <Login/>
+            <Login />
           </AuthGuarder>
           <AuthGuarder path='/register'>
-            <Register/>
+            <Register />
           </AuthGuarder>
           <Route path='/forgot-password' component={ForgotPassword} />
           <Route path='/reset-password/:token' component={ResetPassword} />

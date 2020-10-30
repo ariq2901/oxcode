@@ -2272,7 +2272,7 @@ p.title {
 }
 
 .about i {
-  align-self: center;
+  margin-top: 6px;;
 }
 
 .about i:nth-child(2) {
