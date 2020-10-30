@@ -294,7 +294,7 @@ const ListGrid = (props) => {
         <Fragment>
           {props.resulta.length > 0 ? 
             props.resulta.map((wisata, index) => 
-            <NavLink className="crd" to="/detail" key={index}>
+            <NavLink className="crd" to={`/detail/${wisata.id}`} key={index}>
               <div className="img-wrapper">
                 <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png"  alt="place img"/>
               </div>
@@ -313,7 +313,7 @@ const ListGrid = (props) => {
               </div>
             </NavLink>
           ) : list.map((wisata, index) => 
-              <NavLink className="crd" to="/detail" key={index}>
+              <NavLink className="crd" to={`/detail/${wisata.id}`} key={index}>
                 <div className="img-wrapper">
                   <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png" effect="blur" alt="place img"/>
                 </div>
