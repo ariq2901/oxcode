@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Profiler } from 'react';
 import './App.css';
 import Nav from './components/Nav';
 import Home from './components/Home';
@@ -7,6 +7,7 @@ import About from './components/About';
 import Detail from './Detail';
 import Login from './Login';
 import Register from './Register';
+import Profile from './components/Profile';
 import ResetPassword from './components/ResetPassword';
 import ForgotPassword from './components/ForgotPassword';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -28,6 +29,7 @@ const App = () => {
           </Route>
           <Route path="/about" component={About} />
           <Route path="/detail" component={Detail} />
+          <Route path="/profile" component={Profile} />
           <AuthGuarder path='/login'>
               <Login/>
           </AuthGuarder>
