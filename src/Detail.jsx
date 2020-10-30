@@ -2,8 +2,11 @@ import React, { Fragment, useRef, useEffect } from 'react';
 import Footer from './components/Footer';
 import { render } from 'react-dom'
 import { Map as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet'
+import { useState } from 'react';
 
 const Detail = (props) => {
+
+  const [data, setData] = useState();
 
   const img = useRef();
   const imgBar = useRef();
@@ -12,8 +15,18 @@ const Detail = (props) => {
 
   let before = null;
 
-  const position = [51.505, -0.09];
-  const name = 'Wisata';
+  const position = [data.pin_point.latitude, data.pin_point.longitude];
+  const name = data.name;
+
+  const getDetAtt = async () => {
+    try {
+      const respon = await Axios.get(`${config.api_host}/api/attractions/${props.id}`);
+      // setList(respon.data);
+      setData(respon.data.attraction);
+    } catch (e) {
+      console.error('error feching data', e);
+    }
+  }
 
   const imgHandler = (e) => {
     let arr = [...imgBar.current.children];
@@ -58,8 +71,30 @@ const Detail = (props) => {
   useEffect(() => {
     // map.current.innerHTML = location;
     render(location, map.current)
-    console.log(location);
+    starRating();
+    getDetAtt();
+    // console.log(location);
   }, [location])
+
+  const starRating = (rating) => {
+    let starRatingTitle = [];
+    for (let index = 0; index < 4; index++) {
+      if (index < rating) {
+        starRatingTitle.push('material-icons');
+      } else {
+        starRatingTitle.push('material-icons-outlined');
+      }
+      return starRatingTitle.map((data, index) => (
+        <i className={data} key={index}>star</i>
+      ));
+    }
+  }
+
+  // const imageHandle = () => {
+  //   for (let index = 0; index < data.images[0].length; index++) {
+
+  //   }
+  // }
 
   return (
     <Fragment>
@@ -68,32 +103,24 @@ const Detail = (props) => {
           <div className="row ia">
             <div className="title-header ia">
               <div className="title-box ia">
-                <span className="breadcumb">recreation / jungle land</span>
-                <p className="title">Jungle Land <br />Adventure Theme Park</p>
+                <span className="breadcumb">recreation / ${data.name}</span>
+                <p className="title">{data.name}</p>
                 <span className="rating ia">
-                  <i className="material-icons">star</i>
-                  <i className="material-icons">star</i>
-                  <i className="material-icons">star</i>
-                  <i className="material-icons">star</i>
-                  <i className="material-icons">star</i>
-                  <span>32 Reviews</span>
+                  {starRating(data.rating)}
+                  <span>{data.traveler_reviews[0].length} Reviews</span>
                   <span className="material-icons favorite">favorite</span>
                 </span>
                 <div className="button-row">
                   <button className="btn-ia">
                     <i className="material-icons">location_on</i>
-                  sentul
-                </button>
-                  <button className="btn-ia">
-                    <i className="material-icons">location_on</i>
-                  bogor
-                </button>
+                    {data.city}
+                  </button>
                 </div>
                 <div className="about">
                   <p>Contact</p>
                   <div className="about-grid">
                     <i className="material-icons">call</i>
-                    <span>+8989898</span>
+                    <span>{data.phone}</span>
                   </div>
                 </div>
                 <div className="about">
@@ -101,8 +128,8 @@ const Detail = (props) => {
                   <div className="about-grid">
                     <i className="material-icons-outlined">confirmation_number</i>
                     <span>
-                      <p>weekday: RP.165.000,00 / person</p>
-                      <p>weekday: RP.165.000,00 / person</p>
+                      <p>weekday: RP.{data.ticket_price.weekday},00 / person</p>
+                      <p>weekend: RP.{data.ticket_price.weekend},00 / person</p>
                     </span>
                   </div>
                 </div>
@@ -110,14 +137,14 @@ const Detail = (props) => {
                   <p>locations</p>
                   <div className="about-grid">
                     <i className="material-icons">location_on</i>
-                    <span>Kawasan Santul Nirwana</span>
+                    <span>{data.address}</span>
                   </div>
                 </div>
                 <div className="about">
                   <p>Operational Hour</p>
                   <div className="about-grid">
                     <i className="material-icons-outlined">access_time</i>
-                    <span>09.00 - 20.00</span>
+                    <span>{data.hours_of_operation.from} - {data.hours_of_operation.to}</span>
                   </div>
                 </div>
               </div>
@@ -157,59 +184,36 @@ const Detail = (props) => {
             <div className="main-body">
               <div className="body-text">
                 <div className="card ia color">
-                  <p>
-                    Merupakan wahana aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                </p>
+                  <p>{data.description}</p>
                 </div>
                 <div className="card-title-ia">
                   <p>Review</p>
                   <button className="btn-ia" onClick={modal}>add review</button>
                 </div>
                 <div className="card ia color">
-                  <div className="review">
-                    <div className="review-head">
-                      <div className="head-img" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                      <div className="head-body">
-                        <p>Sirizqi.</p><span>September 2010</span>
-                        <span className="rating ia">
-                          <i className="material-icons">star</i>
-                          <i className="material-icons">star</i>
-                          <i className="material-icons">star</i>
-                          <i className="material-icons">star</i>
-                          <i className="material-icons">star</i>
-                        </span>
+                  {data.traveler_reviews[0].map((dat, index) => (
+                    <div className="review" key={index}>
+                      <div className="review-head">
+                        <div className="head-img" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
+                        <div className="head-body">
+                          <p>{dat.user.name}.</p><span>{dat.created_at}</span>
+                          <span className="rating ia">
+                            {starRating(dat.rating)}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="review-body">
+                        <p>{dat.review}</p>
                       </div>
                     </div>
-                    <div className="review-body">
-                      <p>KLKLKLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLKLKLKLKLKLKKKKKKKKKKKKKKKKKKKKKKKKK</p>
-                    </div>
-                  </div>
-                  <hr className="hr ia" />
-                  <div className="review">
-                    <div className="review-head">
-                      <div className="head-img" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                      <div className="head-body">
-                        <p>Sirizqi.</p><span>September 2010</span>
-                        <span className="rating ia">
-                          <i className="material-icons">star</i>
-                          <i className="material-icons">star</i>
-                          <i className="material-icons">star</i>
-                          <i className="material-icons">star</i>
-                          <i className="material-icons">star</i>
-                        </span>
-                      </div>
-                    </div>
-                    <div className="review-body">
-                      <p>KLKLKLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLKLKLKLKLKLKKKKKKKKKKKKKKKKKKKKKKKKK</p>
-                    </div>
-                  </div>
+                  ))}
                   <button className="btn-ia w-100">
                     show more
                   </button>
                 </div>
               </div>
               <div className="body-det">
-                <p className="text-first-mb">Weather in sentul, <br />Bogor</p>
+                <p className="text-first-mb">Weather in {data.city}, <br />Bogor</p>
                 <div className="color card ia">
                   <div className="weather">
                     <p>Today</p>
