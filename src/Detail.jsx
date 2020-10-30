@@ -80,10 +80,13 @@ const Detail = (props) => {
   useEffect(() => {
     // map.current.innerHTML = location;
     render(location, map.current)
-    starRating();
-    getDetAtt();
     // console.log(location);
   }, [location])
+
+  useEffect(() => {
+    starRating();
+    getDetAtt();
+  }, [id])
 
   const starRating = (rating) => {
     let starRatingTitle = [];
