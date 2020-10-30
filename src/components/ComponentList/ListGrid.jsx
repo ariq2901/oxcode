@@ -14,11 +14,9 @@ const ListGrid = (props) => {
   const PositionReducer = useSelector(state => state.PositionReducer);
   const BoardHome = useSelector(state => state.ResultReducer);
   const [gridfilter, setGridfilter] = React.useState(false);
-  const [cdistance, setCdistance] = React.useState(false);
-  const [calphabet, setCalphabet] = React.useState(false);
   const [categories, setCategories] = React.useState([]);
-  const [creviews, setCreviews] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [hideFilter, setHideFilter] = React.useState(false);
   const [filter, setFilter] = React.useState('');
   const [emptyList, setEmptyList] = React.useState([]);
   const [list, setList] = React.useState([]);
@@ -338,6 +336,7 @@ const ListGrid = (props) => {
         </Fragment>
       );
     } else {
+      setHideFilter(true);
       return(
         <Fragment>
           <div></div>
@@ -361,7 +360,7 @@ const ListGrid = (props) => {
     <Fragment>
       <div className="spots-wrapper listpage">
         <div className="list-title">
-          <div className="filter-wrapper">
+          <div className={hideFilter ? "filter-wrapper hide" : "filter-wrapper"}>
             <p>filter</p>
             <input type="checkbox" onClick={e => {handleClick(e);GPSHandle(e)}} id="filter-toggle"/>
             <label htmlFor="filter-toggle">

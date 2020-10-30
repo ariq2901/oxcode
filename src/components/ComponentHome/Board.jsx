@@ -116,7 +116,7 @@ const Board = ({result}) => {
     <Fragment>
       <div className="wrapper">
         <div className="slogant">
-          <p className="big-title">{display ? "find your destination" : <Typical steps={[`find your destination`, 4000, 'find your exploration', 4000, 'find your happiness', 4000]} loop="1" wrapper="p"/>}</p>
+          <p className="big-title">find your destination</p>
           <p className="slogant-title">this is the start of your journey, don't let other people hold your move. get your own way</p>
         </div>
         <div className="worldmap-img">

@@ -40,7 +40,7 @@ const LoginReducer = (state = initialStateLogin, action) => {
       }
     }
   }
-  if( action.type === 'SETLOGOUT' ) {
+  if( action.type === 'SET_LOGOUT' ) {
     return {
       ...state,
       isLogin: false,
