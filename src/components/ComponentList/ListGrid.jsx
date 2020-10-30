@@ -22,52 +22,66 @@ const ListGrid = (props) => {
   const [list, setList] = React.useState([]);
   const dispatch = useDispatch();
 
-  const getList = async () => {
+  const attractions = async () => {
     try {
       setLoading(true);
-      console.log('props list-grid ', props.type);
       let respon;
       if(props.type) {
-        respon = await Axios.get(`${config.api_host}/api/${props.type}/attractions`);
-        console.log('bypopular', respon);
+       getAttractionByType();
       }
+
       if(MegamenuReducer.category) {
-        const url = `${config.api_host}/api/search/attractions`;
-        const payloadc = {
-          categories : [MegamenuReducer.category]
-        }
-        respon = await Axios.post(url, payloadc);
-        console.log('byCategory', respon);
+        getAttractionByCategory();
       }
+
+      if(BoardHome.data.length < 1 && BoardHome.aksi === true) {
+        console.log('boardhome empty: ', BoardHome);
+        setList(BoardHome.data);
+      } 
       if(BoardHome.data.length > 0) {
         setList(BoardHome.data);
-        console.log('kena boardhome', BoardHome);
-        setLoading(false);
       }
-      if(BoardHome.data.length < 1 && BoardHome.aksi == true) {
-        console.log('masuk ke notFOUND');
-        setList(BoardHome.data);
-        setLoading(false);
-      } 
-      if(BoardHome.data.length < 1 && BoardHome.aksi === false && !MegamenuReducer.category && !props.type) {
+       if(BoardHome.data.length < 1 && BoardHome.aksi === false && !MegamenuReducer.category && !props.type) {
         respon = await Axios.get(`${config.api_host}/api/attractions`);
         console.log('bygeneral', respon);
+        setList(respon.data.attractions);
       }
-      console.log('boardhome', BoardHome);
-      console.log('BOARDHOME TYPE AKSI ', BoardHome.aksi);
-      console.log('BOARDHOME DATA LENGTH ', BoardHome.data);
-      console.log('masuk ke setList DEFAULT');
-      setList(respon.data.attractions);
-      setLoading(false)
+
+      setLoading(false);
     } catch(e) {
       console.error('error feching data', e);
     }
   }
 
+
+  const getAttractionByCategory = async () => {
+    let result;
+    try {
+      result = await Axios.post(`${config.api_host}/api/search/attractions`, {
+          categories : [MegamenuReducer.category]
+        });
+    } catch (error) {
+      console.log('Error: ', error); 
+      return;
+    }
+    console.log('byCategory', result);
+    setList(result.data.attractions);
+  }
+
+  const getAttractionByType = async () => {
+    let result;
+    try {
+      result = await Axios.get(`${config.api_host}/api/${props.type}/attractions`);
+    } catch (error) {
+      console.log('Error: ', error); 
+      return;
+    }
+    setList(result.data.attractions);
+    setLoading(false)
+  }
   
   React.useEffect(() => {
-    console.log(props.resulta);
-    getList();
+    attractions();
   }, [props, MegamenuReducer]);
   
   function skeletonCard(jumlah) {
@@ -92,42 +106,6 @@ const ListGrid = (props) => {
     }
     return skeleton;
   }
-
-  function dummyCard(jumlah) {
-    const skeleton = [];
-    var t;
-    for( t = 0; t < jumlah; t++ ) {
-      skeleton.push(
-        <NavLink className="crd" to="/detail">
-          <div className="img-wrapper">
-            <img src={Dufan} alt="dufan img"/>
-          </div>
-          <div className="title-wrapper">
-            <span>dunia fantasi</span>
-          </div>
-          <div className="rate-wrapper">
-            <div className="rating">
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-            </div>
-            <p className="total-reviews">439 reviews</p>
-          </div>
-          <div className="location-wrapper">
-            <i className="fas fa-map-marker-alt"></i>
-            <p className="location-name">jakarta</p>
-          </div>
-        </NavLink>
-      )
-    }
-    return skeleton;
-  }
-
-  React.useEffect(() => {
-      getList();
-  }, []);
   
   const handleClick = () => {
     setGridfilter(!gridfilter);
@@ -168,7 +146,7 @@ const ListGrid = (props) => {
                 longitude : longit
               }
             }
-            if( filter == 'distance' && categories.length > 0 ) {
+            if( filter === 'distance' && categories.length > 0 ) {
               var payload = {
                 sort_by : "distance",
                 latitude : latit,
@@ -176,7 +154,7 @@ const ListGrid = (props) => {
                 categories : categories
               }
             }
-            if( filter == '' && categories.length > 0 ) {
+            if( filter === '' && categories.length > 0 ) {
               var payload = {
                 categories : categories
               }
@@ -200,29 +178,28 @@ const ListGrid = (props) => {
   }
 
   const byReviews = () => {
-    if( filter == 'reviews' || categories.length > 0 ) {
+    if( filter === 'reviews' || categories.length > 0 ) {
       console.log('masuk ke reviews');
       setLoading(true);
       const url = `${config.api_host}/api/search/attractions`;
       
-      if( filter == 'reviews' && categories.length < 1 ) {  
+      if( filter === 'reviews' && categories.length < 1 ) {  
         var payload = {
           sort_by : "reviews",
         }
       }
-      if( filter == 'reviews' && categories.length > 0 ) {
+      if( filter === 'reviews' && categories.length > 0 ) {
         var payload = {
           sort_by : "reviews",
           categories : categories
         }
       }
-      if( filter == '' && categories.length > 0 ) {
+      if( filter === '' && categories.length > 0 ) {
         var payload = {
           categories : categories
         }
       }
 
-      console.log('BODY D', payload);
       Axios.post(url, payload)
       .then(resp => {
         setLoading(false)
@@ -259,7 +236,6 @@ const ListGrid = (props) => {
         }
       }
 
-      console.log('BODY D', payload);
       Axios.post(url, payload)
       .then(resp => {
         setLoading(false)

@@ -343,6 +343,7 @@ nav {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   opacity: 0.9;
   transition: all 0.2s ease-out;
+  z-index: 990;
 }
 
 .navigation.active {
@@ -2285,7 +2286,7 @@ p.title {
 }
 
 .about i {
-  align-self: center;
+  margin-top: 6px;;
 }
 
 .about i:nth-child(2) {

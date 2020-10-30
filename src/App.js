@@ -10,10 +10,11 @@ import Register from './Register';
 import Profile from './components/Profile';
 import ResetPassword from './components/ResetPassword';
 import ForgotPassword from './components/ForgotPassword';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux';
 import AuthGuarder from "./components/Guarder/AuthGuarder";
+import LoginCallback from './LoginCallback';
 
 const App = () => {
   return (
@@ -28,15 +29,17 @@ const App = () => {
             <ListAttraction/>
           </Route>
           <Route path="/about" component={About} />
-          <Route path="/detail" component={Detail} />
+          <Route path="/detail/:id" component={Detail} />
           <Route path="/profile" component={Profile} />
+          <AuthGuarder path='/oauth/:provider/callback'>
+            <LoginCallback />
+          </AuthGuarder>
           <AuthGuarder path='/login'>
-              <Login/>
+            <Login />
           </AuthGuarder>
           <AuthGuarder path='/register'>
-            <Register/>
+            <Register />
           </AuthGuarder>
-          {/* <Route path='/register' component={Register} /> */}
           <Route path='/forgot-password' component={ForgotPassword} />
           <Route path='/reset-password/:token' component={ResetPassword} />
         </Switch>

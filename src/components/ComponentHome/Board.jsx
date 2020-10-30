@@ -31,52 +31,24 @@ const Board = ({result}) => {
   const keyDownHandler = event => {
     event.preventDefault()
     const url = `${config.api_host}/api/search/attractions`;
-    var namaa = document.getElementById("searchName").value;
-    var cityy = document.getElementById("searchCity").value;
+    var name = document.getElementById("searchName").value;
+    var city = document.getElementById("searchCity").value;
     var category = document.getElementById("searchCategory").value;
-    let payloadk = {};
-    if( namaa.length > 0 && cityy.length > 0 && category !== null ) {
-      payloadk = {
-        name : namaa,
-        city : cityy,
-        categories : [category]
-      }
+    let payload = {};
+     
+    if (name.length > 0) {
+      payload = {...payload, name};
     }
-    if( namaa.length > 0 && cityy.length > 0 && category === null ) {
-      payloadk = {
-        name : namaa,
-        city : cityy
-      }
+    
+    if (city.length > 0) {
+      payload = {...payload, city};
     }
-    if( namaa.length > 0 && cityy.length < 1 && category !== null ) {
-      payloadk = {
-        name : namaa,
-        categories : [category]
-      }
+    
+    if (category !== null) {
+      payload = {...payload, categories: [category]};
     }
-    if( cityy.length > 0 && namaa.length < 1 && category !== null ) {
-      payloadk = {
-        city : cityy,
-        categories : [category]
-      }
-    }
-    if( namaa.length > 0 && cityy.length < 1 && category === null ) {
-      payloadk = {
-        name : namaa
-      }
-    }
-    if( namaa.length < 1 && cityy.length > 0 && category === null ) {
-      payloadk = {
-        city : cityy
-      }
-    }
-    if( namaa.length < 1 && cityy.length < 1 && category !== null ) {
-      payloadk = {
-        categories : [category]
-      }
-    }
-    console.log('payload onKydown ', payloadk);
-    Axios.post(url, payloadk)
+    console.log('payload onKydown ', payload);
+    Axios.post(url, payload)
     .then(respons => {
       setOptions(respons.data.attractions)
     })
@@ -103,53 +75,24 @@ const Board = ({result}) => {
   const onSubmit = event => {
     event.preventDefault()
     const url = `${config.api_host}/api/search/attractions`;
-    var namaa = document.getElementById("searchName").value
-    var cityy = document.getElementById("searchCity").value
+    var name = document.getElementById("searchName").value
+    var city = document.getElementById("searchCity").value
     var category = document.getElementById("searchCategory").value;
-    let payloads = {};
+    let payload = {};
+     
+    if (name.length > 0) {
+      payload = {...payload, name};
+    }
     
-    if( namaa.length > 0 && cityy.length < 1 && category !== null ) {
-      payloads = {
-        name : namaa,
-        categories : [category]
-      }
+    if (city.length > 0) {
+      payload = {...payload, city};
     }
-    if( cityy.length > 0 && namaa.length < 1 && category !== null ) {
-      payloads = {
-        city : cityy,
-        categories : [category]
-      }
+    
+    if (category !== null) {
+      payload = {...payload, categories: [category]};
     }
-    if( namaa.length > 0 && cityy.length < 1 && category === null ) {
-      payloads = {
-        name : namaa
-      }
-    }
-    if( namaa.length < 1 && cityy.length > 0 && category === null ) {
-      payloads = {
-        city : cityy
-      }
-    }
-    if( namaa.length < 1 && cityy.length < 1 && category !== null ) {
-      payloads = {
-        categories : [category]
-      }
-    }
-    if( namaa.length > 0 && cityy.length > 0 && category !== null ) {
-      payloads = {
-        name : namaa,
-        city : cityy,
-        categories : [category]
-      }
-    }
-    if( namaa.length > 0 && cityy.length > 0 && category === null ) {
-      payloads = {
-        name : namaa,
-        city : cityy
-      }
-    }
-    console.log('payload board HOME ', payloads);
-    Axios.post(url, payloads)
+    console.log('payload board HOME ', payload);
+    Axios.post(url, payload)
     .then(respons => {
       result(respons.data.attractions)
       console.log('respon board submit', respons);
@@ -195,8 +138,8 @@ const Board = ({result}) => {
               <input type="text" name="searchCity" id="searchCity" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setSearchKota(event.target.value)}} placeholder="anywhere" value={searchKota}/>
             </div>
             <div className="category-search-box">
-            <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={categories} class="select-category">
-                <option selected value="" key="">All</option>
+            <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={categories} className="select-category">
+                <option defaultValue value="" key="">All</option>
                 {CategoryReducer.category.map((c) =>
                   <option value={c.name} key={c.name}>{c.name}</option>
                 )}
