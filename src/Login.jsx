@@ -6,6 +6,7 @@ import swal from 'sweetalert';
 import { config } from './config';
 import { Input, Button } from './property/Form';
 import Side from './side';
+import BounceLoader from "react-spinners/BounceLoader";
 
 const getWindowDimensions = () => {
   const { innerWidth: width, innerHeight: height } = window;
@@ -171,16 +172,31 @@ const Login = (props) => {
   }
 
   const requestProvider = async (provider) => { 
+    setLoading(true);
     try {
       let url = await Axios.get(`${config.api_host}/api/auth/${provider}/redirect`);
       window.location.replace(url.data.redirectToProvider);
     } catch (error) {
-      console.log('error!');
+      swal({
+        title: "Oops! Something went wrong",
+        text: "Please try again later",
+        icon: "error"
+      });
     }
+    setLoading(false);
   }
 
   return (
     <>
+      {
+        loading ?  <div className="indicator-loading">
+          <BounceLoader
+              size={150}
+              color={"#439CEF"}
+              loading={loading}
+            />
+        </div> : ''
+      }
       <div className="container-fluid no-select" style={{ height: '100vh' }}>
         <div className="row" style={{ height: '100%' }}>
           <div className={width < breakpoint ? "col-12 login-area not-active" : "col-4 login-area not-active"}>

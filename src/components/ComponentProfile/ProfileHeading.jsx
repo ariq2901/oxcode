@@ -10,22 +10,39 @@ const ProfileHeading = () => {
   const [picture, setPicture] = useState(sessionStorage.getItem("picture"));
   const [name, setName] = useState(sessionStorage.getItem("name"));
   const [email, setEmail] = useState(sessionStorage.getItem("email"));
-  const [password, setpassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const submitAction = (e) => {
     e.preventDefault();
     const url = `${config.api_host}/api/users/update`;
     let body = {};
     
-    if (name.length > 0) {
+    if (name.length > 3) {
       body = {...body, name};
+    } else {
+      swal("Oops!", " Minimal Name length is 3", "error");
+      return;
     }
-    if (password.length > 0) {
-      body = {...body, password};
+    
+    if (password !== passwordConfirmation) {
+      swal("Oops!", "Make sure your password is matched with confirmation password", "error");
+      return;
+    } 
+    
+    if (password.length > 0 && password.length < 8) {
+      swal("Oops!", " Minimal Password length is 8", "error");
+      return;
+    } 
+
+    if(password.length > 8) {
+      console.log('masuk');
+      body = {...body, password, password_confirmation: passwordConfirmation};
     }
 
-    console.log('body update ', body);
-    const token = sessionStorage.getItem("tokenB").substr(7);
+    const token = sessionStorage.getItem("tokenB");
+    setLoading(true);
     Axios.put(url, body, { headers: {'Authorization': token} })
     .then(resp => {
       console.log('resp update data ', resp);
@@ -38,9 +55,12 @@ const ProfileHeading = () => {
       dispatch({type: 'SET_PROFILE', pData: "email", pValue: resp.data.user.email});
       dispatch({type: 'SET_PROFILE', pData: "name", pValue: resp.data.user.name});
       dispatch({type: 'SET_PROFILE', pData: "picture", pValue: `${config.api_host}/api/images/${resp.data.user.image.id}`});
+      setLoading(false);
+      swal("Success", "Success to Update Profile!", "success");
     })
     .catch(err => {
-      swal("ooops...", "there is an internal server error, try again later", "error");
+      setLoading(false);
+      swal("Oops!", "Something went wrong", "error");
     });
   }
 
@@ -65,9 +85,13 @@ const ProfileHeading = () => {
           </div>
           <div className="passwordInfo">
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" onChange={e => setpassword(e.target.value)} id="passwordupdate" placeholder="*****" value={password}/>
+            <input type="password" name="password" onChange={e => setPassword(e.target.value)} id="password" placeholder="*****" value={password}/>
           </div>
-          <button className="btn-update" type="submit">Save Changes</button>
+          <div className="passwordInfo">
+            <label htmlFor="password_confirmation">Confirmation Password</label>
+            <input type="password" name="password_confirmation" onChange={e => setPasswordConfirmation(e.target.value)} id="password_confirmation" placeholder="*****" value={passwordConfirmation}/>
+          </div>
+          <button className="btn-update mt-2" type="submit" disabled={loading}>{loading ? 'Updating your profile' : 'Save Changes'}</button>
         </form>
       </div>
       </div>
