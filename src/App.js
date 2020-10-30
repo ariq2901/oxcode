@@ -14,6 +14,7 @@ import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux';
 import AuthGuarder from "./components/Guarder/AuthGuarder";
+import ProfileGuarder from "./components/Guarder/ProfileGuarder";
 import LoginCallback from './LoginCallback';
 
 const App = () => {
@@ -30,7 +31,9 @@ const App = () => {
           </Route>
           <Route path="/about" component={About} />
           <Route path="/detail/:id" component={Detail} />
-          <Route path="/profile" component={Profile} />
+          <ProfileGuarder path='/profile'>
+            <Profile />
+          </ProfileGuarder>
           <AuthGuarder path='/oauth/:provider/callback'>
             <LoginCallback />
           </AuthGuarder>
