@@ -1,13 +1,11 @@
 import Axios from 'axios';
 import React, { useRef, useEffect, useState, Fragment } from 'react';
-import FacebookLogin from 'react-facebook-login';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import swal from 'sweetalert';
 import { config } from './config';
 import { Input, Button } from './property/Form';
 import Side from './side';
-import { GoogleLogin } from 'react-google-login';
 
 const getWindowDimensions = () => {
   const { innerWidth: width, innerHeight: height } = window;
@@ -31,18 +29,6 @@ const useWindowDimensions = () => {
 
   return windowDimensions;
 }
-
-// const useViewport = () => {
-//   const [width, setWidth] = useState(window.innerWidth);
-
-//   useEffect(() => {
-//     const handleWindowResize = () => setWidth(window.innerWidth);
-//     window.addEventListener("resize", handleWindowResize);
-//     return () => window.removeEventListener("resize", handleWindowResize);
-//   }, []);
-
-//   return {width};
-// }
 
 const Login = (props) => {
   const LoginReducer = useSelector(state => state.LoginReducer);
@@ -122,65 +108,11 @@ const Login = (props) => {
     }
   }
 
-  const getUserFacebook = () => {
-    console.log('facebook btn clicked');
-    setClick(true);
-  }
-
-  const responseFacebook = (response) => {
-    if( response.status !== "unknown" ){
-      setAuth(true);
-      setEmail(response.email);
-      setName(response.name);
-      setPicture(response.picture.data.url);
-      console.log('berhasil di set');
-      sessionStorage.setItem("isLogin", true);
-      sessionStorage.setItem("typeLogin", 'facebook');
-      sessionStorage.setItem("email", response.email);
-      sessionStorage.setItem("name", response.name);
-      sessionStorage.setItem("picture", response.picture.data.url);
-      dispatch({type: 'SET_ISLOGIN'});
-      dispatch({type: 'SET_ISLOGIN', typeLogin: 'facebook'});
-      dispatch({type: 'SET_PROFILE', pData: "email", pValue: response.email});
-      dispatch({type: 'SET_PROFILE', pData: "name", pValue: response.name});
-      dispatch({type: 'SET_PROFILE', pData: "picture", pValue: response.picture.data.url});
-
-      props.history.goBack();
-    }
-  }
-
-  const responseGoogle = (response) => {
-    if( response.accessToken ) {
-      console.log(response);
-      setAuth(true);
-      setEmail(response.profileObj.email);
-      setName(response.profileObj.name);
-      setPicture(response.profileObj.imageUrl);
-      console.log('berhasil di set');
-      sessionStorage.setItem("isLogin", true);
-      sessionStorage.setItem("typeLogin", 'google');
-      sessionStorage.setItem("email", response.profileObj.email);
-      sessionStorage.setItem("name", response.profileObj.name);
-      sessionStorage.setItem("picture", response.profileObj.imageUrl);
-      dispatch({type: 'SET_ISLOGIN'});
-      dispatch({type: 'SET_ISLOGIN', typeLogin: 'google'});
-      dispatch({type: 'SET_PROFILE', pData: "email", pValue: response.profileObj.email});
-      dispatch({type: 'SET_PROFILE', pData: "name", pValue: response.profileObj.name});
-      dispatch({type: 'SET_PROFILE', pData: "picture", pValue: response.profileObj.imageUrl});
-
-      props.history.push("/");
-    }
-  }
-    
   const logRad = useRef();
   const image = useRef();
   const { height, width } = useWindowDimensions();
 
   let radAct = null;
-
-  // if (width <= 576) {
-  //   return;
-  // }
 
   const changeRad = (e, p = 'null') => {
     if (p === 'button') {
@@ -238,6 +170,15 @@ const Login = (props) => {
     return null;
   }
 
+  const requestProvider = async (provider) => { 
+    try {
+      let url = await Axios.get(`${config.api_host}/api/auth/${provider}/redirect`);
+      window.location.replace(url.data.redirectToProvider);
+    } catch (error) {
+      console.log('error!');
+    }
+  }
+
   return (
     <>
       <div className="container-fluid no-select" style={{ height: '100vh' }}>
@@ -274,24 +215,8 @@ const Login = (props) => {
                     </Fragment>
                   ) : (
                     <Fragment>
-                      <GoogleLogin 
-                        autoLoad={false}
-                        onSuccess={responseGoogle}
-                        className="btn btn-block border-black goog"
-                        icon="fa-google"
-                        clientId="51117970599-dcj1v25r3rclnbg51k3jr7nbu5a81nas.apps.googleusercontent.com"
-                        buttonText="sign in with google"
-                      />
-                      <FacebookLogin
-                        appId="2363350287365556"
-                        autoLoad={false}
-                        onClick={getUserFacebook}
-                        fields="name,email,picture"
-                        callback={responseFacebook}
-                        cssClass="btn btn-block border-black"
-                        icon="fa-facebook"
-                        textButton="&nbsp;&nbsp;Sign in with facebook"
-                      />
+                      <button onClick={() => requestProvider('google')} className="btn btn-block border-black"><img src={`${process.env.PUBLIC_URL + '/google.png'}`} height='20px' /> sign in with google </button>
+                      <button onClick={() => requestProvider('facebook')} className="btn btn-block border-black"><img src={`${process.env.PUBLIC_URL + '/facebook.png'}`} height='20px' /> sign in with facebook </button>
                     </Fragment>
                   )}
                 </div>
