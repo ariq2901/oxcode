@@ -3,12 +3,18 @@ import Footer from './components/Footer';
 import { render } from 'react-dom'
 import { Map as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet'
 import { useState } from 'react';
+<<<<<<< HEAD
+import { useParams } from 'react-router-dom';
+=======
 import Axios from 'axios';
 import { config } from './config';
+>>>>>>> b8ffdf02a75113ebb52c791a544022bb223f7222
 
 const Detail = (props) => {
 
   const [data, setData] = useState();
+  const [review, setReview] = useState();
+  const [star, setStar] = useState();
 
   const img = useRef();
   const imgBar = useRef();
@@ -16,13 +22,14 @@ const Detail = (props) => {
   const map = useRef();
 
   let before = null;
+  let id = useParams();
 
   const position = [data.pin_point.latitude, data.pin_point.longitude];
   const name = data.name;
 
   const getDetAtt = async () => {
     try {
-      const respon = await Axios.get(`${config.api_host}/api/attractions/${props.id}`);
+      const respon = await Axios.get(`${config.api_host}/api/attractions/${id}`);
       // setList(respon.data);
       setData(respon.data.attraction);
     } catch (e) {
@@ -73,23 +80,31 @@ const Detail = (props) => {
   useEffect(() => {
     // map.current.innerHTML = location;
     render(location, map.current)
-    starRating();
-    getDetAtt();
     // console.log(location);
   }, [location])
+
+  useEffect(() => {
+    starRating();
+    getDetAtt();
+  }, [id])
 
   const starRating = (rating) => {
     let starRatingTitle = [];
     for (let index = 0; index < 4; index++) {
       if (index < rating) {
-        starRatingTitle.push('material-icons');
+        starRatingTitle.push('star');
       } else {
-        starRatingTitle.push('material-icons-outlined');
+        starRatingTitle.push('star_border');
       }
       return starRatingTitle.map((data, index) => (
-        <i className={data} key={index}>star</i>
+        <i className="material-icons" key={index}>{data}</i>
       ));
     }
+  }
+
+  const ratingForm = (e) => {
+    e.preventDefault();
+    console.log(e.target.parentElement);
   }
 
   // const imageHandle = () => {
@@ -261,7 +276,19 @@ const Detail = (props) => {
             <span className="close" onClick={closeModal}>X</span>
           </div>
           <div className="modal-body">
-            <p>JKJKJKJKJKJKJ</p>
+            <form action="">
+              <span className="rating ia">
+                <i className="material-icons-outlined">star</i>
+                <i className="material-icons-outlined">star</i>
+                <i className="material-icons-outlined">star</i>
+                <i className="material-icons-outlined">star</i>
+                <i className="material-icons-outlined">star</i>
+              </span>
+              <input type="range" min="1" max="5" id="range-modal" hidden />
+              <textarea name="review" cols="30" rows="10" className="textarea-modal">
+
+              </textarea>
+            </form>
           </div>
         </div>
       </div>
