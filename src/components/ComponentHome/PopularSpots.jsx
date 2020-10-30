@@ -32,7 +32,7 @@ const PopularSpots = () => {
     var n;
     for( n = 0; n < jumlah; n++ ) {
       skeleton.push(
-        <div className="crd">
+        <div className="crd" key={n}>
           <div className="img-wrapper loading"></div>
           <div className="title-wrapper loading">
             <span></span>
@@ -54,14 +54,14 @@ const PopularSpots = () => {
     var tag = [];
     var i;
     for( i = 0; i < stars; i++ ) {
-      tag.push(<i class='fas fa-star'></i>);
+      tag.push(<i className='fas fa-star' key={i}></i>);
     }
     // console.log(i);
     if( i < 5 ) {
-      tag.push(<i class="far fa-star"></i>);
+      tag.push(<i key={i} className="far fa-star"></i>);
     }
     if( i < 4 ) {
-      tag.push(<i class="far fa-star"></i>);
+      tag.push(<i key={i} className="far fa-star"></i>);
     }
     return tag;
   }
@@ -71,7 +71,7 @@ const PopularSpots = () => {
       <div className="spots-wrapper">
         <div className="spots-title">
           <span className="s-title">most popular tourist spots</span>
-          <Link className="s-view" to={'list-attraction/popular'}>view all<span><i class="fas fa-arrow-right"></i></span></Link>
+          <Link className="s-view" to={'list-attraction/popular'}>view all<span><i className="fas fa-arrow-right"></i></span></Link>
         </div>
         <div className="spots-list">
         {loading ? (
@@ -95,7 +95,7 @@ const PopularSpots = () => {
                     <p className="total-reviews">{wisata.total_reviews} reviews</p>
                   </div>
                   <div className="location-wrapper">
-                    <i class="fas fa-map-marker-alt"></i>
+                    <i className="fas fa-map-marker-alt"></i>
                     <p className="location-name">{wisata.city}</p>
                   </div>
                 </NavLink>

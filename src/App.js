@@ -23,18 +23,26 @@ const App = () => {
           <Route path="/" exact>
             <Home />
           </Route>
+<<<<<<< HEAD
           <Route path="/list-attraction/:type?">``
             <ListAttraction />
+=======
+          <Route path="/list-attraction/:type?">
+            <ListAttraction/>
+>>>>>>> e4f73db198791260c46c2368cf5530f014d9a5c3
           </Route>
           <Route path="/about" component={About} />
           <Route path="/detail/:id" component={Detail} />
           <AuthGuarder path='/login'>
+<<<<<<< HEAD
             <Login />
+=======
+            <Login/>
+>>>>>>> e4f73db198791260c46c2368cf5530f014d9a5c3
           </AuthGuarder>
           <AuthGuarder path='/register'>
             <Register />
           </AuthGuarder>
-          {/* <Route path='/register' component={Register} /> */}
           <Route path='/forgot-password' component={ForgotPassword} />
           <Route path='/reset-password/:token' component={ResetPassword} />
         </Switch>

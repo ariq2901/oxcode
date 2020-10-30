@@ -36,10 +36,14 @@ const Board = ({ result }) => {
     }
   }
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault()
-    const attractions = getFilteredAttractions();
+    const attractions = await getFilteredAttractions();
     result(attractions);
+    
+    dispatch({type: 'SET_RESULT', aData: "data", aValue: attractions});
+    dispatch({type: 'SET_RESULT', aData: "aksi", aValue: true});
+    console.log('onSubmit: ', attractions);
   }
 
   const setPlace = place => {
@@ -66,15 +70,15 @@ const Board = ({ result }) => {
     if (category !== null) {
       payload = {...payload, categories: [category]};
     }
-    console.log('payload board list ', payload);
+
     try {
       result = await Axios.post(url, payload);
+      console.log('isi: ', result);
     } catch (error) {
       swal("ooops...", "there is an internal server error, try again later", "error");
+      return null;
     }
     
-    dispatch({type: 'SET_RESULT', aData: "data", aValue: result.data.attractions});
-    dispatch({type: 'SET_RESULT', aData: "aksi", aValue: true});
     return result.data.attractions;
   }
 
