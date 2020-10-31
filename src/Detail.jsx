@@ -1,8 +1,7 @@
 import React, { Fragment, useRef, useEffect, useState } from 'react';
 import Footer from './components/Footer';
 import { render } from 'react-dom'
-import { Map as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet'
-import { useState } from 'react';
+import { Map as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet';
 import { useParams } from 'react-router-dom';
 import Axios from 'axios';
 import { config } from './config';

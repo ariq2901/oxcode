@@ -370,6 +370,7 @@ const ListGrid = (props) => {
       console.log('resp onpage', resp);
       setList(resp.data.attractions);
       setOnPaginate(true);
+      setCPage(resp.data.meta.current_page);
       if(resp.data.attractions.length < 5) {
         dispatch({type: 'SET_HEIGHT', height: true})
       }
@@ -389,6 +390,7 @@ const ListGrid = (props) => {
       console.log('resp onpage', resp);
       setList(resp.data.attractions);
       setOnPaginate(true);
+      setCPage(resp.data.meta.current_page);
       if(resp.data.attractions.length < 5) {
         dispatch({type: 'SET_HEIGHT', height: true})
       }
@@ -408,6 +410,7 @@ const ListGrid = (props) => {
       console.log('resp onpage', resp);
       setList(resp.data.attractions);
       setOnPaginate(true);
+      setCPage(resp.data.meta.current_page);
       if(resp.data.attractions.length < 5) {
         dispatch({type: 'SET_HEIGHT', height: true})
       }
@@ -579,7 +582,7 @@ const ListGrid = (props) => {
         <ul className="pagination-wrapper">
           <li className="page-item"><button name="button" disabled={cPage < 2} onClick={onPrev} className="page-link">prev</button></li>
           {paginate(lPage)}
-          <li className="page-item"><button name="button" onClick={onNext} className="page-link">next</button></li>
+          <li className="page-item"><button name="button" disabled={cPage === lPage} onClick={onNext} className="page-link">next</button></li>
         </ul>
       </div>
     </Fragment>

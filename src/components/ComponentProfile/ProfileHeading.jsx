@@ -124,34 +124,22 @@ const ProfileHeading = () => {
         </div>
         <div className="userInfo">
           <form onSubmit={submitAction}>
-            <input type="hidden" name="_method" value="put" />
+            <input type="hidden" name="_method" value="put"/>
             <div className="nameInfo">
               <label htmlFor="name">Name</label>
-              <input type="text" name="name" onChange={e => setName(e.target.value)} id="nameupdate" value={name} />
+              <input type="text" name="name" onChange={e => setName(e.target.value)} id="nameupdate" value={name}/>
             </div>
             <div className="passwordInfo">
               <label htmlFor="password">Password</label>
-              <input type="password" name="password" onChange={e => setpassword(e.target.value)} id="passwordupdate" placeholder="*****" value={password} />
+              <input type="password" name="password" onChange={e => setPassword(e.target.value)} id="password" placeholder="*****" value={password}/>
             </div>
-            <button className="btn-update" type="submit">Save Changes</button>
+            <div className="passwordInfo">
+              <label htmlFor="password_confirmation">Confirmation Password</label>
+              <input type="password" name="password_confirmation" onChange={e => setPasswordConfirmation(e.target.value)} id="password_confirmation" placeholder="*****" value={passwordConfirmation}/>
+            </div>
+            <button className="btn-update mt-2" type="submit" disabled={loading}>{loading ? 'Updating your profile' : 'Save Changes'}</button>
           </form>
         </div>
-        <form onSubmit={submitAction}>
-          <input type="hidden" name="_method" value="put"/>
-          <div className="nameInfo">
-            <label htmlFor="name">Name</label>
-            <input type="text" name="name" onChange={e => setName(e.target.value)} id="nameupdate" value={name}/>
-          </div>
-          <div className="passwordInfo">
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" onChange={e => setPassword(e.target.value)} id="password" placeholder="*****" value={password}/>
-          </div>
-          <div className="passwordInfo">
-            <label htmlFor="password_confirmation">Confirmation Password</label>
-            <input type="password" name="password_confirmation" onChange={e => setPasswordConfirmation(e.target.value)} id="password_confirmation" placeholder="*****" value={passwordConfirmation}/>
-          </div>
-          <button className="btn-update mt-2" type="submit" disabled={loading}>{loading ? 'Updating your profile' : 'Save Changes'}</button>
-        </form>
       </div>
     </Fragment>
   );
