@@ -1,11 +1,7 @@
 import React, { Fragment, useRef, useEffect, useState } from 'react';
 import Footer from './components/Footer';
 import { render } from 'react-dom'
-<<<<<<< HEAD
-import { Map as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet'
-=======
 import { Map as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet';
->>>>>>> c36a3c7756633b3ca525ba37707a08c320ab3ec8
 import { useParams } from 'react-router-dom';
 import Axios from 'axios';
 import { config } from './config';
@@ -15,7 +11,6 @@ const Detail = (props) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [position, setPosition] = useState([]);
-  const [name, setName] = useState('');
   const [review, setReview] = useState('');
   const [star, setStar] = useState(0);
 
@@ -34,10 +29,7 @@ const Detail = (props) => {
       const respon = await Axios.get(`${config.api_host}/api/attractions/${id}`);
       setData(respon.data.attraction);
       console.log(respon.data.attraction)
-      console.log(setData(respon.data.attraction));
-      // setPosition([data.pin_point.latitude, data.pin_point.longitude]);
-      // setName(data.name);
-      // setLoading(true);
+      setLoading(true);
       console.log(data);
       console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     } catch (e) {
@@ -79,7 +71,7 @@ const Detail = (props) => {
       />
       <Marker position={position}>
         <Popup>
-          {name}
+          {data.name}
         </Popup>
       </Marker>
     </LeafletMap>
@@ -90,22 +82,32 @@ const Detail = (props) => {
   }, [id])
 
   useEffect(() => {
-    // render(location, map.current)
+    if (loading) {
+      setPosition([data.pin_point.latitude, data.pin_point.longitude]);
+    }
+    console.log(position)
+  }, [data])
+
+  useEffect(() => {
+    if (position[0] !== undefined) {
+      render(location, map.current)
+    }
+    console.log(position[0]);
     console.log('aaaaaa');
-  }, [])
+  }, [data])
 
   const starRating = (rating) => {
     let starRatingTitle = [];
-    for (let index = 1; index < 5; index++) {
+    for (let index = 1; index <= 5; index++) {
       if (index < rating || rating === 5) {
         starRatingTitle.push('star');
       } else {
         starRatingTitle.push('star_border');
       }
-      return starRatingTitle.map((dat, index) => (
-        <i className="material-icons" key={index}>{dat}</i>
-      ));
     }
+    return starRatingTitle.map((dat, index) => (
+      <i className="material-icons" key={index}>{dat}</i>
+    ));
   }
 
   const ratingForm = (e) => {
@@ -122,12 +124,6 @@ const Detail = (props) => {
       }
     }
     range.value = value
-  }
-
-  const imageHandle = () => {
-    for (let index = 0; index < data.images.length; index++) {
-
-    }
   }
 
   const formSubmit = (e) => {
@@ -158,8 +154,8 @@ const Detail = (props) => {
           <div className="row ia">
             <div className="title-header ia">
               <div className="title-box ia">
-                <span className="breadcumb">recreation / {name}</span>
-                <p className="title">{name}</p>
+                <span className="breadcumb">recreation / {data.name}</span>
+                <p className="title">{data.name}</p>
                 {loading ? (
                   <span className="rating ia">
                     {starRating(data.rating)}
