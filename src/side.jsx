@@ -11,8 +11,8 @@ const Side = (props) => {
     <div className="col sider">
       <div className="center lr-3" ref={image}>
         <img src="" alt="" />
-        <span style={{ color: 'rgba(255, 255, 255, 50%)' }}>best place</span>
-        <h2 style={{ color: 'white' }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quisquam quos incidunt,</h2>
+        <span style={{ color: 'rgba(255, 255, 255, 50%)' }}>Recomendation attraction</span>
+        <h2 style={{ color: 'white' }}>Let's see at popular attractions</h2>
       </div>
       <footer className="log-footer">
         <div style={{ alignSelf: 'center' }} ref={logRad}>

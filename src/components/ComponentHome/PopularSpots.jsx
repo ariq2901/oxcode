@@ -81,7 +81,7 @@ const PopularSpots = () => {
             ) : (
               <Fragment>
               {list.slice(0, 3).map((wisata, index) =>
-                <NavLink className="crd" to="/detail" key={index}>
+                <NavLink className="crd" to={`/detail/${wisata.id}`} key={index}>
                   <div className="img-wrapper">
                     <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png"  alt="place img"/>                  
                   </div>

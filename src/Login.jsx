@@ -6,7 +6,6 @@ import swal from 'sweetalert';
 import { config } from './config';
 import { Input, Button, IndicatorLoading } from './property/Form';
 import Side from './side';
-import BounceLoader from "react-spinners/BounceLoader";
 
 const getWindowDimensions = () => {
   const { innerWidth: width, innerHeight: height } = window;
