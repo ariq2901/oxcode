@@ -54,7 +54,8 @@ const LoginCallback = () => {
       dispatch({type: 'SET_PROFILE', pData: "email", pValue: user.data.user.email});
       dispatch({type: 'SET_PROFILE', pData: "name", pValue: user.data.user.name});
       dispatch({type: 'SET_PROFILE', pData: "picture", pValue: `${config.api_host}/api/images/${user.data.user.image.id}`});
-      history.push('/');
+      window.location.reload(true);
+      // history.push('/');
     } catch (error) {
       swal({
         title: "Ooops!",
