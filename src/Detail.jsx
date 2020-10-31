@@ -146,7 +146,7 @@ const Detail = () => {
       swal('Oops!', 'You must give rate first', 'warning');
       return;
     }
-    
+
     if (review.trim() === '') {
       swal('Oops!', 'You must fill review first', 'warning');
       return;
@@ -166,7 +166,7 @@ const Detail = () => {
       console.log(response);
       swal('Success', 'Your review has been added', 'success');
     } catch (e) {
-      swal('Error',  `${e.response.data.message}`, 'error');
+      swal('Error', `${e.response.data.message}`, 'error');
     }
     setLoading(false);
   }
@@ -174,176 +174,176 @@ const Detail = () => {
   return (
     <Fragment>
       {
-        loading ? <IndicatorLoading/> : ''
+        loading ? <IndicatorLoading /> : ''
       }
-     {
-       !loading ?
-        <div className="detail">
-           <section className="header">
-            <div className="container ia">
-              <div className="row ia">
-                <div className="title-header ia">
-                  <div className="title-box ia">
-                    <span className="breadcumb">recreation / {data.name}</span>
-                    <p className="title">{data.name}</p>
+      {
+        !loading ?
+          <div className="detail">
+            <section className="header">
+              <div className="container ia">
+                <div className="row ia">
+                  <div className="title-header ia">
+                    <div className="title-box ia">
+                      <span className="breadcumb">recreation / {data.name}</span>
+                      <p className="title">{data.name}</p>
                       <span className="rating ia">
-                      <div className="rating">
-                        {starLoop(data.rating)}
-                      </div>
+                        <div className="rating">
+                          {starLoop(data.rating)}
+                        </div>
                         {/* {starRating(data.rating)} */}
                         <span>{data.traveler_reviews ? data.traveler_reviews.length : ''} Reviews</span>
                         {/* <span className="material-icons favorite">favorite</span> */}
                       </span>
-                    <div className="button-row">
-                      {loading ? (
-                        <button className="btn-ia">
-                          <i className="material-icons">location_on</i>
-                          {data.city}
-                        </button>
-                      ) : null}
-                    </div>
-                    <div className="about">
-                      <p>Contact</p>
-                      {!loading ? (
-                        <div className="about-grid">
-                          <i className="material-icons">call</i>
-                          <span>{data.phone}</span>
-                        </div>
-                      ) : (
+                      <div className="button-row">
+                        {loading ? (
+                          <button className="btn-ia">
+                            <i className="material-icons">location_on</i>
+                            {data.city}
+                          </button>
+                        ) : null}
+                      </div>
+                      <div className="about">
+                        <p>Contact</p>
+                        {!loading ? (
                           <div className="about-grid">
                             <i className="material-icons">call</i>
-                            <span>00000000000</span>
+                            <span>{data.phone}</span>
                           </div>
-                        )}
-                    </div>
-                    <div className="about">
-                      <p>Ticket Price</p>
-                      <div className="about-grid">
-                        <i className="material-icons-outlined">confirmation_number</i>
+                        ) : (
+                            <div className="about-grid">
+                              <i className="material-icons">call</i>
+                              <span>00000000000</span>
+                            </div>
+                          )}
+                      </div>
+                      <div className="about">
+                        <p>Ticket Price</p>
+                        <div className="about-grid">
+                          <i className="material-icons-outlined">confirmation_number</i>
                           <span>
-                            <p>weekday: RP. {data.ticket_price ? data.ticket_price.weekday  : '0'},00 / person</p>
-                            <p>weekend: RP. {data.ticket_price ?data.ticket_price.weekend : '0'},00 / person</p>
+                            <p>weekday: RP. {data.ticket_price ? data.ticket_price.weekday : '0'},00 / person</p>
+                            <p>weekend: RP. {data.ticket_price ? data.ticket_price.weekend : '0'},00 / person</p>
                           </span>
+                        </div>
+                      </div>
+                      <div className="about">
+                        <p>locations</p>
+                        <div className="about-grid">
+                          <i className="material-icons">location_on</i>
+                          {!loading ? (
+                            <span>{data.address}</span>
+                          ) : (
+                              <span>null</span>
+                            )}
+                        </div>
+                      </div>
+                      <div className="about">
+                        <p>Operational Hour</p>
+                        <div className="about-grid">
+                          <i className="material-icons-outlined">access_time</i>
+                          <span>{data.hours_of_operation ? data.hours_of_operation.from : ''} - {data.hours_of_operation ? data.hours_of_operation.to : ''}</span>
+                        </div>
                       </div>
                     </div>
-                    <div className="about">
-                      <p>locations</p>
-                      <div className="about-grid">
-                        <i className="material-icons">location_on</i>
-                        {!loading ? (
-                          <span>{data.address}</span>
+                    <div className="image-title">
+                      {data.images ? (
+                        <div className="img-main rs" ref={img} style={{ backgroundImage: `url('${config.api_host}/api/images/${data.images[0].id}')` }}></div>
+                      ) : (
+                          <div className="img-main" ref={img} style={{ backgroundColor: 'black', }}></div>
+                        )}
+                      <div className="img-bar" ref={imgBar}>
+                        {data.images ? (
+                          data.images.map((hasil, index) => (
+                            <button className="image-on" onClick={imgHandler} key={index}>
+                              <div className="image-h" style={{ backgroundImage: `url('${config.api_host}/api/images/${hasil.id}')` }}></div>
+                            </button>
+                          ))
                         ) : (
-                            <span>null</span>
+                            <button className="image-on" onClick={imgHandler}>
+                              <div className="image-h" style={{ backgroundColor: 'black', }}></div>
+                            </button>
                           )}
                       </div>
                     </div>
-                    <div className="about">
-                      <p>Operational Hour</p>
-                      <div className="about-grid">
-                        <i className="material-icons-outlined">access_time</i>
-                        <span>{data.hours_of_operation ? data.hours_of_operation.from : ''} - {data.hours_of_operation ? data.hours_of_operation.to : ''}</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section className="body ia">
+              <div className="container ia">
+                <div className="row ia">
+                  <div className="main-body">
+                    <div className="body-text">
+                      <div className="card ia color">
+                        {!loading ? (
+                          <p>{data.description}</p>
+                        ) : (
+                            <p>Description</p>
+                          )}
+                      </div>
+                      <div className="card-title-ia">
+                        <p>Review</p>
+                        <button className="btn-ia" onClick={modal}>add review</button>
+                      </div>
+                      <div className="card ia color">
+                        {data.traveler_reviews ? (
+                          data.traveler_reviews.map((dat, index) => (
+                            <div className="review" key={index}>
+                              <div className="review-head">
+                                <div className="head-img" style={{ backgroundImage: `url('${config.api_host}/api/images/${dat.user.image.id}')` }}></div>
+                                <div className="head-body">
+                                  <p>{dat.user.name}. </p> <span>{dat.created_at}</span>
+                                  <span className="rating ia">
+                                    <div className="rating">
+                                      {starLoop(dat.rating)}
+                                    </div>
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="review-body">
+                                <p>{dat.review}</p>
+                              </div>
+                            </div>
+                          ))
+                        ) : null}
                       </div>
                     </div>
                   </div>
-                  <div className="image-title">
-                    {data.images ? (
-                      <div className="img-main rs" ref={img} style={{ backgroundImage: `url('${config.api_host}/api/images/${data.images[0].id}')` }}></div>
-                    ) : (
-                        <div className="img-main" ref={img} style={{ backgroundColor: 'black', }}></div>
-                      )}
-                    <div className="img-bar" ref={imgBar}>
-                      {data.images ? (
-                        data.images.map((hasil, index) => (
-                          <button className="image-on" onClick={imgHandler} key={index}>
-                            <div className="image-h" style={{ backgroundImage: `url('${config.api_host}/api/images/${hasil.id}')` }}></div>
-                          </button>
-                        ))
-                      ) : (
-                          <button className="image-on" onClick={imgHandler}>
-                            <div className="image-h" style={{ backgroundColor: 'black', }}></div>
-                          </button>
-                        )}
-                    </div>
-                  </div>
                 </div>
               </div>
-            </div>
-          </section>
-          <section className="body ia">
-            <div className="container ia">
-              <div className="row ia">
-                <div className="main-body">
-                  <div className="body-text">
-                    <div className="card ia color">
-                      {!loading ? (
-                        <p>{data.description}</p>
-                      ) : (
-                          <p>Description</p>
-                        )}
-                    </div>
-                    <div className="card-title-ia">
-                      <p>Review</p>
-                      <button className="btn-ia" onClick={modal}>add review</button>
-                    </div>
-                    <div className="card ia color">
-                      {data.traveler_reviews ? (
-                        data.traveler_reviews.map((dat, index) => (
-                          <div className="review" key={index}>
-                            <div className="review-head">
-                              <div className="head-img" style={{ backgroundImage: `url('${config.api_host}/api/images/${dat.user.image.id}')` }}></div>
-                              <div className="head-body">
-                                <p>{dat.user.name}. </p> <span>{dat.created_at}</span>
-                                <span className="rating ia">
-                                  <div className="rating">
-                                    {starLoop(dat.rating)}
-                                  </div>
-                                </span>
-                              </div>
-                            </div>
-                            <div className="review-body">
-                              <p>{dat.review}</p>
-                            </div>
-                          </div>
-                        ))
-                      ) : null}
-                    </div>
-                  </div>
+            </section>
+            <Footer />
+            <div className="modal" ref={modalRef}>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <p className="modal-title">Add Review</p>
+                  <span className="close" onClick={closeModal}>X</span>
                 </div>
-              </div>
-            </div>
-          </section>
-          <Footer />
-          <div className="modal" ref={modalRef}>
-            <div className="modal-content">
-              <div className="modal-header">
-                <p className="modal-title">Add Review</p>
-                <span className="close" onClick={closeModal}>X</span>
-              </div>
-              <div className="modal-body">
-                <form method="POST" onSubmit={formSubmit}>
-                  <span className="rating ia">
-                    <i className="material-icons" onClick={ratingForm} num="1">star_border</i>
-                    <i className="material-icons" onClick={ratingForm} num="2">star_border</i>
-                    <i className="material-icons" onClick={ratingForm} num="3">star_border</i>
-                    <i className="material-icons" onClick={ratingForm} num="4">star_border</i>
-                    <i className="material-icons" onClick={ratingForm} num="5">star_border</i>
-                  </span>
-                  <input type="range" min="0" max="5" name="rate" id="range-modal" hidden defaultValue="0"/>
-                  <div class="form-group-detail">
-                    <textarea wrap="off" id="review" name="review" cols="30" rows="10" className="textarea-modal" required></textarea>
-                    <label for="review">Review</label>
-                  </div>
-                  {/* <textarea name="review" cols="30" rows="10" className="textarea-modal">
+                <div className="modal-body">
+                  <form method="POST" onSubmit={formSubmit}>
+                    <span className="rating ia">
+                      <i className="material-icons" onClick={ratingForm} num="1">star_border</i>
+                      <i className="material-icons" onClick={ratingForm} num="2">star_border</i>
+                      <i className="material-icons" onClick={ratingForm} num="3">star_border</i>
+                      <i className="material-icons" onClick={ratingForm} num="4">star_border</i>
+                      <i className="material-icons" onClick={ratingForm} num="5">star_border</i>
+                    </span>
+                    <input type="range" min="0" max="5" name="rate" id="range-modal" hidden defaultValue="0" />
+                    <div class="form-group-detail">
+                      <textarea wrap="off" id="review" name="review" cols="30" rows="10" className="textarea-modal" required></textarea>
+                      <label for="review">Review</label>
+                    </div>
+                    {/* <textarea name="review" cols="30" rows="10" className="textarea-modal">
 
                   </textarea> */}
-                  <button type="submit" className="btn-ia w-100">Submit</button>
-                </form>
+                    <button type="submit" className="btn-ia w-100">Submit</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        : ''
-     }
+          : ''
+      }
     </Fragment >
   );
 }
