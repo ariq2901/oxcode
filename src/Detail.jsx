@@ -8,10 +8,20 @@ import { config } from './config';
 import swal from 'sweetalert';
 import { IndicatorLoading } from './property/Form';
 
+<<<<<<< HEAD
 const Detail = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [position, setPosition] = useState([]);
+=======
+const Detail = (props) => {
+
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [position, setPosition] = useState([]);
+  const [review, setReview] = useState('');
+  const [star, setStar] = useState(0);
+>>>>>>> 971f246f91a0306ea55559e4fe9f8dce1e628864
 
   const img = useRef();
   const imgBar = useRef();
@@ -27,6 +37,11 @@ const Detail = () => {
     try {
       const respon = await Axios.get(`${config.api_host}/api/attractions/${id}`);
       setData(respon.data.attraction);
+<<<<<<< HEAD
+=======
+      console.log(respon.data.attraction)
+      setLoading(true);
+>>>>>>> 971f246f91a0306ea55559e4fe9f8dce1e628864
       console.log(data);
       console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     } catch (e) {
@@ -81,16 +96,16 @@ const Detail = () => {
 
   const starRating = (rating) => {
     let starRatingTitle = [];
-    for (let index = 1; index < 5; index++) {
+    for (let index = 1; index <= 5; index++) {
       if (index < rating || rating === 5) {
         starRatingTitle.push('star');
       } else {
         starRatingTitle.push('star_border');
       }
-      return starRatingTitle.map((data, index) => (
-        <i className="material-icons" key={index}>{data}</i>
-      ));
     }
+    return starRatingTitle.map((dat, index) => (
+      <i className="material-icons" key={index}>{dat}</i>
+    ));
   }
 
   function starLoop(stars) {
@@ -128,12 +143,6 @@ const Detail = () => {
       }
     }
     range.value = value
-  }
-
-  const imageHandle = () => {
-    for (let index = 0; index < data.images.length; index++) {
-
-    }
   }
 
   const formSubmit = async (e) => {
