@@ -2,19 +2,11 @@ import React, { Fragment, useRef, useEffect, useState } from 'react';
 import Footer from './components/Footer';
 import { render } from 'react-dom'
 import { Map as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet'
-<<<<<<< HEAD
 import { useParams } from 'react-router-dom';
-=======
-import { useState } from 'react';
-<<<<<<< HEAD
-=======
-import { useParams } from 'react-router-dom';
->>>>>>> a4e705196d0f9e1130889db28f838b4ab1efb4ef
->>>>>>> d8602b5666db577f73b724cb85d64be35aaa18b2
 import Axios from 'axios';
 import { config } from './config';
 
-const Detail = () => {
+const Detail = (props) => {
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -106,8 +98,8 @@ const Detail = () => {
       } else {
         starRatingTitle.push('star_border');
       }
-      return starRatingTitle.map((data, index) => (
-        <i className="material-icons" key={index}>{data}</i>
+      return starRatingTitle.map((dat, index) => (
+        <i className="material-icons" key={index}>{dat}</i>
       ));
     }
   }
@@ -167,7 +159,7 @@ const Detail = () => {
                 {loading ? (
                   <span className="rating ia">
                     {starRating(data.rating)}
-                    <span>{data.traveler_reviews[0].length} Reviews</span>
+                    <span>{data.traveler_reviews.length} Reviews</span>
                     <span className="material-icons favorite">favorite</span>
                   </span>
                 ) : (
