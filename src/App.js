@@ -10,7 +10,7 @@ import Register from './Register';
 import Profile from './components/Profile';
 import ResetPassword from './components/ResetPassword';
 import ForgotPassword from './components/ForgotPassword';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, HashRouter, Link, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './redux';
 import AuthGuarder from "./components/Guarder/AuthGuarder";
@@ -20,7 +20,7 @@ import LoginCallback from './LoginCallback';
 const App = () => {
   return (
     <Provider store={store}>
-      <Router>
+      <HashRouter>
         <Nav />
         <Switch>
           <Route path="/" exact>
@@ -46,7 +46,7 @@ const App = () => {
           <Route path='/forgot-password' component={ForgotPassword} />
           <Route path='/reset-password/:token' component={ResetPassword} />
         </Switch>
-      </Router>
+      </HashRouter>
     </Provider>
   );
 }
