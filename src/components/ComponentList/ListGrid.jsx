@@ -424,7 +424,7 @@ const ListGrid = (props) => {
   const paginate = (juml) => {
     const hal = [];
     for(var h=1; h <= juml; h++) {
-      hal.push(<li key={h} className="page-item"><button name="button" value={h} onClick={onPage} className="page-link">{h}</button></li>)
+      hal.push(<li key={h} className={`page-item ${cPage === h ? 'active' : ''}`}><button name="button" disabled={cPage === h} value={h} onClick={onPage} className="page-link">{h}</button></li>)
     }
     return hal;
   }

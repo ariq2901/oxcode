@@ -224,7 +224,7 @@ nav > .megamenu-hidden {
 }
 
 button.page-link:disabled,
-button.page-link[disabled]{
+button.page-link[disabled] {
   background-color: #ebe7e7;
   color: #666666;
 }
@@ -325,11 +325,13 @@ section.header.netral {
 }
 
 section.main.attract {
-  height: 1400px;
+  min-height: 1400px;
+  height: 100%;
 }
 
 section.main.attract.min {
-  height: 932px;
+  min-height: 932px;
+  height: 100%;
 }
 
 .container.attract {
@@ -839,7 +841,8 @@ select.select-category option {
   margin-right: 30px;
 }
 
-.slick-prev:before, .slick-next:before {
+.slick-prev:before,
+.slick-next:before {
   color: black;
 }
 
@@ -924,7 +927,7 @@ select.select-category option {
 .title-wrapper {
   color: rgba(63, 61, 86, 1);
   margin-top: 3.3%;
-  font-size: 2.5em;
+  font-size: 2.4em;
   font-weight: 500;
 }
 
@@ -1509,7 +1512,7 @@ ul.pagination-wrapper {
 .pagination-wrapper .page-item {
   font-size: 1.2em;
   font-weight: 500;
-  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 /*^ Responsive Breakpoint */

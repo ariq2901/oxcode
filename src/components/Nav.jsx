@@ -120,6 +120,7 @@ const Nav = () => {
       setPicture('');
       setAuth(false);
       sessionStorage.clear();
+      history.push('/login');
     })
     .catch(err => {
       swal("oops...", "Something went wrong, try again later", "error");
@@ -181,7 +182,7 @@ const Nav = () => {
                     </button>
                     <div className={profilePop ? "status-wrapper" : "status-wrapper hidden"}>
                       <div><i className="fas fa-user-circle"></i><span>{name}</span></div>
-                      <div><i class="far fa-address-card"></i><Link to="/profile" className="address-card"><span>profile dashboard</span></Link></div>
+                      <div><i className="far fa-address-card"></i><Link to="/profile" className="address-card"><span>profile dashboard</span></Link></div>
                       {loginType()}
                     </div>
                   </div>
