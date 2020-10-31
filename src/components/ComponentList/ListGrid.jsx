@@ -292,9 +292,34 @@ const ListGrid = (props) => {
     if (list.length > 0) {
       return (
         <Fragment>
+<<<<<<< HEAD
           {props.resulta.length > 0 ?
             props.resulta.map((wisata, index) =>
               <NavLink className="crd" to="/detail" key={index}>
+=======
+          {props.resulta.length > 0 ? 
+            props.resulta.map((wisata, index) => 
+            <NavLink className="crd" to={`/detail/${wisata.id}`} key={index}>
+              <div className="img-wrapper">
+                <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png"  alt="place img"/>
+              </div>
+              <div className="title-wrapper">
+                <span>{wisata.name}</span>
+              </div>
+              <div className="rate-wrapper">
+                <div className="rating">
+                  {starLoop(wisata.rating)}
+                </div>
+                <p className="total-reviews">{wisata.total_reviews} reviews</p>
+              </div>
+              <div className="location-wrapper">
+                {loading ? '' : <i className="fas fa-map-marker-alt"></i>}
+                <p className="location-name">{wisata.city}</p>
+              </div>
+            </NavLink>
+          ) : list.map((wisata, index) => 
+              <NavLink className="crd" to={`/detail/${wisata.id}`} key={index}>
+>>>>>>> d8602b5666db577f73b724cb85d64be35aaa18b2
                 <div className="img-wrapper">
                   <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png" alt="place img" />
                 </div>

@@ -231,7 +231,7 @@ nav > .megamenu-hidden {
   border-radius: 5px;
   padding: 0.5em 1em;
   opacity: 1;
-  transition: opacity .6s;
+  transition: opacity 0.6s;
 }
 
 .status-wrapper::before {
@@ -253,7 +253,7 @@ nav > .megamenu-hidden {
   opacity: 0;
   pointer-events: none;
   height: 0px;
-  transition: opacity .7s;
+  transition: opacity 0.7s;
 }
 
 .status-wrapper div {
@@ -2286,7 +2286,7 @@ p.title {
 }
 
 .about i {
-  margin-top: 6px;;
+  margin-top: 6px;
 }
 
 .about i:nth-child(2) {
@@ -3129,16 +3129,20 @@ footer.footer {
   align-items: flex-end;
 }
 
-.nameInfo, .passwordInfo {
+.nameInfo,
+.passwordInfo {
   display: flex;
   flex-direction: column;
 }
 
-.nameInfo label, .passwordInfo label {
+.nameInfo label,
+.passwordInfo label {
   font-size: 1.3em;
 }
 
-.nameInfo input, .passwordInfo input, .passwordInfo .passChange {
+.nameInfo input,
+.passwordInfo input,
+.passwordInfo .passChange {
   width: 80%;
   height: 30px;
   border: 1px solid #767676;
@@ -3150,21 +3154,27 @@ footer.footer {
   box-shadow: 2px 5px 18px rgba(0, 0, 0, 0.1);
 }
 
-.nameInfo input:focus, .passwordInfo input:focus {
+.nameInfo input:focus,
+.passwordInfo input:focus {
   border: 1px solid #bababa;
 }
 
-.nameInfo input::placeholder, .passwordInfo input::placeholder {
+.nameInfo input::placeholder,
+.passwordInfo input::placeholder {
   color: rgb(46, 44, 44);
   opacity: 1; /* Firefox */
 }
 
-.nameInfo input:-ms-input-placeholder, .passwordInfo input:-ms-input-placeholder { /* Internet Explorer 10-11 */
- color: rgb(46, 44, 44);
+.nameInfo input:-ms-input-placeholder,
+.passwordInfo input:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: rgb(46, 44, 44);
 }
 
-.nameInfo input::-ms-input-placeholder, .passwordInfo input::-ms-input-placeholder { /* Microsoft Edge */
- color: rgb(46, 44, 44);
+.nameInfo input::-ms-input-placeholder,
+.passwordInfo input::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: rgb(46, 44, 44);
 }
 
 form .btn-update {
@@ -3182,6 +3192,21 @@ form .btn-update {
   border: none;
   background-color: #1b8588;
 }
+
+.indicator-loading {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  right: 0;
+  z-index: 9999999;
+  justify-content: center;
+  align-items: center;
+  background: #ffff;
+}
+
 /*! ukuran minidesktop */
 @media screen and (max-width: 1201px) {
   .sider {

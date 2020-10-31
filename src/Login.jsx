@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import swal from 'sweetalert';
 import { config } from './config';
-import { Input, Button } from './property/Form';
+import { Input, Button, IndicatorLoading } from './property/Form';
 import Side from './side';
+import BounceLoader from "react-spinners/BounceLoader";
 
 const getWindowDimensions = () => {
   const { innerWidth: width, innerHeight: height } = window;
@@ -48,64 +49,57 @@ const Login = (props) => {
   // ^ Breakpoint
   const breakpoint = 1200;
 
-  const submitLog = (e) => {
-    console.log('hi');
+  const submitLog = async (e) => {
     e.preventDefault();
-    if( emailInput.length > 0 && passInput.length > 0 ) {
 
+    if( emailInput.length > 0 && passInput.length > 0 ) {
       setLoading(true);
-      console.log('confirmed');
-      const url = `${config.api_host}/api/auth/login`
+      console.log(loading);
+      const url = `${config.api_host}/api/auth/login`;
       const payload = {
         email : emailInput,
         password : passInput,
         remember_me : remember
       }
-      console.log('payload ', payload);
-      Axios.post(url, payload)
-      .then(_ => {
-        const token = _.data.personal_access_token;
-        const tokenB = `Bearer `.concat(token.token);
-        // const options = {
-          //   headers: {'Authorization': tokenB}
-          // }
-          const urlD = `${config.api_host}/api/auth/user`;
-          Axios.get(urlD, { headers : {'Authorization': tokenB} })
-          .then(u => {
-            console.log('user data: ', u);
-          sessionStorage.setItem("typeLogin", 'skytours');
-          sessionStorage.setItem("isLogin", true);
-          sessionStorage.setItem("email", u.data.user.email);
-          sessionStorage.setItem("name", u.data.user.name);
-          sessionStorage.setItem("tokenB", tokenB);
-          sessionStorage.setItem("picture", `${config.api_host}/api/images/${u.data.user.image.id}`);
-          dispatch({type: 'SET_ISLOGIN', typeLogin: 'skytours'});
-          dispatch({type: 'SET_ISLOGIN'});
-          dispatch({type: 'SET_PROFILE', pData: "email", pValue: u.data.user.email});
-          dispatch({type: 'SET_PROFILE', pData: "name", pValue: u.data.user.name});
-          dispatch({type: 'SET_PROFILE', pData: "picture", pValue: `${config.api_host}/api/images/${u.data.user.image.id}`});
+      try {
+        const personal_access_token = (await Axios.post(url, payload)).data.personal_access_token;
+        const token = `Bearer `.concat(personal_access_token.token);
+        const urlD = `${config.api_host}/api/auth/user`;
+        getUserDetail(urlD, token);
+      } catch (error) {
+         swal({
+          title: "Something went wrong",
+          text: `${error.response.data.message}`,
+          icon: "error"
+        });
+        setLoading(false);
+      }
+    } 
+  }
 
-          props.history.push('/');
-        })
-        .catch(err => {
-          console.log('error ', err);
-        })
-        setLoading(false);
-      })
-      .catch(e => {
-        console.log('failure', e);
-        if( e.response.status == 401 ) {
-          swal({
-            title: "verify your account",
-            text: "Verify your account in the email we sent to your mailbox",
-            icon: "warning"
-          })
-        }
-        setLoading(false);
-      })
-    } else {
-      console.log('NOT confirmed');
+  const getUserDetail = async (url, token) => {
+    try {
+      const user = ((await Axios.get(url, { headers : {'Authorization': token} }))).data.user;
+      sessionStorage.setItem("typeLogin", 'skytours');
+      sessionStorage.setItem("isLogin", true);
+      sessionStorage.setItem("email", user.email);
+      sessionStorage.setItem("name", user.name);
+      sessionStorage.setItem("tokenB", token);
+      sessionStorage.setItem("picture", `${config.api_host}/api/images/${user.image.id}`);
+      dispatch({type: 'SET_ISLOGIN', typeLogin: 'skytours'});
+      dispatch({type: 'SET_ISLOGIN'});
+      dispatch({type: 'SET_PROFILE', pData: "email", pValue: user.email});
+      dispatch({type: 'SET_PROFILE', pData: "name", pValue: user.name});
+      dispatch({type: 'SET_PROFILE', pData: "picture", pValue: `${config.api_host}/api/images/${user.image.id}`});
+      props.history.push('/');
+    } catch (error) {
+      swal({
+        title: "Something went wrong",
+        text: `${error.response.data.message}`,
+        icon: "error"
+      });
     }
+    setLoading(false);
   }
 
   const logRad = useRef();
@@ -171,16 +165,25 @@ const Login = (props) => {
   }
 
   const requestProvider = async (provider) => { 
+    setLoading(true);
     try {
       let url = await Axios.get(`${config.api_host}/api/auth/${provider}/redirect`);
       window.location.replace(url.data.redirectToProvider);
     } catch (error) {
-      console.log('error!');
+      swal({
+        title: "Oops! Something went wrong",
+        text: "Please try again later",
+        icon: "error"
+      });
     }
+    setLoading(false);
   }
 
   return (
     <>
+      {
+        loading ? <IndicatorLoading /> : ''
+      }
       <div className="container-fluid no-select" style={{ height: '100vh' }}>
         <div className="row" style={{ height: '100%' }}>
           <div className={width < breakpoint ? "col-12 login-area not-active" : "col-4 login-area not-active"}>

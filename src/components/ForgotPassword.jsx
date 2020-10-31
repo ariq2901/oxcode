@@ -11,19 +11,18 @@ const Forgotpassword= () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
-  function validateEmail(em) {
-    const re = /\S+@\S+\.\S+/;
-    return re.test(em);
+  function emailIsValid (email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
   }
 
   const sendRequest = () => {
     setLoading(true);
-    if( email.length == '' ){
+    if( email.trim() === '' ){
       Swal('Something went wrong', 'The email can\'t be empty','error')
       setLoading(false);
       return false;
     }
-    if( !validateEmail(email) ) {
+    if( !emailIsValid(email) ) {
       Swal('Something went wrong', 'The email is not valid','error')
       setLoading(false);
       return false;
