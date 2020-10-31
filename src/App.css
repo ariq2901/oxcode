@@ -3266,12 +3266,16 @@ form .btn-update {
   background: #ffff;
 }
 
-.slick-slide div {
+.lr-3 .slick-slider .slick-list .slick-track .slick-slide div {
   transform: translateY(-10px);
 }
 
 .slider-item h2 {
   padding-right: 3%;
+}
+
+.akir h2 {
+  padding-right: 6%;
 }
 
 .slider-item {

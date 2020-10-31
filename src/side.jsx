@@ -16,9 +16,11 @@ const Side = (props) => {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 6000,
   }
 
   return (
@@ -39,7 +41,7 @@ const Side = (props) => {
           <span style={{ color: 'rgba(255, 255, 255, 50%)' }}>skytours</span>
           <h2 style={{ color: 'white' }}>the world is very wide, explore it all with your own way</h2>
         </div>
-        <div className="slider-item">
+        <div className="slider-item akir">
           <div className="slide-img-wrapper">
             <img src={Login3} alt="illustration" />
           </div>
