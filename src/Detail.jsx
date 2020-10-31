@@ -8,20 +8,10 @@ import { config } from './config';
 import swal from 'sweetalert';
 import { IndicatorLoading } from './property/Form';
 
-<<<<<<< HEAD
 const Detail = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [position, setPosition] = useState([]);
-=======
-const Detail = (props) => {
-
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [position, setPosition] = useState([]);
-  const [review, setReview] = useState('');
-  const [star, setStar] = useState(0);
->>>>>>> 971f246f91a0306ea55559e4fe9f8dce1e628864
 
   const img = useRef();
   const imgBar = useRef();
@@ -37,11 +27,6 @@ const Detail = (props) => {
     try {
       const respon = await Axios.get(`${config.api_host}/api/attractions/${id}`);
       setData(respon.data.attraction);
-<<<<<<< HEAD
-=======
-      console.log(respon.data.attraction)
-      setLoading(true);
->>>>>>> 971f246f91a0306ea55559e4fe9f8dce1e628864
       console.log(data);
       console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     } catch (e) {
