@@ -2584,11 +2584,28 @@ p.title {
 .person-img-wrapper {
   overflow: hidden;
   width: 70%;
+  max-height: 250px;
   border-radius: 10px;
 }
 
 .person-img-wrapper img {
   width: 100%;
+}
+
+.person-card:nth-child(1) .person-img-wrapper {
+  background-color: #2B9526;
+}
+
+.person-card:nth-child(1) .person-img-wrapper img {
+  transform: scale(0.88)
+}
+
+.person-card:nth-child(2) .person-img-wrapper img {
+  transform: translateY(-10%);
+}
+
+.person-card:nth-child(3) .person-img-wrapper img {
+  transform: translateY(-10%);
 }
 
 .person-detail {

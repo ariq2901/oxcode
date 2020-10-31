@@ -139,7 +139,7 @@ const Board = ({result}) => {
             </div>
             <div className="category-search-box">
             <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={categories} className="select-category">
-                <option defaultValue value="" key="">All</option>
+                <option defaultValue="" key="">All</option>
                 {CategoryReducer.category.map((c) =>
                   <option value={c.name} key={c.name}>{c.name}</option>
                 )}

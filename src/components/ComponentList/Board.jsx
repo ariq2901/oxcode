@@ -4,8 +4,10 @@ import { config } from '../../config';
 import { useEffect } from 'react';
 import Axios from 'axios';
 import swal from 'sweetalert';
+import { useHistory } from 'react-router-dom';
 
 const Board = ({ result }) => {
+  let history = useHistory();
   const CategoryReducer = useSelector(state => state.CategoryReducer);
   const dispatch = useDispatch();
   const [searchKota, setSearchKota] = React.useState("");
@@ -66,11 +68,15 @@ const Board = ({ result }) => {
     if (city.length > 0) {
       payload = {...payload, city};
     }
-    
-    if (category !== null) {
+
+    if (category == "all") {
+      history.push("/list-attraction");
+      return false;
+    }
+    if (category !== null && category != "all") {
       payload = {...payload, categories: [category]};
     }
-
+    console.log('payload board LIST ', payload);
     try {
       result = await Axios.post(url, payload);
       console.log('isi: ', result);
@@ -98,8 +104,8 @@ const Board = ({ result }) => {
               <input type="text" name="searchCity" id="searchCity" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setSearchKota(event.target.value)}} placeholder="anywhere" value={searchKota}/>
             </div>
             <div className="category-search-box">
-              <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={categories} className="select-category">
-                <option defaultValue value="">All</option>
+              <select onClick={() => setDisplay(!display)} onChange={event => {setCategories(event.target.value)}} id="searchCategory" value={categories} className="select-category">
+                <option value="all">All</option>
                 {CategoryReducer.category.map((c) =>
                   <option value={c.name} key={c.name}>{c.name}</option>
                 )}
