@@ -115,13 +115,28 @@ const PositionReducer = (state = initialPosition, action) => {
   return state;
 }
 
+const initialHeight = {
+  height: false
+}
+
+const HeightReducer = (state = initialHeight, action) => {
+  if( action.type === 'SET_HEIGHT' ) {
+    return {
+      ...state,
+      height: action.height
+    }
+  }
+  return state;
+}
+
 const reducer = combineReducers({
   RegisterReducer,
   LoginReducer,
   CategoryReducer,
   MegamenuReducer,
   ResultReducer,
-  PositionReducer
+  PositionReducer,
+  HeightReducer
 })
 
 export default reducer;

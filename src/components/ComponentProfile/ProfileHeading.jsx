@@ -13,6 +13,7 @@ const ProfileHeading = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [pictureUpdate, setPictureUpdate] = useState('');
 
   const submitAction = (e) => {
     e.preventDefault();
@@ -63,6 +64,47 @@ const ProfileHeading = () => {
       swal("Oops!", "Something went wrong", "error");
     });
   }
+  const changePicture = (e) => {
+    // e.preventDefault();
+    // fileUpload(pictureUpdate);
+    // let images = e.target.files;
+    let fd = new FormData();
+    let fdAppend = fd.append("images", e);
+    console.log('images fd', fdAppend);
+  }
+  // const changePicture = (e) => {
+  //   let files = e.target.files || e.dataTransfer.files;
+  //   if(!files.length) {
+  //     return;
+  //   }
+  //   console.log('files ',files[0]);
+  //   createImage(files[0]);
+  // }
+  // const createImage = (file) => {
+  //   let reader = new FileReader();
+  //   reader.onload = (e) => {
+  //     setPictureUpdate(e.target.result)
+  //   };
+  //   reader.readAsDataURL(file);
+  // }
+  // const fileUpload = (image) => {
+  //   const url = `${config.api_host}/api/users/update`;
+  //   const body = {
+  //     image: image
+  //   }
+  //   const token = sessionStorage.getItem("tokenB");
+  //   setLoading(true);
+  //   console.log('body ', body);
+  //   Axios.put(url, body, { headers: {'Authorization': token} })
+  //   .then(resp => {
+  //     console.log('update data ', resp);
+  //     setLoading(false);
+  //   })
+  //   .catch(err => {
+  //     setLoading(false);
+  //     swal("Oops!", "Something went wrong", "error");
+  //   });
+  // }
 
   return(
     <Fragment>
@@ -74,10 +116,14 @@ const ProfileHeading = () => {
           <div className="profileInfo">
             <span>{name}</span>
             <span>{email}</span>
+            <form encType="multipart/form-data">
+              <input type="file" name="images" onChange={e => changePicture(e.target.files)} id="pictureupdate"/>
+              <button type="submit">submit</button>
+            </form>
           </div>
         </div>
         <div className="userInfo">
-        <form onSubmit={submitAction}>
+        <form onSubmit={submitAction} id="formPicture">
           <input type="hidden" name="_method" value="put"/>
           <div className="nameInfo">
             <label htmlFor="name">Name</label>

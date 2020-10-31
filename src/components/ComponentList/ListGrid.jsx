@@ -8,6 +8,7 @@ import Axios from 'axios';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import NotfoundIMG from '../../img/home/noData.jpg';
+import swal from 'sweetalert';
 
 const ListGrid = (props) => {
   const MegamenuReducer = useSelector(state => state.MegamenuReducer);
@@ -20,6 +21,9 @@ const ListGrid = (props) => {
   const [filter, setFilter] = React.useState('');
   const [emptyList, setEmptyList] = React.useState([]);
   const [list, setList] = React.useState([]);
+  const [lPage, setLPage] = React.useState('');
+  const [cPage, setCPage] = React.useState('');
+  const [onPaginate, setOnPaginate] = React.useState(false);
   const dispatch = useDispatch();
 
   const attractions = async () => {
@@ -41,15 +45,17 @@ const ListGrid = (props) => {
       if(BoardHome.data.length > 0) {
         setList(BoardHome.data);
       }
-       if(BoardHome.data.length < 1 && BoardHome.aksi === false && !MegamenuReducer.category && !props.type) {
+       if(BoardHome.data.length < 1 && BoardHome.aksi === false && !MegamenuReducer.category && !props.type && !onPaginate) {
         respon = await Axios.get(`${config.api_host}/api/attractions`);
         console.log('bygeneral', respon);
         setList(respon.data.attractions);
+        setLPage(respon.data.meta.last_page);
+        setCPage(respon.data.meta.current_page);
       }
 
       setLoading(false);
     } catch(e) {
-      console.error('error feching data', e);
+      swal('ooops...', 'something went wrong, try again later', 'error');
     }
   }
 
@@ -315,7 +321,7 @@ const ListGrid = (props) => {
           ) : list.map((wisata, index) => 
               <NavLink className="crd" to={`/detail/${wisata.id}`} key={index}>
                 <div className="img-wrapper">
-                  <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png" effect="blur" alt="place img"/>
+                  <LazyLoadImage src={`${config.api_host}/api/images/${wisata.id}`} width="100%" placeholderSrc="/images/placeholder.png" effect="blur" alt="place img"/>
                 </div>
                 <div className="title-wrapper">
                   <span>{wisata.name}</span>
@@ -353,8 +359,72 @@ const ListGrid = (props) => {
         </Fragment>
       );
     }
-  }  
+  }
 
+  const onPrev = () => {
+    setLoading(true);
+    const laman = cPage - 1;
+    const url = `${config.api_host}/api/attractions?page=${laman}`;
+    Axios.get(url)
+    .then(resp => {
+      console.log('resp onpage', resp);
+      setList(resp.data.attractions);
+      setOnPaginate(true);
+      if(resp.data.attractions.length < 5) {
+        dispatch({type: 'SET_HEIGHT', height: true})
+      }
+      if(resp.data.attractions.length > 5) {
+        dispatch({type: 'SET_HEIGHT', height: false})
+      }
+      setLoading(false);
+    })
+  }
+  
+  const onPage = e => {
+    setLoading(true);
+    const laman = e.target.value;
+    const url = `${config.api_host}/api/attractions?page=${laman}`;
+    Axios.get(url)
+    .then(resp => {
+      console.log('resp onpage', resp);
+      setList(resp.data.attractions);
+      setOnPaginate(true);
+      if(resp.data.attractions.length < 5) {
+        dispatch({type: 'SET_HEIGHT', height: true})
+      }
+      if(resp.data.attractions.length > 5) {
+        dispatch({type: 'SET_HEIGHT', height: false})
+      }
+      setLoading(false);
+    })
+  }
+  
+  const onNext = () => {
+    setLoading(true);
+    const laman = cPage + 1;
+    const url = `${config.api_host}/api/attractions?page=${laman}`;
+    Axios.get(url)
+    .then(resp => {
+      console.log('resp onpage', resp);
+      setList(resp.data.attractions);
+      setOnPaginate(true);
+      if(resp.data.attractions.length < 5) {
+        dispatch({type: 'SET_HEIGHT', height: true})
+      }
+      if(resp.data.attractions.length > 5) {
+        dispatch({type: 'SET_HEIGHT', height: false})
+      }
+      setLoading(false);
+    })
+  }
+  
+  const paginate = (juml) => {
+    const hal = [];
+    for(var h=1; h <= juml; h++) {
+      hal.push(<li key={h} className="page-item"><button name="button" value={h} onClick={onPage} className="page-link">{h}</button></li>)
+    }
+    return hal;
+  }
 
   return(
     <Fragment>
@@ -506,6 +576,11 @@ const ListGrid = (props) => {
             }
           </div>
         </div>
+        <ul className="pagination-wrapper">
+          <li className="page-item"><button name="button" disabled={cPage < 2} onClick={onPrev} className="page-link">prev</button></li>
+          {paginate(lPage)}
+          <li className="page-item"><button name="button" onClick={onNext} className="page-link">next</button></li>
+        </ul>
       </div>
     </Fragment>
   );
