@@ -96,6 +96,12 @@ const MegamenuReducer = (state = initialMegamenu, action) => {
       category: action.cat
     }
   }
+  if( action.type === 'SET_SUGGESS' ) {
+    return {
+      ...state,
+      searches: action.search
+    }
+  }
   return state;
 }
 

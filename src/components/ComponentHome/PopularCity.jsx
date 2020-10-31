@@ -5,15 +5,19 @@ import Bali from '../../img/bali.jpg';
 import Axios from 'axios';
 import {config} from '../../config';
 import '../../App.css';
-import {Link, NavLink} from 'react-router-dom';
+import {Link, NavLink, useHistory} from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import PrevArrow from './ArrowPrev';
+import { useDispatch } from 'react-redux';
+import swal from 'sweetalert';
 
 const PopularCity = () => {
+  const dispatch = useDispatch();
+  let history = useHistory();
   const [loading, setLoading] = React.useState(false);
   const [popcity, setPopcity] = React.useState([]);
   
@@ -56,6 +60,29 @@ const PopularCity = () => {
     return skeleton;
   }
 
+  const byCity = cityy => {
+    const url = `${config.api_host}/api/search/attractions`;
+    const body = {
+      city: cityy
+    }
+    console.log('body byCity', body)
+    Axios.post(url, body)
+    .then(resp => {
+      dispatch({type: 'SET_RESULT', aData: "data", aValue: resp.data.attractions});
+      dispatch({type: 'SET_RESULT', aData: "aksi", aValue: true});
+      if(resp.data.attractions.length < 5) {
+        dispatch({type: 'SET_HEIGHT', height: true})
+      }
+      if(resp.data.attractions.length > 5) {
+        dispatch({type: 'SET_HEIGHT', height: false})
+      }
+      history.push('/list-attraction')
+    })
+    .catch(err => {
+      swal("ooops...", "there is an internal error, try again later", "error");
+    })
+  }
+
   const settings = {
     dots: false,
     infinite: true,
@@ -84,7 +111,7 @@ const PopularCity = () => {
           ) : (
             <Slider {...settings}>
             {popcity.map((kota, index) =>
-              <NavLink className="crd city" to="/list-attraction" key={index}>
+              <div className="crd city" onClick={() => byCity(kota.name)} key={index}>
                 <div className="img-wrapper">
                   <LazyLoadImage src={`${config.api_host}/api/images/${kota.image[0].id}`} width="100%" placeholderSrc="/images/placeholder.png"  alt="place img"/>    
                 </div>
@@ -94,7 +121,7 @@ const PopularCity = () => {
                 <div className="desc-city">
                   <p>{kota.description}</p>
                 </div>
-              </NavLink>
+              </div>
             )}
             </Slider>
           )}

@@ -149,6 +149,12 @@ const Nav = () => {
     dispatch({type: 'SET_CAT', cat: name});
     history.push('/list-attraction');
   }
+
+  function byPopSearch(namee) {
+      console.log('name popSearch', namee);
+      dispatch({type: 'SET_SUGGESS', search: namee});
+      history.push('list-attraction');
+  }
   
 
   return(
@@ -227,21 +233,21 @@ const Nav = () => {
               </div>
               )}
               <div className="search-list">
-                <div className="search-wrapper">
+                <div className="search-wrapper" onClick={() => byPopSearch('bromo')}>
                   <i className="fas fa-search"></i>
                   <p>bromo</p>
                 </div>
-                <div className="search-wrapper">
+                <div className="search-wrapper" onClick={() => byPopSearch('dufan')}>
                   <i className="fas fa-search"></i>
                   <p>dufan</p>
                 </div>
-                <div className="search-wrapper">
+                <div className="search-wrapper" onClick={() => byPopSearch('kuta beach')}>
                   <i className="fas fa-search"></i>
-                  <p>ancol</p>
+                  <p>kuta beach</p>
                 </div>
-                <div className="search-wrapper">
+                <div className="search-wrapper" onClick={() => byPopSearch('water kingdom')}>
                   <i className="fas fa-search"></i>
-                  <p>taman safari</p>
+                  <p>water kingdom</p>
                 </div>
               </div>
             </div>
