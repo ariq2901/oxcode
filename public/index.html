@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-      crossorigin="" />
-    <link rel="icon" type="image/png" href="./images/logo.png" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material  +Icons+Outlined" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#3f3d56" />
-    <meta name="description" content="Skytours travel agency Application"/>
-    <link rel="apple-touch-icon" href="./images/logo.png" />
-    <link rel="manifest" href="./manifest.json" />
-    <script src="https://kit.fontawesome.com/bb4caf3f1f.js" crossorigin="anonymous"></script>
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+  <link rel="icon" type="image/png" href="./images/logo.png" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#3f3d56" />
+  <meta name="description" content="Skytours travel agency Application" />
+  <link rel="apple-touch-icon" href="./images/logo.png" />
+  <link rel="manifest" href="./manifest.json" />
+  <script src="https://kit.fontawesome.com/bb4caf3f1f.js" crossorigin="anonymous"></script>
   <title>Skytours</title>
 </head>
 
@@ -29,14 +30,15 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script>
-      if( 'serviceWorker' in navigator ) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./serviceworker.js')
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/serviceworker.js')
           .then((reg) => console.log('Success : ', reg.scope))
           .catch((err) => console.log('Failure : ', err));
-        })
-      }
-    </script>
-  </body>
+      })
+    }
+  </script>
+</body>
+
 </html>

@@ -1,20 +1,19 @@
-import React, { Fragment, useRef, useEffect } from 'react';
+import React, { Fragment, useRef, useEffect, useState } from 'react';
 import Footer from './components/Footer';
 import { render } from 'react-dom'
 import { Map as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet'
-import { useState } from 'react';
-<<<<<<< HEAD
 import { useParams } from 'react-router-dom';
-=======
 import Axios from 'axios';
 import { config } from './config';
->>>>>>> b8ffdf02a75113ebb52c791a544022bb223f7222
 
-const Detail = (props) => {
+const Detail = () => {
 
-  const [data, setData] = useState();
-  const [review, setReview] = useState();
-  const [star, setStar] = useState();
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [position, setPosition] = useState([]);
+  const [name, setName] = useState('');
+  const [review, setReview] = useState('');
+  const [star, setStar] = useState(0);
 
   const img = useRef();
   const imgBar = useRef();
@@ -22,16 +21,21 @@ const Detail = (props) => {
   const map = useRef();
 
   let before = null;
-  let id = useParams();
-
-  const position = [data.pin_point.latitude, data.pin_point.longitude];
-  const name = data.name;
+  let { id } = useParams();
 
   const getDetAtt = async () => {
     try {
+      console.log('bbbbbbbbbbbbbbbbbbbb')
+      setLoading(false);
       const respon = await Axios.get(`${config.api_host}/api/attractions/${id}`);
-      // setList(respon.data);
       setData(respon.data.attraction);
+      console.log(respon.data.attraction)
+      console.log(setData(respon.data.attraction));
+      // setPosition([data.pin_point.latitude, data.pin_point.longitude]);
+      // setName(data.name);
+      // setLoading(true);
+      console.log(data);
+      console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     } catch (e) {
       console.error('error feching data', e);
     }
@@ -78,20 +82,18 @@ const Detail = (props) => {
   );
 
   useEffect(() => {
-    // map.current.innerHTML = location;
-    render(location, map.current)
-    // console.log(location);
-  }, [location])
-
-  useEffect(() => {
-    starRating();
     getDetAtt();
   }, [id])
 
+  useEffect(() => {
+    // render(location, map.current)
+    console.log('aaaaaa');
+  }, [])
+
   const starRating = (rating) => {
     let starRatingTitle = [];
-    for (let index = 0; index < 4; index++) {
-      if (index < rating) {
+    for (let index = 1; index < 5; index++) {
+      if (index < rating || rating === 5) {
         starRatingTitle.push('star');
       } else {
         starRatingTitle.push('star_border');
@@ -104,14 +106,46 @@ const Detail = (props) => {
 
   const ratingForm = (e) => {
     e.preventDefault();
-    console.log(e.target.parentElement);
+    var range = document.getElementById('range-modal');
+    var parent = e.currentTarget.parentElement.children;
+    var value = e.currentTarget.attributes.num.value;
+
+    for (let index = 0; index < parent.length; index++) {
+      if (index < value) {
+        parent[index].innerHTML = 'star'
+      } else {
+        parent[index].innerHTML = 'star_border'
+      }
+    }
+    range.value = value
   }
 
-  // const imageHandle = () => {
-  //   for (let index = 0; index < data.images[0].length; index++) {
+  const imageHandle = () => {
+    for (let index = 0; index < data.images.length; index++) {
 
-  //   }
-  // }
+    }
+  }
+
+  const formSubmit = (e) => {
+    e.preventDefault();
+    var rate = e.currentTarget.children.rate.value;
+    var review = e.currentTarget.children.review.value;
+    const token = sessionStorage.getItem("tokenB");
+
+    try {
+      Axios.post((`${config.api_host}/api/reviews`), {
+        rating: parseInt(rate),
+        review: review,
+        attraction_id: '1'
+      }, {
+        headers: {
+          "Authorization": token
+        }
+      });
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   return (
     <Fragment>
@@ -120,75 +154,100 @@ const Detail = (props) => {
           <div className="row ia">
             <div className="title-header ia">
               <div className="title-box ia">
-                <span className="breadcumb">recreation / ${data.name}</span>
-                <p className="title">{data.name}</p>
-                <span className="rating ia">
-                  {starRating(data.rating)}
-                  <span>{data.traveler_reviews[0].length} Reviews</span>
-                  <span className="material-icons favorite">favorite</span>
-                </span>
+                <span className="breadcumb">recreation / {name}</span>
+                <p className="title">{name}</p>
+                {loading ? (
+                  <span className="rating ia">
+                    {starRating(data.rating)}
+                    <span>{data.traveler_reviews[0].length} Reviews</span>
+                    <span className="material-icons favorite">favorite</span>
+                  </span>
+                ) : (
+                    <span className="rating ia">
+                      {starRating(0)}
+                      <span>0 Reviews</span>
+                      <span className="material-icons favorite">favorite</span>
+                    </span>
+                  )}
                 <div className="button-row">
-                  <button className="btn-ia">
-                    <i className="material-icons">location_on</i>
-                    {data.city}
-                  </button>
+                  {loading ? (
+                    <button className="btn-ia">
+                      <i className="material-icons">location_on</i>
+                      {data.city}
+                    </button>
+                  ) : null}
                 </div>
                 <div className="about">
                   <p>Contact</p>
-                  <div className="about-grid">
-                    <i className="material-icons">call</i>
-                    <span>{data.phone}</span>
-                  </div>
+                  {loading ? (
+                    <div className="about-grid">
+                      <i className="material-icons">call</i>
+                      <span>{data.phone}</span>
+                    </div>
+                  ) : (
+                      <div className="about-grid">
+                        <i className="material-icons">call</i>
+                        <span>00000000000</span>
+                      </div>
+                    )}
                 </div>
                 <div className="about">
                   <p>Ticket Price</p>
                   <div className="about-grid">
                     <i className="material-icons-outlined">confirmation_number</i>
-                    <span>
-                      <p>weekday: RP.{data.ticket_price.weekday},00 / person</p>
-                      <p>weekend: RP.{data.ticket_price.weekend},00 / person</p>
-                    </span>
+                    {loading ? (
+                      <span>
+                        <p>weekday: RP.{data.ticket_price.weekday},00 / person</p>
+                        <p>weekend: RP.{data.ticket_price.weekend},00 / person</p>
+                      </span>
+                    ) : (
+                        <span>
+                          <p>Rp.0</p>
+                        </span>
+                      )}
                   </div>
                 </div>
                 <div className="about">
                   <p>locations</p>
                   <div className="about-grid">
                     <i className="material-icons">location_on</i>
-                    <span>{data.address}</span>
+                    {loading ? (
+                      <span>{data.address}</span>
+                    ) : (
+                        <span>null</span>
+                      )}
                   </div>
                 </div>
                 <div className="about">
                   <p>Operational Hour</p>
                   <div className="about-grid">
                     <i className="material-icons-outlined">access_time</i>
-                    <span>{data.hours_of_operation.from} - {data.hours_of_operation.to}</span>
+                    {loading ? (
+                      <span>{data.hours_of_operation.from} - {data.hours_of_operation.to}</span>
+                    ) : (
+                        <span>00:00 - 00:00</span>
+                      )}
                   </div>
                 </div>
               </div>
               <div className="image-title">
-                <div className="img-main" ref={img} style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
+                {loading ? (
+                  <div className="img-main" ref={img} style={{ backgroundImage: `${config.api_host}/api/images/${data.images[0].id}` }}></div>
+                ) : (
+                    <div className="img-main" ref={img} style={{ backgroundColor: 'black', }}></div>
+                  )}
                 <div className="img-bar" ref={imgBar}>
-                  <button className="image-on" onClick={imgHandler}>
-                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                  </button>
-                  <button className="image-on" onClick={imgHandler}>
-                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo2.jpg'})` }}></div>
-                  </button>
-                  <button className="image-on" onClick={imgHandler}>
-                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                  </button>
-                  <button className="image-on" onClick={imgHandler}>
-                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                  </button>
-                  <button className="image-on" onClick={imgHandler}>
-                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                  </button>
-                  <button className="image-on" onClick={imgHandler}>
-                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                  </button>
-                  <button className="image-on" onClick={imgHandler}>
-                    <div className="image-h" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                  </button>
+                  {loading ? (
+                    data.images.map((hasil, index) => (
+                      <button className="image-on" onClick={imgHandler} key={index}>
+                        <div className="image-h" style={{ backgroundImage: `${config.api_host}/api/images/${hasil.id}` }}></div>
+                      </button>
+                    ))
+                  ) : (
+                      <button className="image-on" onClick={imgHandler}>
+                        <div className="image-h" style={{ backgroundColor: 'black', }}></div>
+                      </button>
+                    )}
                 </div>
               </div>
             </div>
@@ -201,36 +260,42 @@ const Detail = (props) => {
             <div className="main-body">
               <div className="body-text">
                 <div className="card ia color">
-                  <p>{data.description}</p>
+                  {loading ? (
+                    <p>{data.description}</p>
+                  ) : (
+                      <p>Description</p>
+                    )}
                 </div>
                 <div className="card-title-ia">
                   <p>Review</p>
                   <button className="btn-ia" onClick={modal}>add review</button>
                 </div>
                 <div className="card ia color">
-                  {data.traveler_reviews[0].map((dat, index) => (
-                    <div className="review" key={index}>
-                      <div className="review-head">
-                        <div className="head-img" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
-                        <div className="head-body">
-                          <p>{dat.user.name}.</p><span>{dat.created_at}</span>
-                          <span className="rating ia">
-                            {starRating(dat.rating)}
-                          </span>
+                  {loading ? (
+                    data.traveler_reviews.map((dat, index) => (
+                      <div className="review" key={index}>
+                        <div className="review-head">
+                          <div className="head-img" style={{ backgroundImage: `url(${process.env.PUBLIC_URL + '/bromo.jpg'})` }}></div>
+                          <div className="head-body">
+                            <p>{dat.user.name}.</p><span>{dat.created_at}</span>
+                            <span className="rating ia">
+                              {starRating(dat.rating)}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="review-body">
+                          <p>{dat.review}</p>
                         </div>
                       </div>
-                      <div className="review-body">
-                        <p>{dat.review}</p>
-                      </div>
-                    </div>
-                  ))}
+                    ))
+                  ) : null}
                   <button className="btn-ia w-100">
                     show more
                   </button>
                 </div>
               </div>
               <div className="body-det">
-                <p className="text-first-mb">Weather in {data.city}, <br />Bogor</p>
+                <p className="text-first-mb">Weather in {data.name ?? null}, <br />{data.city ?? null}</p>
                 <div className="color card ia">
                   <div className="weather">
                     <p>Today</p>
@@ -258,7 +323,7 @@ const Detail = (props) => {
                 </div>
                 <div className="mt-1 mb-1 card-title-ia">
                   <p>Direction</p>
-                  <span><i className="material-icons-outlined">gps_fixed</i></span>
+                  <span><i className="material-icons">gps_fixed</i></span>
                 </div>
                 <div className="color card ia" ref={map}>
 
@@ -276,23 +341,24 @@ const Detail = (props) => {
             <span className="close" onClick={closeModal}>X</span>
           </div>
           <div className="modal-body">
-            <form action="">
+            <form method="POST" onSubmit={formSubmit}>
               <span className="rating ia">
-                <i className="material-icons-outlined">star</i>
-                <i className="material-icons-outlined">star</i>
-                <i className="material-icons-outlined">star</i>
-                <i className="material-icons-outlined">star</i>
-                <i className="material-icons-outlined">star</i>
+                <i className="material-icons" onClick={ratingForm} num="1">star_border</i>
+                <i className="material-icons" onClick={ratingForm} num="2">star_border</i>
+                <i className="material-icons" onClick={ratingForm} num="3">star_border</i>
+                <i className="material-icons" onClick={ratingForm} num="4">star_border</i>
+                <i className="material-icons" onClick={ratingForm} num="5">star_border</i>
               </span>
-              <input type="range" min="1" max="5" id="range-modal" hidden />
+              <input type="range" min="1" max="5" name="rate" id="range-modal" hidden />
               <textarea name="review" cols="30" rows="10" className="textarea-modal">
 
               </textarea>
+              <button type="submit" className="btn-ia w-100">Submit</button>
             </form>
           </div>
         </div>
       </div>
-    </Fragment>
+    </Fragment >
   );
 }
 

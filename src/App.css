@@ -2822,6 +2822,7 @@ footer.footer {
 }
 
 .main-body {
+  width: 100%;
   margin-top: 5%;
   display: grid;
   grid-template-columns: 4fr 1fr;

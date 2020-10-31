@@ -16,40 +16,40 @@ const ProfileHeading = () => {
     e.preventDefault();
     const url = `${config.api_host}/api/users/update`;
     let body = {};
-    
+
     if (name.length > 0) {
-      body = {...body, name};
+      body = { ...body, name };
     }
     if (password.length > 0) {
-      body = {...body, password};
+      body = { ...body, password };
     }
 
     console.log('body update ', body);
     const token = sessionStorage.getItem("tokenB").substr(7);
-    Axios.put(url, body, { headers: {'Authorization': token} })
-    .then(resp => {
-      console.log('resp update data ', resp);
-      sessionStorage.setItem("typeLogin", 'skytours');
-      sessionStorage.setItem("isLogin", true);
-      sessionStorage.setItem("email", resp.data.user.email);
-      sessionStorage.setItem("name", resp.data.user.name);
-      sessionStorage.setItem("picture", `${config.api_host}/api/images/${resp.data.user.image.id}`);
-      dispatch({type: 'SET_ISLOGIN', typeLogin: 'skytours'});
-      dispatch({type: 'SET_PROFILE', pData: "email", pValue: resp.data.user.email});
-      dispatch({type: 'SET_PROFILE', pData: "name", pValue: resp.data.user.name});
-      dispatch({type: 'SET_PROFILE', pData: "picture", pValue: `${config.api_host}/api/images/${resp.data.user.image.id}`});
-    })
-    .catch(err => {
-      swal("ooops...", "there is an internal server error, try again later", "error");
-    });
+    Axios.put(url, body, { headers: { 'Authorization': token } })
+      .then(resp => {
+        console.log('resp update data ', resp);
+        sessionStorage.setItem("typeLogin", 'skytours');
+        sessionStorage.setItem("isLogin", true);
+        sessionStorage.setItem("email", resp.data.user.email);
+        sessionStorage.setItem("name", resp.data.user.name);
+        sessionStorage.setItem("picture", `${config.api_host}/api/images/${resp.data.user.image.id}`);
+        dispatch({ type: 'SET_ISLOGIN', typeLogin: 'skytours' });
+        dispatch({ type: 'SET_PROFILE', pData: "email", pValue: resp.data.user.email });
+        dispatch({ type: 'SET_PROFILE', pData: "name", pValue: resp.data.user.name });
+        dispatch({ type: 'SET_PROFILE', pData: "picture", pValue: `${config.api_host}/api/images/${resp.data.user.image.id}` });
+      })
+      .catch(err => {
+        swal("ooops...", "there is an internal server error, try again later", "error");
+      });
   }
 
-  return(
+  return (
     <Fragment>
       <div className="profile-wrapper">
         <div className="profileStatus">
           <div className="profileImg">
-            <img src={picture} alt="picture img"/>
+            <img src={picture} alt="picture img" />
           </div>
           <div className="profileInfo">
             <span>{name}</span>
@@ -57,19 +57,19 @@ const ProfileHeading = () => {
           </div>
         </div>
         <div className="userInfo">
-        <form onSubmit={submitAction}>
-          <input type="hidden" name="_method" value="put"/>
-          <div className="nameInfo">
-            <label htmlFor="name">Name</label>
-            <input type="text" name="name" onChange={e => setName(e.target.value)} id="nameupdate" value={name}/>
-          </div>
-          <div className="passwordInfo">
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" onChange={e => setpassword(e.target.value)} id="passwordupdate" placeholder="*****" value={password}/>
-          </div>
-          <button className="btn-update" type="submit">Save Changes</button>
-        </form>
-      </div>
+          <form onSubmit={submitAction}>
+            <input type="hidden" name="_method" value="put" />
+            <div className="nameInfo">
+              <label htmlFor="name">Name</label>
+              <input type="text" name="name" onChange={e => setName(e.target.value)} id="nameupdate" value={name} />
+            </div>
+            <div className="passwordInfo">
+              <label htmlFor="password">Password</label>
+              <input type="password" name="password" onChange={e => setpassword(e.target.value)} id="passwordupdate" placeholder="*****" value={password} />
+            </div>
+            <button className="btn-update" type="submit">Save Changes</button>
+          </form>
+        </div>
       </div>
     </Fragment>
   );
