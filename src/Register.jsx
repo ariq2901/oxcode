@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState, Fragment } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, withRouter } from 'react-router-dom';
-import { Input, Button } from './property/Form';
+import { Input, Button, IndicatorLoading } from './property/Form';
 import swal from 'sweetalert';
 import { config } from './config';
 import Side from './side';
@@ -51,7 +51,7 @@ const Register = (props) =>{
   const submitReg = (e) => {
     e.preventDefault()
     console.log();
-    if(name.length > 0 && email.length > 0 && password.length > 0 && password === passwordCon) {
+    if(name.length > 3 && email.length > 0 && password.length > 0 && password === passwordCon) {
       if( password === passwordCon ) {
         setLoading(true);
         console.log('all confirmed');
@@ -70,14 +70,15 @@ const Register = (props) =>{
           props.history.push('/login');
         })
         .catch(e => {
-          console.log('failure ', e);
+          // console.log('failure ', e.response.data);
+          swal("Oops!", `${e.response.data.errors.email[0]}`, "error");
           setLoading(false);
         })
       } else {
-        console.log('pass GK SAMA');
+        swal("Oops!", "Password must be same with Password Confirmation!", "error");
       }
     } else {
-      console.log('ada error');
+      swal("Oops!", "Something wrong with your input!", "error");
     }
   }
 
@@ -172,8 +173,26 @@ const Register = (props) =>{
     return null;
   }
 
+  const requestProvider = async (provider) => { 
+    setLoading(true);
+    try {
+      let url = await Axios.get(`${config.api_host}/api/auth/${provider}/redirect`);
+      window.location.replace(url.data.redirectToProvider);
+    } catch (error) {
+      swal({
+        title: "Oops! Something went wrong",
+        text: "Please try again later",
+        icon: "error"
+      });
+    }
+    setLoading(false);
+  }
+
   return(
     <Fragment>
+       {
+        loading ? <IndicatorLoading /> : ''
+      }
       <div className="container-fluid no-select" style={{ height: '100vh' }}>
         <div className="row" style={{ height: '100%' }}>
           <div className={width < breakpoint ? "col-12 login-area not-active" : "col-4 login-area not-active"}>
@@ -211,23 +230,16 @@ const Register = (props) =>{
 
               </form>
               <div className="social-login">
-                <button className="btn btn-block border-black"><img src={`${process.env.PUBLIC_URL + '/google.png'}`} height='20px' /> sign in with google</button>
                 {auth ? (
                   <Fragment>
                     {/* <a href="#" onClick={(e)=>{e.preventDefault(); window.FB.logout(); logOutFacebook()}}>logout</a> */}
                   <button className="btn btn-block border-black"><img src={`${process.env.PUBLIC_URL + '/facebook.png'}`} height='20px' /> getting your info... </button>
                   </Fragment>
                   ) : (
-                    <FacebookLogin
-                      appId="2363350287365556"
-                      autoLoad={false}
-                      onClick={getUserFacebook}
-                      fields="name,email,picture"
-                      callback={responseFacebook}
-                      cssClass="btn btn-block border-black"
-                      icon="fa-facebook"
-                      textButton="&nbsp;&nbsp;Sign in with facebook"
-                    />
+                     <Fragment>
+                      <button onClick={() => requestProvider('google')} className="btn btn-block border-black"><img src={`${process.env.PUBLIC_URL + '/google.png'}`} height='20px' /> sign in with google </button>
+                      <button onClick={() => requestProvider('facebook')} className="btn btn-block border-black"><img src={`${process.env.PUBLIC_URL + '/facebook.png'}`} height='20px' /> sign in with facebook </button>
+                    </Fragment>
                   )}
                 </div>
               </div>

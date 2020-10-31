@@ -39,6 +39,10 @@ button:focus {
   border: none;
 }
 
+ul {
+  margin: 0;
+}
+
 p {
   margin-bottom: 0;
 }
@@ -219,6 +223,12 @@ nav > .megamenu-hidden {
   z-index: 0;
 }
 
+button.page-link:disabled,
+button.page-link[disabled] {
+  background-color: #ebe7e7;
+  color: #666666;
+}
+
 .status-wrapper {
   position: absolute;
   display: flex;
@@ -312,6 +322,24 @@ section.header {
 
 section.header.netral {
   background-color: #fff;
+}
+
+section.main.attract {
+  min-height: 1400px;
+  height: 100%;
+}
+
+section.main.attract.min {
+  min-height: 932px;
+  height: 100%;
+}
+
+.container.attract {
+  height: 100%;
+}
+
+.row.attract {
+  height: 100%;
 }
 
 .row.row-nav {
@@ -801,6 +829,23 @@ select.select-category option {
   text-decoration: none !important;
 }
 
+.slick-list {
+  height: 45vh;
+}
+
+.slick-track {
+  height: 100%;
+}
+
+.slick-slide {
+  margin-right: 30px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black;
+}
+
 .crd.loading {
   background-color: #fff;
 }
@@ -882,7 +927,7 @@ select.select-category option {
 .title-wrapper {
   color: rgba(63, 61, 86, 1);
   margin-top: 3.3%;
-  font-size: 2.5em;
+  font-size: 2.4em;
   font-weight: 500;
 }
 
@@ -978,6 +1023,7 @@ select.select-category option {
 }
 
 .spots-wrapper.listpage {
+  height: 100%;
   padding: 2.5% 0 10% 0;
 }
 
@@ -1094,6 +1140,7 @@ select.select-category option {
 
 .grid-wrapper {
   width: 100%;
+  height: 100%;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 0 auto;
@@ -1110,11 +1157,6 @@ select.select-category option {
   grid-gap: 40px 30px;
   transition: 1s;
 }
-
-.full-page {
-  width: 100%;
-}
-
 .main-list .crd,
 .main-list-filter .crd {
   width: 100%;
@@ -1455,6 +1497,22 @@ label .checkmark::after {
   font-size: 2em;
   font-weight: 500;
   color: var(--blue-primary);
+}
+
+ul.pagination-wrapper {
+  padding-top: 5%;
+  width: 100%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.pagination-wrapper .page-item {
+  font-size: 1.2em;
+  font-weight: 500;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 /*^ Responsive Breakpoint */

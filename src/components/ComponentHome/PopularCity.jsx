@@ -8,6 +8,10 @@ import '../../App.css';
 import {Link, NavLink} from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import PrevArrow from './ArrowPrev';
 
 const PopularCity = () => {
   const [loading, setLoading] = React.useState(false);
@@ -51,22 +55,36 @@ const PopularCity = () => {
     }
     return skeleton;
   }
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 2000,
+    prevArrow: <PrevArrow />,
+    nextArrow: <PrevArrow />
+  };
   
   return(
     <Fragment>
       <div className="city-wrapper">
         <div className="spots-title">
           <span className="s-title">most popular city</span>
-          <Link className="s-view" to={'list-attraction/popular'}>view all<span><i className="fas fa-arrow-right"></i></span></Link>
         </div>
-        <div className="spots-list">
           {loading ? (
             <Fragment>
-              {skeletonCard(3)}
+              <div className="spots-list">
+                {skeletonCard(3)}
+              </div>
             </Fragment>
           ) : (
-            popcity.map((kota, index) =>
-              <NavLink className="crd" to="/list-attraction" key={index}>
+            <Slider {...settings}>
+            {popcity.map((kota, index) =>
+              <NavLink className="crd city" to="/list-attraction" key={index}>
                 <div className="img-wrapper">
                   <LazyLoadImage src={`${config.api_host}/api/images/${kota.image[0].id}`} width="100%" placeholderSrc="/images/placeholder.png"  alt="place img"/>    
                 </div>
@@ -77,9 +95,9 @@ const PopularCity = () => {
                   <p>{kota.description}</p>
                 </div>
               </NavLink>
-            )
+            )}
+            </Slider>
           )}
-        </div>
       </div>
     </Fragment>
   );
