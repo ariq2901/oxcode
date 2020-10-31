@@ -3149,13 +3149,14 @@ footer.footer {
   width: 100%;
   height: 35vh;
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
 .profileStatus .profileImg {
   margin-right: 8%;
-  width: 33%;
+  width: 38%;
   height: 48%;
   overflow: hidden;
   border-radius: 50%;
@@ -3728,6 +3729,13 @@ form .btn-update {
 
   .search-notfound {
     height: 50%;
+  }
+  .profile-wrapper {
+    grid-template-columns: 1fr;
+    padding: 0 2%;
+  }
+  .profile-wrapper .profileImg {
+    width: 40%;
   }
 }
 

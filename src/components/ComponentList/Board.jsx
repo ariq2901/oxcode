@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { config } from '../../config';
 import { useEffect } from 'react';
@@ -7,20 +7,79 @@ import swal from 'sweetalert';
 import { useHistory } from 'react-router-dom';
 
 const Board = ({ result }) => {
-  let history = useHistory();
   const CategoryReducer = useSelector(state => state.CategoryReducer);
+  const BoardHome = useSelector(state => state.ResultReducer);
   const dispatch = useDispatch();
-  const [searchKota, setSearchKota] = React.useState("");
-  const [categories, setCategories] = React.useState("");
-  const [display, setDisplay] = React.useState(false);
-  let [attractions, setAttractions] = React.useState([]);
-  const [search, setSearch] = React.useState([]);
-  const wrapperRef = useRef(null);
+  let history = useHistory();
 
-  const keyDownHandler = async (event) => {
+  const [options, setOptions] = useState([]);
+  const [display, setDisplay] = useState(false);
+  const [search, setSearch] = useState([]);
+  const [searchKota, setSearchKota] = useState("");
+  const [categories, setCategories] = useState("");
+  const wrapperRef = useRef(null);
+  // const [hasil, setHasil] = useState([]);
+  // const [searchName, setSearchName] = useState("");
+  // const [searchCity, setSearchCity] = useState("");
+  // const [searchCat, setSearchCat] = useState("");
+  // const [searchFrom, setSearchFrom] = useState("00:00");
+  // const [searchTo, setSearchTo] = useState("00:00");
+
+  const keyDownHandler = event => {
     event.preventDefault()
-    const attractions = await getFilteredAttractions();
-    setAttractions(attractions);
+    const url = `${config.api_host}/api/search/attractions`;
+    var namaa = document.getElementById("searchName").value;
+    var cityy = document.getElementById("searchCity").value;
+    var category = document.getElementById("searchCategory").value;
+    let payloadk = {};
+    if( namaa.length > 0 && cityy.length > 0 && category !== null ) {
+      payloadk = {
+        name : namaa,
+        city : cityy,
+        categories : [category]
+      }
+    }
+    if( namaa.length > 0 && cityy.length > 0 && category === null ) {
+      payloadk = {
+        name : namaa,
+        city : cityy
+      }
+    }
+    if( namaa.length > 0 && cityy.length < 1 && category !== null ) {
+      payloadk = {
+        name : namaa,
+        categories : [category]
+      }
+    }
+    if( cityy.length > 0 && namaa.length < 1 && category !== null ) {
+      payloadk = {
+        city : cityy,
+        categories : [category]
+      }
+    }
+    if( namaa.length > 0 && cityy.length < 1 && category === null ) {
+      payloadk = {
+        name : namaa
+      }
+    }
+    if( namaa.length < 1 && cityy.length > 0 && category === null ) {
+      payloadk = {
+        city : cityy
+      }
+    }
+    if( namaa.length < 1 && cityy.length < 1 && category !== null ) {
+      payloadk = {
+        categories : [category]
+      }
+    }
+    console.log('payload onKydown ', payloadk);
+    Axios.post(url, payloadk)
+    .then(respons => {
+      setOptions(respons.data.attractions)
+    })
+    .catch(err => {
+      console.log('failure ', err);
+    })
   }
 
   useEffect(() => {
@@ -38,54 +97,72 @@ const Board = ({ result }) => {
     }
   }
 
-  const onSubmit = async (event) => {
+  const onSubmit = event => {
     event.preventDefault()
-    const attractions = await getFilteredAttractions();
-    result(attractions);
+    const url = `${config.api_host}/api/search/attractions`;
+    var namaa = document.getElementById("searchName").value
+    var cityy = document.getElementById("searchCity").value
+    var category = document.getElementById("searchCategory").value;
+    let payloads = {};
     
-    dispatch({type: 'SET_RESULT', aData: "data", aValue: attractions});
-    dispatch({type: 'SET_RESULT', aData: "aksi", aValue: true});
-    console.log('onSubmit: ', attractions);
+    if( namaa.length > 0 && cityy.length < 1 && category !== null ) {
+      payloads = {
+        name : namaa,
+        categories : [category]
+      }
+    }
+    if( cityy.length > 0 && namaa.length < 1 && category !== null ) {
+      payloads = {
+        city : cityy,
+        categories : [category]
+      }
+    }
+    if( namaa.length > 0 && cityy.length < 1 && category === null ) {
+      payloads = {
+        name : namaa
+      }
+    }
+    if( namaa.length < 1 && cityy.length > 0 && category === null ) {
+      payloads = {
+        city : cityy
+      }
+    }
+    if( namaa.length < 1 && cityy.length < 1 && category !== null ) {
+      payloads = {
+        categories : [category]
+      }
+    }
+    if( namaa.length > 0 && cityy.length > 0 && category !== null ) {
+      payloads = {
+        name : namaa,
+        city : cityy,
+        categories : [category]
+      }
+    }
+    if( namaa.length > 0 && cityy.length > 0 && category === null ) {
+      payloads = {
+        name : namaa,
+        city : cityy
+      }
+    }
+    console.log('payload board HOME ', payloads);
+    Axios.post(url, payloads)
+    .then(respons => {
+      console.log('respon board submit', respons);
+      dispatch({type: 'SET_RESULT', aData: "data", aValue: respons.data.attractions});
+      dispatch({type: 'SET_RESULT', aData: "aksi", aValue: true});
+      history.push("/list-attraction");
+    })
+    .catch(e => {
+      swal("ooops...", "there is an internal error, try again later", "error");
+      console.log("error ", e);
+    })
   }
 
   const setPlace = place => {
     setSearch(place);
+    console.log('place', place);
     setDisplay(false);
-  }
-
-  const getFilteredAttractions = async () => {
-    let result = [];
-    const url = `${config.api_host}/api/search/attractions`;
-    let name = document.getElementById("searchName").value;
-    let city = document.getElementById("searchCity").value;
-    let category = document.getElementById("searchCategory").value;
-    let payload = {};
-    
-    if (name.length > 0) {
-      payload = {...payload, name};
-    }
-    
-    if (city.length > 0) {
-      payload = {...payload, city};
-    }
-
-    if (category == "all") {
-      history.push("/list-attraction");
-      return false;
-    }
-    if (category !== null && category != "all") {
-      payload = {...payload, categories: [category]};
-    }
-    console.log('payload board LIST ', payload);
-    try {
-      result = await Axios.post(url, payload);
-      console.log('isi: ', result);
-    } catch (error) {
-      swal("ooops...", "there is an internal server error, try again later", "error");
-      return null;
-    }
-    
-    return result.data.attractions;
   }
 
   return(
@@ -104,8 +181,8 @@ const Board = ({ result }) => {
               <input type="text" name="searchCity" id="searchCity" onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setSearchKota(event.target.value)}} placeholder="anywhere" value={searchKota}/>
             </div>
             <div className="category-search-box">
-              <select onClick={() => setDisplay(!display)} onChange={event => {setCategories(event.target.value)}} id="searchCategory" value={categories} className="select-category">
-                <option value="all">All</option>
+            <select onClick={() => setDisplay(!display)} onChange={event => {keyDownHandler(event);setCategories(event.target.value)}} id="searchCategory" value={categories} class="select-category">
+                <option selected value="" key="">All</option>
                 {CategoryReducer.category.map((c) =>
                   <option value={c.name} key={c.name}>{c.name}</option>
                 )}
@@ -121,9 +198,10 @@ const Board = ({ result }) => {
       </div>
       {display && (
         <div  ref={wrapperRef} className="autoContainer">
-          {attractions.slice(0, 5).map((v, i) => {
+          {options.slice(0, 5).map((v, i) => {
             return (
               <div onClick={() => setPlace(v.name)} className="autoOption" key={i} tabIndex="0">
+                {console.log('v', v)}
                 <div className="iconOption">
                   <i className="fas fa-map-marker-alt"></i>
                 </div>

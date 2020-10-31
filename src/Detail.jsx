@@ -165,6 +165,7 @@ const Detail = () => {
       });
       console.log(response);
       swal('Success', 'Your review has been added', 'success');
+      window.location.reload(true);
     } catch (e) {
       swal('Error',  `${e.response.data.message}`, 'error');
     }
