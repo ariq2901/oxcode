@@ -24,6 +24,7 @@ body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
+  overflow-y: scroll !important;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   font-size: 10px;
@@ -3712,4 +3713,56 @@ form .btn-update {
 .leaflet-container {
   width: 100%;
   height: 100%;
+}
+
+textarea {
+  resize: none;
+  overflow: auto;
+}
+
+.form-group-detail {
+  position: relative;
+  margin-bottom: 20px;
+}
+.form-group-detail input,
+.form-group-detail textarea {
+  width: 100%;
+  font-size: 1em;
+  color: grey;
+  padding: 10px 10px;
+  background: transparent;
+  border: 1px solid #439cef;
+  z-index: 9;
+  box-sizing: border-box;
+  border-radius: 4px;
+  display: block;
+}
+
+.form-group-detail label {
+  position: absolute;
+  top: -2px;
+  padding: 11px 10px;
+  transition: all 200ms;
+  opacity: 0.5;
+  font-size: 1em;
+  z-index: -1;
+}
+
+.form-group-detail input:focus,
+.form-group-detail textarea:focus {
+  outline: none;
+}
+
+.form-group-detail input:focus + label,
+.form-group-detail textarea:focus + label,
+.form-group-detail input:valid + label,
+.form-group-detail textarea:valid + label {
+  top: 7px !important;
+  left: 5px;
+  font-size: 0.8em;
+  transform: translate3d(0, -100%, 0);
+  opacity: 1;
+  padding: 0px 10px;
+  background: #f9f9f9;
+  z-index: 1;
 }
