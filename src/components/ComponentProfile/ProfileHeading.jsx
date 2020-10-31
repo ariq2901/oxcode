@@ -106,12 +106,12 @@ const ProfileHeading = () => {
   //   });
   // }
 
-  return(
+  return (
     <Fragment>
       <div className="profile-wrapper">
         <div className="profileStatus">
           <div className="profileImg">
-            <img src={picture} alt="picture img"/>
+            <img src={picture} alt="picture img" />
           </div>
           <div className="profileInfo">
             <span>{name}</span>
@@ -123,7 +123,20 @@ const ProfileHeading = () => {
           </div>
         </div>
         <div className="userInfo">
-        <form onSubmit={submitAction} id="formPicture">
+          <form onSubmit={submitAction}>
+            <input type="hidden" name="_method" value="put" />
+            <div className="nameInfo">
+              <label htmlFor="name">Name</label>
+              <input type="text" name="name" onChange={e => setName(e.target.value)} id="nameupdate" value={name} />
+            </div>
+            <div className="passwordInfo">
+              <label htmlFor="password">Password</label>
+              <input type="password" name="password" onChange={e => setpassword(e.target.value)} id="passwordupdate" placeholder="*****" value={password} />
+            </div>
+            <button className="btn-update" type="submit">Save Changes</button>
+          </form>
+        </div>
+        <form onSubmit={submitAction}>
           <input type="hidden" name="_method" value="put"/>
           <div className="nameInfo">
             <label htmlFor="name">Name</label>
@@ -139,7 +152,6 @@ const ProfileHeading = () => {
           </div>
           <button className="btn-update mt-2" type="submit" disabled={loading}>{loading ? 'Updating your profile' : 'Save Changes'}</button>
         </form>
-      </div>
       </div>
     </Fragment>
   );

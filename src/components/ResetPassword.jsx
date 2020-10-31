@@ -62,6 +62,7 @@ const ResetPassword = () => {
       const result = await Axios.post(`${config.api_host}/api/password/reset`, payload);
       if (!result.error) {
         swal({title: 'Success', text: 'Your password has been changed successfully!',icon:'success'});
+        history.push('/login');
       }
     } catch (error) {
       console.log(error);

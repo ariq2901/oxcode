@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import MapContainer from '../MapContainer';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Dufan from '../../img/dufan.jpg';
 import React, { Fragment } from 'react';
-import {config} from '../../config';
+import { config } from '../../config';
 import Axios from 'axios';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -30,19 +30,19 @@ const ListGrid = (props) => {
     try {
       setLoading(true);
       let respon;
-      if(props.type) {
-       getAttractionByType();
+      if (props.type) {
+        getAttractionByType();
       }
 
-      if(MegamenuReducer.category) {
+      if (MegamenuReducer.category) {
         getAttractionByCategory();
       }
 
-      if(BoardHome.data.length < 1 && BoardHome.aksi === true) {
+      if (BoardHome.data.length < 1 && BoardHome.aksi === true) {
         console.log('boardhome empty: ', BoardHome);
         setList(BoardHome.data);
-      } 
-      if(BoardHome.data.length > 0) {
+      }
+      if (BoardHome.data.length > 0) {
         setList(BoardHome.data);
       }
        if(BoardHome.data.length < 1 && BoardHome.aksi === false && !MegamenuReducer.category && !props.type && !onPaginate) {
@@ -64,10 +64,10 @@ const ListGrid = (props) => {
     let result;
     try {
       result = await Axios.post(`${config.api_host}/api/search/attractions`, {
-          categories : [MegamenuReducer.category]
-        });
+        categories: [MegamenuReducer.category]
+      });
     } catch (error) {
-      console.log('Error: ', error); 
+      console.log('Error: ', error);
       return;
     }
     console.log('byCategory', result);
@@ -79,21 +79,21 @@ const ListGrid = (props) => {
     try {
       result = await Axios.get(`${config.api_host}/api/${props.type}/attractions`);
     } catch (error) {
-      console.log('Error: ', error); 
+      console.log('Error: ', error);
       return;
     }
     setList(result.data.attractions);
     setLoading(false)
   }
-  
+
   React.useEffect(() => {
     attractions();
   }, [props, MegamenuReducer]);
-  
+
   function skeletonCard(jumlah) {
     const skeleton = [];
     var n;
-    for( n = 0; n < jumlah; n++ ) {
+    for (n = 0; n < jumlah; n++) {
       skeleton.push(
         <div className="crd" key={n}>
           <div className="img-wrapper loading"></div>
@@ -112,7 +112,7 @@ const ListGrid = (props) => {
     }
     return skeleton;
   }
-  
+
   const handleClick = () => {
     setGridfilter(!gridfilter);
   }
@@ -120,63 +120,63 @@ const ListGrid = (props) => {
   function starLoop(stars) {
     var tag = [];
     var i;
-    for( i = 0; i < stars; i++ ) {
+    for (i = 0; i < stars; i++) {
       tag.push(<i key={i} className='fas fa-star'></i>);
     }
     // console.log(i);
-    if( i < 5 ) {
+    if (i < 5) {
       tag.push(<i key={i} className="far fa-star"></i>);
     }
-    if( i < 4 ) {
+    if (i < 4) {
       tag.push(<i key={i} className="far fa-star"></i>);
     }
     return tag;
   }
 
   const byDistance = () => {
-    if( filter == 'distance' || categories.length > 0 ) {
+    if (filter == 'distance' || categories.length > 0) {
       console.log('masuk ke distance');
-      if(navigator.geolocation) {
+      if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          async function(position) {
+          async function (position) {
             setLoading(true);
 
             const latit = position.coords.latitude.toString();
             const longit = position.coords.longitude.toString();
 
             const url = `${config.api_host}/api/search/attractions`;
-            if( filter == 'distance' && categories.length < 1 ) {  
+            if (filter == 'distance' && categories.length < 1) {
               var payload = {
-                sort_by : "distance",
-                latitude : latit,
-                longitude : longit
+                sort_by: "distance",
+                latitude: latit,
+                longitude: longit
               }
             }
-            if( filter === 'distance' && categories.length > 0 ) {
+            if (filter === 'distance' && categories.length > 0) {
               var payload = {
-                sort_by : "distance",
-                latitude : latit,
-                longitude : longit,
-                categories : categories
+                sort_by: "distance",
+                latitude: latit,
+                longitude: longit,
+                categories: categories
               }
             }
-            if( filter === '' && categories.length > 0 ) {
+            if (filter === '' && categories.length > 0) {
               var payload = {
-                categories : categories
+                categories: categories
               }
             }
-            
+
             console.log('BODY D', payload);
             Axios.post(url, payload)
-            .then(resp => {
-              setLoading(false)
-              console.log('list distance ', resp);
-              setList(resp.data.attractions);
-            })
-            .catch(er => {
-              setLoading(false)
-              console.log('failure ', er);
-            })
+              .then(resp => {
+                setLoading(false)
+                console.log('list distance ', resp);
+                setList(resp.data.attractions);
+              })
+              .catch(er => {
+                setLoading(false)
+                console.log('failure ', er);
+              })
           }
         )
       }
@@ -184,91 +184,91 @@ const ListGrid = (props) => {
   }
 
   const byReviews = () => {
-    if( filter === 'reviews' || categories.length > 0 ) {
+    if (filter === 'reviews' || categories.length > 0) {
       console.log('masuk ke reviews');
       setLoading(true);
       const url = `${config.api_host}/api/search/attractions`;
-      
-      if( filter === 'reviews' && categories.length < 1 ) {  
+
+      if (filter === 'reviews' && categories.length < 1) {
         var payload = {
-          sort_by : "reviews",
+          sort_by: "reviews",
         }
       }
-      if( filter === 'reviews' && categories.length > 0 ) {
+      if (filter === 'reviews' && categories.length > 0) {
         var payload = {
-          sort_by : "reviews",
-          categories : categories
+          sort_by: "reviews",
+          categories: categories
         }
       }
-      if( filter === '' && categories.length > 0 ) {
+      if (filter === '' && categories.length > 0) {
         var payload = {
-          categories : categories
+          categories: categories
         }
       }
 
       Axios.post(url, payload)
-      .then(resp => {
-        setLoading(false)
-        console.log('list reviews ', resp);
-        setList(resp.data.attractions);
-      })
-      .catch(er => {
-        setLoading(false)
-        console.log('failure ', er);
-      })
+        .then(resp => {
+          setLoading(false)
+          console.log('list reviews ', resp);
+          setList(resp.data.attractions);
+        })
+        .catch(er => {
+          setLoading(false)
+          console.log('failure ', er);
+        })
     }
   }
 
   const byAlphabet = () => {
-    if( filter == 'alphabet' || categories.length > 0 ) {
+    if (filter == 'alphabet' || categories.length > 0) {
       console.log('masuk ke alphabet');
       setLoading(true);
       const url = `${config.api_host}/api/search/attractions`;
 
-      if( filter == 'alphabet' && categories.length < 1 ) {  
+      if (filter == 'alphabet' && categories.length < 1) {
         var payload = {
-          sort_by : "alphabet",
+          sort_by: "alphabet",
         }
       }
-      if( filter == 'alphabet' && categories.length > 0 ) {
+      if (filter == 'alphabet' && categories.length > 0) {
         var payload = {
-          sort_by : "alphabet",
-          categories : categories
+          sort_by: "alphabet",
+          categories: categories
         }
       }
-      if( filter == '' && categories.length > 0 ) {
+      if (filter == '' && categories.length > 0) {
         var payload = {
-          categories : categories
+          categories: categories
         }
       }
 
       Axios.post(url, payload)
-      .then(resp => {
-        setLoading(false)
-        console.log('list alphabet ', resp);
-        setList(resp.data.attractions);
-      })
-      .catch(er => {
-        setLoading(false)
-        console.log('failure ', er);
-      })
+        .then(resp => {
+          setLoading(false)
+          console.log('list alphabet ', resp);
+          setList(resp.data.attractions);
+        })
+        .catch(er => {
+          setLoading(false)
+          console.log('failure ', er);
+        })
     }
   }
 
   React.useEffect(() => {
-    if(filter == 'distance' || categories.length > 0 && filter != 'reviews' && filter != 'alphabet') {
+    if (filter == 'distance' || categories.length > 0 && filter != 'reviews' && filter != 'alphabet') {
       byDistance();
     }
-    if(filter == 'reviews' || categories.length > 0 && filter != 'alphabet' && filter != 'distance') {
+    if (filter == 'reviews' || categories.length > 0 && filter != 'alphabet' && filter != 'distance') {
       byReviews();
     }
-    if(filter == 'alphabet' || categories.length > 0 && filter != 'reviews' && filter != 'distance') {
+    if (filter == 'alphabet' || categories.length > 0 && filter != 'reviews' && filter != 'distance') {
       byAlphabet();
     }
   }, [filter, categories]);
 
   const categoryHandle = (item) => {
-    if( categories.includes(item) ) {
+    if (categories.includes(item)) {
       setCategories(categories.filter(cat => cat != item));
     } else {
       setCategories([...categories, item]);
@@ -281,11 +281,11 @@ const ListGrid = (props) => {
   }
 
   const GPSHandle = () => {
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
         var lati = position.coords.latitude;
         var longi = position.coords.longitude;
-        dispatch({type: 'SET_LOC', lati: lati, longi: longi});
+        dispatch({ type: 'SET_LOC', lati: lati, longi: longi });
         console.log('lat long set');
       })
     }
@@ -295,8 +295,8 @@ const ListGrid = (props) => {
   }
 
   const IsiKonten = () => {
-    if(list.length > 0) {
-      return(
+    if (list.length > 0) {
+      return (
         <Fragment>
           {props.resulta.length > 0 ? 
             props.resulta.map((wisata, index) => 
@@ -321,7 +321,7 @@ const ListGrid = (props) => {
           ) : list.map((wisata, index) => 
               <NavLink className="crd" to={`/detail/${wisata.id}`} key={index}>
                 <div className="img-wrapper">
-                  <LazyLoadImage src={`${config.api_host}/api/images/${wisata.id}`} width="100%" placeholderSrc="/images/placeholder.png" effect="blur" alt="place img"/>
+                  <LazyLoadImage src={`${config.api_host}/api/images/${wisata.images[0].id}`} width="100%" placeholderSrc="/images/placeholder.png" alt="place img" />
                 </div>
                 <div className="title-wrapper">
                   <span>{wisata.name}</span>
@@ -343,12 +343,12 @@ const ListGrid = (props) => {
       );
     } else {
       setHideFilter(true);
-      return(
+      return (
         <Fragment>
           <div></div>
           <div className="search-notfound">
             <div className="notfound-img">
-              <img src={NotfoundIMG} alt="notfound img"/>
+              <img src={NotfoundIMG} alt="notfound img" />
             </div>
             <div className="notfound-text">
               <p className="info-ttl">Sad no result!</p>
@@ -426,13 +426,13 @@ const ListGrid = (props) => {
     return hal;
   }
 
-  return(
+  return (
     <Fragment>
       <div className="spots-wrapper listpage">
         <div className="list-title">
           <div className={hideFilter ? "filter-wrapper hide" : "filter-wrapper"}>
             <p>filter</p>
-            <input type="checkbox" onClick={e => {handleClick(e);GPSHandle(e)}} id="filter-toggle"/>
+            <input type="checkbox" onClick={e => { handleClick(e); GPSHandle(e) }} id="filter-toggle" />
             <label htmlFor="filter-toggle">
               <span className="fil-span"></span>
             </label>
@@ -446,20 +446,20 @@ const ListGrid = (props) => {
               <p>sort by</p>
               <div className="sort-checkbox">
                 <div className="reviews-btn">
-                  <input type="radio" name="sortBy" onChange={e=> {byReviews(e); setFilter(e.target.value)}} className="visually-hidden" value="reviews" id="reviews"/>
+                  <input type="radio" name="sortBy" onChange={e => { byReviews(e); setFilter(e.target.value) }} className="visually-hidden" value="reviews" id="reviews" />
                   <label htmlFor="reviews" className="sortby-label r">reviews</label>
                 </div>
                 <div className="reviews-btn">
-                  <input type="radio" name="sortBy" onChange={e=> {byDistance(e); setFilter(e.target.value)}} className="visually-hidden" value="distance" id="distance"/>
+                  <input type="radio" name="sortBy" onChange={e => { byDistance(e); setFilter(e.target.value) }} className="visually-hidden" value="distance" id="distance" />
                   <label htmlFor="distance" className="sortby-label d">distance</label>
                 </div>
                 <div className="reviews-btn">
-                  <input type="radio" name="sortBy" onChange={e=> {byAlphabet(e); setFilter(e.target.value)}} className="visually-hidden" value="alphabet" id="alphabet"/>
+                  <input type="radio" name="sortBy" onChange={e => { byAlphabet(e); setFilter(e.target.value) }} className="visually-hidden" value="alphabet" id="alphabet" />
                   <label htmlFor="alphabet" className="sortby-label a">alphabet</label>
                 </div>
               </div>
             </div>
-            <hr className="line-divider"/>
+            <hr className="line-divider" />
             <div className="types-tunel">
               <div className="types-tunel-title">
                 <p>types of attractions</p>
@@ -469,7 +469,7 @@ const ListGrid = (props) => {
                 <ul>
                   <li>
                     <div className="type-checkbox">
-                      <input type="checkbox" value="mountain" onChange={e => checkHandler(e)} id="mountain-box"/>
+                      <input type="checkbox" value="mountain" onChange={e => checkHandler(e)} id="mountain-box" />
                       <label htmlFor="mountain-box">
                         <span className="checkmark"></span>
                       </label>
@@ -478,7 +478,7 @@ const ListGrid = (props) => {
                   </li>
                   <li>
                     <div className="type-checkbox">
-                      <input type="checkbox" value="beach" onChange={e => checkHandler(e)} id="beach-box"/>
+                      <input type="checkbox" value="beach" onChange={e => checkHandler(e)} id="beach-box" />
                       <label htmlFor="beach-box">
                         <span className="checkmark"></span>
                       </label>
@@ -487,7 +487,7 @@ const ListGrid = (props) => {
                   </li>
                   <li>
                     <div className="type-checkbox">
-                      <input type="checkbox" value="museum" onChange={e => checkHandler(e)} id="museum-box"/>
+                      <input type="checkbox" value="museum" onChange={e => checkHandler(e)} id="museum-box" />
                       <label htmlFor="museum-box">
                         <span className="checkmark"></span>
                       </label>
@@ -496,7 +496,7 @@ const ListGrid = (props) => {
                   </li>
                   <li>
                     <div className="type-checkbox">
-                      <input type="checkbox" value="zoo" onClick={e => checkHandler(e)} id="zoo-box"/>
+                      <input type="checkbox" value="zoo" onClick={e => checkHandler(e)} id="zoo-box" />
                       <label htmlFor="zoo-box">
                         <span className="checkmark"></span>
                       </label>
@@ -509,7 +509,7 @@ const ListGrid = (props) => {
                     <ul>
                       <li>
                         <div className="type-checkbox">
-                          <input type="checkbox" value="recreation" onClick={e => checkHandler(e)} id="recreation-box"/>
+                          <input type="checkbox" value="recreation" onClick={e => checkHandler(e)} id="recreation-box" />
                           <label htmlFor="recreation-box">
                             <span className="checkmark"></span>
                           </label>
@@ -518,7 +518,7 @@ const ListGrid = (props) => {
                       </li>
                       <li>
                         <div className="type-checkbox">
-                          <input type="checkbox" value="lake" onClick={e => checkHandler(e)} id="lake-box"/>
+                          <input type="checkbox" value="lake" onClick={e => checkHandler(e)} id="lake-box" />
                           <label htmlFor="lake-box">
                             <span className="checkmark"></span>
                           </label>
@@ -527,7 +527,7 @@ const ListGrid = (props) => {
                       </li>
                       <li>
                         <div className="type-checkbox">
-                          <input type="checkbox" value="waterpark" onClick={e => checkHandler(e)} id="waterpark-box"/>
+                          <input type="checkbox" value="waterpark" onClick={e => checkHandler(e)} id="waterpark-box" />
                           <label htmlFor="waterpark-box">
                             <span className="checkmark"></span>
                           </label>
@@ -536,7 +536,7 @@ const ListGrid = (props) => {
                       </li>
                       <li>
                         <div className="type-checkbox">
-                          <input type="checkbox" value="waterfall" onClick={e => checkHandler(e)} id="waterfall-box"/>
+                          <input type="checkbox" value="waterfall" onClick={e => checkHandler(e)} id="waterfall-box" />
                           <label htmlFor="waterfall-box">
                             <span className="checkmark"></span>
                           </label>
@@ -548,20 +548,20 @@ const ListGrid = (props) => {
                 </ul>
               </div>
             </div>
-            <hr className="line-divider dua"/>
+            <hr className="line-divider dua" />
             <div className="hours-operation">
               <div className="hours-operation-title">
                 <p>hours of operation</p>
               </div>
               <div className="hours-operation-field">
-                <input type="text" name="from-op" id="from-op"/>
+                <input type="text" name="from-op" id="from-op" />
                 <div className="field-to"><span>to</span></div>
-                <input type="text" name="to-op" id="to-op"/>
+                <input type="text" name="to-op" id="to-op" />
               </div>
             </div>
-            <hr className="line-divider dua"/>
+            <hr className="line-divider dua" />
             <div className="map">
-              <MapContainer center={[PositionReducer.lat, PositionReducer.long]} zoom={5}/>
+              <MapContainer center={[PositionReducer.lat, PositionReducer.long]} zoom={5} />
             </div>
           </div>
           <div className={gridfilter ? "main-list-filter" : "main-list"}>
@@ -569,10 +569,10 @@ const ListGrid = (props) => {
               <Fragment>
                 {skeletonCard(6)}
               </Fragment>
-            ) : 
-            (
-              <IsiKonten />
-            )
+            ) :
+              (
+                <IsiKonten />
+              )
             }
           </div>
         </div>
