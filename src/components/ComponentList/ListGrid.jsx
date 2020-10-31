@@ -38,6 +38,10 @@ const ListGrid = (props) => {
         getAttractionByCategory();
       }
 
+      if (MegamenuReducer.searches) {
+        getAttractionBySearches();
+      }
+
       if (BoardHome.data.length < 1 && BoardHome.aksi === true) {
         console.log('boardhome empty: ', BoardHome);
         setList(BoardHome.data);
@@ -71,6 +75,20 @@ const ListGrid = (props) => {
       return;
     }
     console.log('byCategory', result);
+    setList(result.data.attractions);
+  }
+
+  const getAttractionBySearches = async () => {
+    let result;
+    try {
+      result = await Axios.post(`${config.api_host}/api/search/attractions`, {
+        name: MegamenuReducer.searches
+      });
+    } catch (error) {
+      console.log('Error: ', error);
+      return;
+    }
+    console.log('bySearchPop', result);
     setList(result.data.attractions);
   }
 
@@ -549,17 +567,6 @@ const ListGrid = (props) => {
                     </ul>
                   </li>
                 </ul>
-              </div>
-            </div>
-            <hr className="line-divider dua" />
-            <div className="hours-operation">
-              <div className="hours-operation-title">
-                <p>hours of operation</p>
-              </div>
-              <div className="hours-operation-field">
-                <input type="text" name="from-op" id="from-op" />
-                <div className="field-to"><span>to</span></div>
-                <input type="text" name="to-op" id="to-op" />
               </div>
             </div>
             <hr className="line-divider dua" />

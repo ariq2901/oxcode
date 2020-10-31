@@ -116,10 +116,6 @@ const ProfileHeading = () => {
           <div className="profileInfo">
             <span>{name}</span>
             <span>{email}</span>
-            <form encType="multipart/form-data">
-              <input type="file" name="images" onChange={e => changePicture(e.target.files)} id="pictureupdate"/>
-              <button type="submit">submit</button>
-            </form>
           </div>
         </div>
         <div className="userInfo">

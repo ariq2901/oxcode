@@ -18,7 +18,7 @@ const ListAttraction = (props) => {
           </div>
         </div>
       </section>
-      <section className={HeightReducer.height ? "main attract min" : "main attract"}>
+      <section className={HeightReducer.height ? "main attract min" : result ? "main attract min2" : "main attract"}>
         <div className="container attract">
           <div className="row attract">
             <ListGrid type={type} resulta={result}/>
