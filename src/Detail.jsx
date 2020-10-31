@@ -287,7 +287,7 @@ const Detail = () => {
                     </div>
                     <div className="card ia color">
                       {data.traveler_reviews ? (
-                        data.traveler_reviews.map((dat, index) => (
+                        data.traveler_reviews.reverse().map((dat, index) => (
                           <div className="review" key={index}>
                             <div className="review-head">
                               <div className="head-img" style={{ backgroundImage: `url('${config.api_host}/api/images/${dat.user.image.id}')` }}></div>

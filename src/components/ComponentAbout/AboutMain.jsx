@@ -1,5 +1,8 @@
 import React, { Fragment, useEffect } from 'react';
-import Dummy from '../../img/man-dummy.png';
+import Dafa from '../../img/dafa.jpeg';
+import Ariq from '../../img/ariq.jpeg';
+import Ibrahim from '../../img/Ibrahim.jpeg';
+import Dummy from '../../img/man-dummy.jpg';
 import Email from '../../svg/email.svg';
 import Facebook from '../../svg/facebook.svg';
 import Instagram from '../../svg/instagram.svg';
@@ -34,7 +37,7 @@ const AboutMain = () => {
       <div className="our-team-grid" data-aos="fade-up" data-aos-offset="310">
         <div className="person-card">
           <div className="person-img-wrapper">
-            <img src={Dummy} alt="person card"/>
+            <img src={Dafa} alt="person card"/>
           </div>
           <div className="person-detail">
             <div className="person-name">
@@ -47,7 +50,7 @@ const AboutMain = () => {
         </div>
         <div className="person-card">
           <div className="person-img-wrapper">
-            <img src={Dummy} alt="person card"/>
+            <img src={Ariq} alt="person card"/>
           </div>
           <div className="person-detail">
             <div className="person-name">
@@ -60,7 +63,7 @@ const AboutMain = () => {
         </div>
         <div className="person-card">
           <div className="person-img-wrapper">
-            <img src={Dummy} alt="person card"/>
+            <img src={Ibrahim} alt="person card"/>
           </div>
           <div className="person-detail">
             <div className="person-name">
